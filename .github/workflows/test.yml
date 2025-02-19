@@ -1,4 +1,4 @@
-name: Test Action
+name: Deploy-Test
 
 on:
     push:
@@ -23,4 +23,3 @@ jobs:
             - name: Deploy using SCP
               run: |
                 scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -r ./dist/* ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/htdocs/www.destinyarticlefinder.com/client
-            
