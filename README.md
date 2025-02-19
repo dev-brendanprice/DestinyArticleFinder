@@ -1,6 +1,6 @@
 # Destiny Article Finder
 
-This tool will allow you to search Bungie.net News articles via a keyword/search term. Visit the website: https://destinyarticlefinder.com
+This tool provides string-matching and reading functionality for Bungie.net News articles. Visit the website: https://destinyarticlefinder.com
 
 *Inspired by: https://destiny.bungie.org/patchnotes/*
 
