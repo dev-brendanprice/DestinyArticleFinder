@@ -158,4 +158,6 @@ export default async function intializeEvents() {
         }
         catch (error) { console.error(error) };
     });
+
+    console.log('Events intialized');
 };
