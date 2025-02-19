@@ -1,0 +1,46 @@
+#tabGroupContainer {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+#tabItem {
+    display: flex;
+    flex-direction: row;
+    gap: 7px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #2a2831;
+    padding: 5px 10px 5px 10px;
+    border-radius: 10px;
+    border-bottom: none;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    font-weight: normal;
+    font-size: 14px;
+    user-select: none;
+    transition: all 0.1s;
+}
+
+#tabItem:hover {
+    background-color: #2a28318f;
+    transition: all 0.1s;
+}
+
+#tabTitle {
+    pointer-events: none;
+}
+
+.activeTab {
+    background-color: #2a2831 !important;
+}
+
+#btnCloseTab {
+    border-radius: 50%;
+    width: 11px;
+    height: 11px;
+    padding: 2px;
+}
+#btnCloseTab:hover {
+    background-color: rgb(165, 105, 105);
+}

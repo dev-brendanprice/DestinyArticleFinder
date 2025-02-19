@@ -1,0 +1,99 @@
+#headerContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 90%;
+    margin: 0 auto;
+    padding: 15px;
+    align-items: center;
+}
+
+#logoContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    user-select: none;
+}
+
+#logoIcon {
+    width: 32px;
+}
+
+#headSearchBarResults {
+    display: none;
+    position: absolute;
+    background-color: #211e3d;
+    border-radius: 6px;
+    border: 1px solid #333b41;
+    width: 100%;
+    height: fit-content;
+    max-height: 300px;
+    word-wrap: break-word;
+    margin: 0 auto;
+    top: 40px;
+    z-index: 99 !important;
+    overflow-y: auto;
+}
+
+#headSearchBarResults > div {
+    text-align: left;
+    font-size: 14px;
+    padding: 5px 20px 5px 5px;
+    border-bottom: 1px solid #333b41;
+    border-right: 1px solid #333b41;
+    cursor: pointer;
+}
+
+#headSearchBarResults > div:hover {
+    background-color: #322c57;
+    color: #bfbfbf;
+}
+
+#headSearchBarResults > div:last-child {
+    border-bottom: none;
+}
+
+#headSearchBarContainer {
+    display: none; /* Toggles to flex */
+    position: relative;
+    width: 35%;
+    margin: 0 auto;
+}
+
+#headSearchBar {
+    border: none;
+    padding-left: 10px;
+    height: 28px;
+    min-width: 100%;
+    border-radius: 5px;
+    border: 1px solid #333b41;
+    background-color: #211D3D;
+    outline: none;
+    caret-color: #8c85b6;
+    color: #8c85b6;
+    font-weight: normal;
+}
+
+#headNavContainer {
+    display: flex;
+    gap: 20px;
+}
+
+#headNavContainer > img {
+    transition: all 0.15s;
+}
+#headNavContainer > img:hover {
+    filter: brightness(150%);
+    transition: all 0.15s;
+}
+
+#bungieLogoIcon {
+    cursor: pointer;
+    width: 23px;
+}
+#settingsIcon {
+    cursor: pointer;
+    width: 20px;
+}

@@ -1,0 +1,27 @@
+html {
+    scrollbar-gutter: stable;
+}
+
+*::-webkit-scrollbar-button {
+    display: none;
+}
+
+*::-webkit-scrollbar {
+    width: 8px;
+}
+
+*::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: rgba(99, 108, 144, 0.5);
+    border: 5px solid transparent;
+    border-radius: 24px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(99, 108, 144, 0.6);
+    border: 0px solid transparent;
+    box-shadow: none;
+}

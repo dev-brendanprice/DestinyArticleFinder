@@ -1,0 +1,203 @@
+#articleMainContainer {
+    display: none; /* Toggles to flex */
+    flex-direction: column;
+    margin: 0 auto;
+    margin-top: 50px;
+    align-items: center;
+    justify-content: center;
+    width: 85%;
+}
+
+#articleSubContainer {
+    margin-bottom: 2rem;
+    border: 1px solid #2a2831;
+    background-color: #19191c;
+    filter: blur(2px); /* removes onload */
+}
+
+#tabGroupsAndControls {
+    width: 100%;
+    position: sticky;
+    top: 0px;
+    background-color: #100f18;
+}
+
+#articleControls {
+    display: flex;
+    justify-content: left;
+    gap: 15px;
+    padding: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    box-sizing: border-box;
+    width: 100%;
+    border-bottom: 1px solid #3c3c49;
+    background-color: #232328;
+    border-top-right-radius: 5px;
+    filter: opacity(0.6); /* removes onload */
+}
+
+#loadNoticeText {
+    margin-left: auto;
+    align-content: center;
+    font-size: 12px;
+    font-weight: normal;
+    color: rgb(193, 135, 48);
+}
+
+
+
+#controlSearchBarContainer {
+    width: 20%;
+}
+
+#controlSearchBar {
+    border: none;
+    background-color: #3b3b3b;
+    color: white;
+    margin-bottom: 0px;
+    padding-left: 5px;
+    outline: none;
+    width: 100%;
+}
+
+#controlSearchFeedbackContainer {
+    font-size: 12px;
+    font-weight: normal;
+    align-content: center;
+}
+
+#controlSearchFeedbackResultsText {
+    display: none; /* flex */
+    gap: 3px;
+}
+
+#controlButtonsContainer {
+    display: flex;
+    justify-content: left;
+    gap: 10px;
+    width: fit-content;
+}
+
+.buttonArrow {
+    width: 14px;
+    cursor: pointer;
+    transition: all 0.1s;
+}
+.buttonArrow:hover {
+    filter: brightness(150%);
+    transition: all 0.1s;
+}
+
+#articleContainer {
+    margin: 0 auto;
+    padding: 15px;
+    height: fit-content;
+    width: fit-content;
+    box-sizing: content-box;
+}
+
+#articleTitleContainer {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+#articleTitle {
+    font-weight: 600;
+}
+
+#articleTitleLink {
+    width: 16px;
+    height: 16px;
+}
+#articleTitleLink:hover {
+    cursor: pointer;
+}
+
+#articleSubtitle {
+    font-size: 14px;
+}
+
+#articleContent {
+    font-size: 14px;
+    font-weight: normal;
+    text-align: left;
+}
+
+#articleImage {
+    overflow: hidden;
+    width: 100%;
+    object-fit: cover;
+    height: 250px;
+}
+#articleIframe {
+    width: 100%;
+    height: 400px;
+    max-height: 500px;
+}
+#articleTagA {
+    text-decoration: none;
+    color: rgba(255,206,31,.8);
+}
+#articleContent > a {
+    text-decoration: none;
+    color: rgba(255,206,31,.8);
+}
+
+h1, h2, h3, h4, h5, h6, li, ul {
+    margin: 0;
+    padding: 0;
+}
+h1, h2, h3, h4 {
+    text-transform: uppercase;
+}
+h2, h3, h4 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+h4 {
+    font-size: 1rem;
+}
+p {
+    line-height: 1.5;
+}
+ul {
+    margin: 0 0 0 18px;
+    list-style-type: none;
+}
+li {
+    margin: 4px 0 0 18px;
+    list-style-type: disc;
+}
+
+table td {
+    padding: 1rem;
+    border: 1px solid #35414b;
+}
+
+a {
+    text-decoration: none;
+    color: rgba(255, 158, 31, 0.5);
+}
+a:hover {
+    color: rgb(255, 232, 148);
+}
+
+hr {
+    height: 0;
+    margin: 1rem 0;
+    border: 0;
+    border-bottom: 2px solid hsla(0,0%,96.1%,.1);
+}
+
+.highlight {
+    background-color: #f6ff0070;
+    color: black;
+}
+
+.activeHighlight {
+    background-color: #e7eb00;
+    color: black;
+}

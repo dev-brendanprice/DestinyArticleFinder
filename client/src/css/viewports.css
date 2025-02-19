@@ -1,0 +1,18 @@
+@media (max-width: 1000px) {
+    #articleMainContainer {
+        width: 100% !important;
+    }
+    #logoIcon {
+        width: 24px !important;
+    }
+}
+
+@media (max-width: 500px) {
+    #midContainerTitle {
+        font-size: 26px;
+    }
+    #midSearchBar {
+        height: 36px;
+        width: 270px;
+    }
+}
