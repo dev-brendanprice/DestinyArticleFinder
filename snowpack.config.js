@@ -1,13 +1,9 @@
 // Snowpack config
 /** @type {import("snowpack").SnowpackUserConfig } */
 export default {
-  root: './src',
-  devOptions: {
-    hmr: true,
-    port: 5500,
-    open: 'none'
-  },
+  root: './client',
   optimize: {
     minify: true
-  }
+  },
+  mode: 'production'
 };
