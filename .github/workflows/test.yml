@@ -19,7 +19,14 @@ jobs:
             - name: Get SSH Key and set permissions
               run: |
                 mkdir -p ~/.ssh/
-                echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa && chmod 700 ~/.ssh
+                echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+                chmod 600 ~/.ssh/id_rsa
+                chmod 700 ~/.ssh
+            - name: Install sshpass
+              run: sudo apt-get update && sudo apt-get install -y sshpass
+            - name: add remove server to known_hosts
+              run: |
+                ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
             - name: Deploy using SCP
               run: |
                 scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -r ./dist/* ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/htdocs/www.destinyarticlefinder.com/client
