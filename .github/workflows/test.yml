@@ -21,4 +21,4 @@ jobs:
                 mkdir -p ~/.ssh/
                 echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
             - name: Deploy using SCP
-              run: scp -C -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -r ./client/build ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USER }}/htdocs/www.destinyarticlefinder.com/client
+              run: scp -C -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -r ./client/build ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USER }}/htdocs/www.destinyarticlefinder.com/client/
