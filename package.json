@@ -4,7 +4,7 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "dev": "npx snowpack dev --polyfill-node",
+    "dev": "node ./server/main.js",
     "build": "npx snowpack build"
   },
   "keywords": [],
