@@ -4,6 +4,7 @@
   "description": "",
   "main": "main.js",
   "scripts": {
+    "dev": "node ./server/main.js",
     "build": "npx snowpack build"
   },
   "keywords": [],
