@@ -1,4 +1,4 @@
-name: Deploy-Test
+name: Deploy Snowpack Build
 
 on:
     push:
