@@ -1,21 +1,21 @@
 const express = require('express');
+const cors = require('cors');
+const app = express();
+
 const mysql = require('mysql');
-const path = require('path');
 const dotenv = require('dotenv');
-const databaseConfig = require('./config/database');
+const { databaseConfig, variables } = require('./config/variables');
+
+// express middleware
+app.use(cors({
+    origin: `${variables.origin}` // allow from dev/prod frontend
+}));
+console.log(`CORS enabled for ${variables.origin}`);
 
 dotenv.config();
-const app = express();
-const PORT = process.env.PORT || 3000;
-
+const expressPort = process.env.PORT || 3000;
 const connectionPool = mysql.createPool(databaseConfig);
 
-// Serve static files from the frontend
-// app.use(express.static(path.join(__dirname, '../../frontend/src/')));
-
-// app.get('/', (req, res) => {
-//     res.sendFile(path.join(__dirname, '../../frontend/src/index.html'));
-// });
 
 // Create variations from string (e.g. "sunshot", "Sunshot", "SUNSHOT")
 function createSearchVariation(substring) {
@@ -24,7 +24,7 @@ function createSearchVariation(substring) {
         substring.toUpperCase(), // uppercase
         substring.charAt(0).toUpperCase() + substring.slice(1).toLowerCase() // capitalised
     ];
-}
+};
 
 // Find article that contains substring
 async function findArticleWithSubstring(connectionPool, substring) {
@@ -40,17 +40,20 @@ async function findArticleWithSubstring(connectionPool, substring) {
             resolve(results);
         });
     });
-}
+};
 
-app.get('/api/data', (req, res) => {
+
+// ..
+app.get('/api/data', async (req, res) => {
+
     const substring = req.query.search;
-    findArticleWithSubstring(connectionPool, substring)
-        .then(articles => {
-            res.json({ data: articles, search: substring });
-        })
-        .catch(console.error);
+    await findArticleWithSubstring(connectionPool, substring)
+    .then(articles => {
+        res.json({ data: articles, search: substring })
+    })
+    .catch(console.error);
 });
 
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+app.listen(expressPort, () => {
+    console.log(`serving: http://localhost:${expressPort}`);
 });

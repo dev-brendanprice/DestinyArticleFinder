@@ -14,4 +14,4 @@ import settingsicon from './assets/settings.svg';
 import intializeEvents from './components/events.js';
 
 intializeEvents();
-console.log('Done');
+console.log('Welcome to Destiny Article Finder!');

@@ -1,8 +1,14 @@
+import variables from './config/variables.js';
 
 // Tell server to return matching articles, using specified search term
 export default async function fetchResult(searchTerm) {
-    const articles = await fetch(`/api/data?search=${searchTerm}`)
-    .then(response => response.json())
-    .then(data => { return data }).catch(console.error);
+
+    // console.log(`${variables.HOST}/api/data?search=sunshot`);
+    // console.log(searchTerm);
+
+    const articles = await fetch(`${variables.HOST}/api/data?search=${searchTerm}`)
+        .then(res => res.json())
+        .then(data => { return data });
+    
     return articles;
 };
