@@ -3,9 +3,8 @@ import { parseArticles, clearResults } from './parseArticles.js';
 import { positions, whatDoWeCallThisFunction, cleanseHighlightedSpans } from './controlSearch.js';
 import fetchResult from './fetch.js';
 
-
 export default async function intializeEvents() {
-
+    console.log('First line of events.js');
     // Bungie logo redirect
     document.getElementById('bungieLogoIcon').addEventListener('click', () => window.open('https://www.bungie.net/7/en/News', '_blank').focus());
     const midSearchBar = document.getElementById('midSearchBar');
@@ -159,5 +158,5 @@ export default async function intializeEvents() {
         catch (error) { console.error(error) };
     });
 
-    console.log('Events intialized');
+    console.log('Events initialized');
 };
