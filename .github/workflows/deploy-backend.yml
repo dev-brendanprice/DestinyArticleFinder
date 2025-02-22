@@ -1,0 +1,18 @@
+name: Deploy Backend
+
+on:
+  push:
+    paths:
+      - 'backend/**'
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        container:
+            image: node:22
+        steps:
+            - uses: actions/checkout@v3
+            - name: Get SSH key and set permissions
+              run: |
+                mkdir -p ~/.ssh
+                echo "${{ secrets.SSH_USERAPI_PRIVATE_KEY }}" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
