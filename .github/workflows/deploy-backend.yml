@@ -16,3 +16,5 @@ jobs:
               run: |
                 mkdir -p ~/.ssh
                 echo "${{ secrets.SSH_USERAPI_PRIVATE_KEY }}" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
+            - name: Deploy using SCP
+              run: scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -r ./backend ${{ secrets.USERAPI }}@${{ secrets.HOST }}:/home/${{ secrets.SSH_USERAPI }}/htdocs/api.destinyarticlefinder.com/
