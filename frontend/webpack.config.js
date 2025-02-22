@@ -15,7 +15,6 @@ const config = (cli_env) => {
             path: path.resolve(__dirname, 'dist'),
             filename: 'bundle.js'
         },
-        // mode: `${process.env.MODE}`,
         module: {
             rules: [
                 {
@@ -32,10 +31,7 @@ const config = (cli_env) => {
             ]
         },
         plugins: [
-            new DotenvWebpackPlugin({
-                path: path.resolve(__dirname, '.env'),
-                prefix: 'import.meta.env.'
-            }),
+            new DotenvWebpackPlugin(),
             new HtmlWebpackPlugin({
                 template: path.resolve(__dirname, 'src/index.html'),
                 filename: 'index.html'
@@ -48,7 +44,7 @@ const config = (cli_env) => {
             static: {
                 directory: path.join(__dirname, 'src')
             },
-            port: process.env.DEV_PORT || 3300,
+            port: 3300,
             hot: true,
             liveReload: true
         }
