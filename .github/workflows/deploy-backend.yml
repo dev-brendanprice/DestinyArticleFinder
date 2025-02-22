@@ -2,6 +2,8 @@ name: Deploy Backend
 
 on:
   push:
+    branches:
+      - restructure/webpack-pnpm-express
     paths:
       - 'backend/**'
 
