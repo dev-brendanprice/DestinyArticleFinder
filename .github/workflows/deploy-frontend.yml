@@ -16,7 +16,7 @@ jobs:
               with:
                 version: 10
             - name: Build with webpack
-              run: pnpm install && pnpm -C ./frontend/ run build
+              run: pnpm -C ./frontend/ install && pnpm -C ./frontend/ run build
             - name: Get SSH Key and set permissions
               run: |
                 mkdir -p ~/.ssh/
