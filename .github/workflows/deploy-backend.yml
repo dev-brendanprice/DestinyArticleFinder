@@ -19,4 +19,4 @@ jobs:
             - name: Deploy using SCP
               run: scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -r ./backend/* ${{ secrets.SSH_USERAPI }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USERAPI }}/htdocs/api.destinyarticlefinder.com/
             - name: Install & Prune dependencies + Remove nodemon
-              run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SSH_USERAPI }}@${{ secrets.SSH_HOST }} "pnpm install"
+              run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SSH_USERAPI }}@${{ secrets.SSH_HOST }} "cd /home/${{ secrets.SSH_USERAPI }}/htdocs/api.destinyarticlefinder.com/ && pnpm install && pnpm uninstall nodemon && pnpm prune"
