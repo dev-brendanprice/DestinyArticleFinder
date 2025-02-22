@@ -20,5 +20,5 @@ jobs:
             - name: Get SSH Key and set permissions
               run: |
                 mkdir -p ~/.ssh/
-                echo "${{ secrets.SSH_USERSTATIC_PRIVATE_KEY }}" > ~/.ssh/id_rsa && chmod 600 ~/.shh/id_rsa
+                echo "${{ secrets.SSH_USERSTATIC_PRIVATE_KEY }}" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
             
