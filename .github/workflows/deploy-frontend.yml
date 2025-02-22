@@ -21,4 +21,6 @@ jobs:
               run: |
                 mkdir -p ~/.ssh/
                 echo "${{ secrets.SSH_USERSTATIC_PRIVATE_KEY }}" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
+            - name: Deploy using SCP
+              run: scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -r ./frontend/dist/* ${{ secrets.SSH_USERSTATIC }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USERSTATIC }}/htdocs/www.destinyarticlefinder.com/
             
