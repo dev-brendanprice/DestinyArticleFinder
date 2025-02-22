@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - restructure/webpack-pnpm-express
-    paths:
-      - 'backend/**'
 
 jobs:
     deploy:
