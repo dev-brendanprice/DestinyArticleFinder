@@ -4,7 +4,6 @@ import path from 'path';
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import DotenvWebpackPlugin from 'dotenv-webpack';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 
@@ -22,7 +21,6 @@ const config = merge(common, {
         ]
     },
     plugins: [
-        new DotenvWebpackPlugin(),
         new MiniCssExtractPlugin({
             filename: '[name].[contenthash].css'
         })

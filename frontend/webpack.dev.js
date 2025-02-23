@@ -1,7 +1,6 @@
 import { merge } from 'webpack-merge';
 import common from './webpack.common.js';
 import path from 'path';
-import DotenvWebpackPlugin from 'dotenv-webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
@@ -17,7 +16,6 @@ const config = merge(common, {
         liveReload: true
     },
     plugins: [
-        new DotenvWebpackPlugin(),
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, 'src/template.html')
         }),

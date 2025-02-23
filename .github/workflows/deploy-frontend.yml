@@ -12,15 +12,12 @@ jobs:
             image: node:22
         steps:
             - uses: actions/checkout@v3
-            - uses: pnpm/action-setup@v4
-              with:
-                version: 10
-            - name: Build with webpack
-              run: pnpm -C ./frontend/ install && pnpm -C ./frontend/ run build
             - name: Get SSH Key and set permissions
               run: |
                 mkdir -p ~/.ssh/
                 echo "${{ secrets.SSH_USERSTATIC_PRIVATE_KEY }}" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
-            - name: Deploy using SCP
-              run: scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -r ./frontend/dist/* ${{ secrets.SSH_USERSTATIC }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USERSTATIC }}/htdocs/www.destinyarticlefinder.com/
+            - name: Copy repo with SCP
+              run: scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -r ./frontend/* ${{ secrets.SSH_USERSTATIC }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USERSTATIC }}/htdocs/www.destinyarticlefinder.com/
+            - name: Build at root using webpack
+              run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SSH_USERSTATIC }}@${{ secrets.SSH_HOST }} "cd htdocs/api.destinyarticlefinder.com/ && pnpm install && pnpm run build"
             
