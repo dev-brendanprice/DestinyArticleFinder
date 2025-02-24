@@ -3,7 +3,6 @@ import { parseArticles, clearResults } from './parseArticles.js';
 import { positions, whatDoWeCallThisFunction, cleanseHighlightedSpans } from './controlSearch.js';
 import fetchResult from './fetch.js';
 
-
 export default async function intializeEvents() {
 
     // Bungie logo redirect
@@ -158,6 +157,4 @@ export default async function intializeEvents() {
         }
         catch (error) { console.error(error) };
     });
-
-    console.log('Events intialized');
 };
