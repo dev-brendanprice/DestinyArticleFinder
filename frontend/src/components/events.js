@@ -38,10 +38,17 @@ export default async function intializeEvents() {
     
     // Event for search bar the user initially sees
     midSearchBar.addEventListener('keyup', async () => {
+
+        document.getElementById(`midSearchBarContainer`).style.borderBottomLeftRadius = '0px';
+        document.getElementById(`midSearchBarContainer`).style.borderBottomRightRadius = '0px';
+        document.getElementsByClassName(`spinner`)[0].style.opacity = '0.5';
+
         await doFetch(midSearchBar, 'midSearchBar', () => {
             document.getElementById(`midSearchBarContainer`).style.borderBottomLeftRadius = '5px';
             document.getElementById(`midSearchBarContainer`).style.borderBottomRightRadius = '5px';
         });
+
+        document.getElementsByClassName(`spinner`)[0].style.opacity = '0';
     });
 
 

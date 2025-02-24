@@ -102,10 +102,10 @@ export function parseArticles(data, searchBarNamePrefix) {
     searchResultsDomElement.innerHTML = '';
     searchResultsDomElement.style.display = 'block';
 
-    if (searchBarNamePrefix == 'midSearchBar') {
-        document.getElementById(`${searchBarNamePrefix}`).style.borderBottomLeftRadius = '0px';
-        document.getElementById(`${searchBarNamePrefix}`).style.borderBottomRightRadius = '0px';
-    };
+    // if (searchBarNamePrefix == 'midSearchBar') {
+    //     document.getElementById(`${searchBarNamePrefix}`).style.borderBottomLeftRadius = '0px';
+    //     document.getElementById(`${searchBarNamePrefix}`).style.borderBottomRightRadius = '0px';
+    // };
 
     for (let i=0; i<articles.length; i++) {
 

@@ -3,7 +3,7 @@ import './css/header.css';
 import './css/index.css';
 import './css/scroll.css';
 import './css/tabGroup.css';
-import './css/throbber.css';
+import './css/spinner.css';
 import './css/viewports.css';
 
 import arrowhat from './assets/arrow_hat.svg';

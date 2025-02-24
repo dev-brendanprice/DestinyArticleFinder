@@ -1,13 +1,13 @@
 .spinner {
+    position: absolute;
     display: flex;
-    opacity: 0; /* 0.5 when turned on */
-    pointer-events: none;
-    transition: opacity .25s;
+    opacity: 0;
+    transition: opacity .2s;
 }
 
 .spinner,.spinner svg {
-    height: 36px;
-    width: 36px
+    height: 20px;
+    width: 20px
 }
 
 .spinner.mini,.spinner.mini svg {
