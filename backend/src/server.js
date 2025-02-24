@@ -1,10 +1,10 @@
-const express = require('express');
-const cors = require('cors');
+import express from 'express';
 const app = express();
-
-const mysql = require('mysql');
-const dotenv = require('dotenv');
-const { databaseConfig, variables } = require('./config/variables');
+import cors from 'cors';
+import mysql from 'mysql';
+import { variables } from './variables.js';
+import { findArticleWithSubstring } from './modules/findArticleWithSubstr.js';
+console.log(variables);
 
 // express middleware
 app.use(cors({
@@ -12,46 +12,21 @@ app.use(cors({
 }));
 console.log(`CORS enabled for ${variables.origin}`);
 
-dotenv.config();
+// globals
 const expressPort = process.env.PORT || 3000;
-const connectionPool = mysql.createPool(databaseConfig);
+const connectionPool = mysql.createPool(variables.dbConf);
 
 
-// Create variations from string (e.g. "sunshot", "Sunshot", "SUNSHOT")
-function createSearchVariation(substring) {
-    return [
-        substring.toLowerCase(), // lowercase
-        substring.toUpperCase(), // uppercase
-        substring.charAt(0).toUpperCase() + substring.slice(1).toLowerCase() // capitalised
-    ];
-};
 
-// Find article that contains substring
-async function findArticleWithSubstring(connectionPool, substring) {
-    const variations = createSearchVariation(substring);
-    const query = `
-        SELECT * FROM articles
-        WHERE ${variations.map(variation => `htmlContent LIKE '%${variation}%'`).join(' OR ')} LIMIT 0, 25
-    `;
-
-    return new Promise((resolve, reject) => {
-        connectionPool.query(query, (err, results) => {
-            if (err) return reject(err);
-            resolve(results);
-        });
-    });
-};
-
-
-// ..
+// query articles database
 app.get('/api/data', async (req, res) => {
 
     const substring = req.query.search;
     await findArticleWithSubstring(connectionPool, substring)
-    .then(articles => {
-        res.json({ data: articles, search: substring })
-    })
-    .catch(console.error);
+        .then(articles => {
+            res.json({ data: articles, search: substring })
+        })
+        .catch(console.error);
 });
 
 app.listen(expressPort, () => {
