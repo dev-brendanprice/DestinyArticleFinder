@@ -45,7 +45,18 @@
     color: rgb(193, 135, 48);
 }
 
-
+#articleControlsTitle {
+    display: flex;
+    justify-content: left;
+    padding-left: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    box-sizing: border-box;
+    font-size: 12px;
+    font-weight: normal;
+    background-color: #232328;
+    border-bottom: 1px solid #3c3c49;
+}
 
 #controlSearchBarContainer {
     width: 20%;
@@ -89,6 +100,9 @@
     transition: all 0.1s;
 }
 
+#articleContainerTemplate {
+    display: none;
+}
 #articleContainer {
     margin: 0 auto;
     padding: 15px;
@@ -99,8 +113,9 @@
 
 #articleTitleContainer {
     display: flex;
-    gap: 10px;
+    padding-top: 15px;
     align-items: center;
+    gap: 10px;
 }
 
 #articleTitle {
@@ -120,6 +135,7 @@
 }
 
 #articleContent {
+    margin-top: 30px;
     font-size: 14px;
     font-weight: normal;
     text-align: left;
@@ -129,7 +145,9 @@
     overflow: hidden;
     width: 100%;
     object-fit: cover;
-    height: 250px;
+    height: 550px;
+    border: 0.2px dashed #80808066;
+    background: url('https://placehold.co/1000x550/transparent/80808010?text=resource+loading..+or+is+unavailable.') no-repeat center center;
 }
 #articleIframe {
     width: 100%;
@@ -200,4 +218,11 @@ hr {
 .activeHighlight {
     background-color: #e7eb00;
     color: black;
+}
+
+figcaption {
+    font-size: 12px;
+    font-style: italic;
+    text-align: center;
+    margin-top: 0.5rem;
 }

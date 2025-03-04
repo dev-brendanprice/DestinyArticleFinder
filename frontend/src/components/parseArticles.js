@@ -15,7 +15,7 @@ const tabGroup = {
 };
 
 function addTabToGroup(article, searchTerm) {
-
+    // console.log('addTabToGroup()');
     tabGroup.addTab(article, searchTerm); // Add tab to array
     const tabObjLength = Object.keys(tabGroup.tabArticles).length;
     const newTab = document.createElement('div');
@@ -42,7 +42,7 @@ function addTabToGroup(article, searchTerm) {
     
     tabGroupContainer.appendChild(newTab);
 
-    // ..
+    // listen for tab close and tab click events
     tabCloseButton.addEventListener('click', (e) => {
         e.stopPropagation();
         removeTabFromGroup(e)
@@ -53,7 +53,7 @@ function addTabToGroup(article, searchTerm) {
         const tabGroupContainer = tabContainer.parentElement;
 
         for (let child of tabGroupContainer.children) {
-            child.removeAttribute('class');
+            child.removeAttribute('class'); // remove activeTab class from all tabs
         };
         tabContainer.classList.add('activeTab');
 
@@ -140,7 +140,8 @@ export function clearResults(searchBarNamePrefix) {
 
 
 async function renderArticle(article, searchTerm) {
-
+    console.log(article);
+    // remove unnecessary text/attributes
     const articleSubTitle = article.dateShortForm + ' - ' + article.author;
     article.htmlContent = removeDataAttrs(article.htmlContent, 'img');
     article.htmlContent = removeDataAttrs(article.htmlContent, 'iframe');
@@ -152,40 +153,46 @@ async function renderArticle(article, searchTerm) {
     document.getElementById('midContainer').style.display = 'none';
     document.getElementById('headSearchBarContainer').style.display = 'flex';
     document.getElementById('articleMainContainer').style.display = 'flex';
+
+    document.getElementById('articleControlsTitleText').innerHTML = `${article.title} (${article.dateShortForm})`;
     document.getElementById('articleTitle').innerHTML = article.title;
     document.getElementById('articleSubtitle').innerHTML = articleSubTitle;
     document.getElementById('articleContent').innerHTML = article.htmlContent;
     document.getElementById('articleTitleLink').addEventListener('click', () => window.open(article.url, '_blank').focus());
+    // console.log(articleContainer);
 
-    // Drop-in AI code -> Promise await iframes loading (REFACTOR ME)
+    // wait for iframes to load (refactor this)
     function iframesLoaded() {
         return new Promise((resolve, reject) => {
 
-            let iframes = document.querySelectorAll('iframe');
-            if (iframes.length === 0) {
+            // store to-be-loaded iframes
+            let articleContainer = document.getElementById('articleContainer');
+            let iframes = articleContainer.querySelectorAll('iframe');
+            let elements = Array.from(iframes)//.concat(Array.from(images));
+            if (elements.length === 0) {
                 resolve();
                 return;
             };
     
             let loadedCount = 0;
-            iframes.forEach((iframe) => {
+            elements.forEach((el) => { // wait for each element
     
-                iframe.onload = () => {
+                el.onload = () => {
                     loadedCount++;
-                    if (loadedCount === iframes.length) {
+                    if (loadedCount === elements.length) {
                         resolve();
                     };
                 };
     
-                iframe.onerror = () => {
-                    reject(new Error('An iframe failed to load'));
+                el.onerror = () => {
+                    reject(new Error('An element failed to load'));
                 };
             });
         });
     };
 
     iframesLoaded().then(() => {
-        console.log('🍒 iframes loaded!');
+        console.log('🍒 (selected) resources loaded!');
 
         // highlight substrings, then show find function results
         whatDoWeCallThisFunction(document.getElementById('articleContent'), searchTerm);
@@ -205,6 +212,7 @@ async function renderArticle(article, searchTerm) {
 
 
 // reformat returned HTML content
+// nuke this code; it's shit and not needed
 function removeDataAttrs(htmlContent) {
     const pattern = /\s*asset_uid="[^"]*"/gi;
     const modifiedContent = htmlContent.replace(pattern, '');

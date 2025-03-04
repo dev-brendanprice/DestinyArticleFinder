@@ -1,11 +1,16 @@
 #headerContainer {
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
-    width: 90%;
+    width: 85%;
     margin: 0 auto;
     padding: 15px;
     align-items: center;
+}
+
+.headerFlexItem {
+    flex: 1;
+    display: flex;
+    justify-content: center;
 }
 
 #logoContainer {
@@ -58,7 +63,7 @@
 #headSearchBarContainer {
     display: none; /* Toggles to flex */
     position: relative;
-    width: 35%;
+    /* width: 35%; */
     margin: 0 auto;
 }
 
@@ -76,15 +81,16 @@
     font-weight: normal;
 }
 
-#headNavContainer {
+#headButtonsContainer {
     display: flex;
     gap: 20px;
+    justify-content: right;
 }
 
-#headNavContainer > img {
+#headButtonsContainer > img {
     transition: all 0.15s;
 }
-#headNavContainer > img:hover {
+#headButtonsContainer > img:hover {
     filter: brightness(150%);
     transition: all 0.15s;
 }
