@@ -19,12 +19,16 @@ const connectionPool = mysql.createPool(variables.dbConf);
 
 
 // query articles database
-app.get('/api/data', async (req, res) => {
+app.get('/api/v1/articles', async (req, res) => {
 
     const substring = req.query.search;
     await findArticleWithSubstring(connectionPool, substring)
         .then(articles => {
-            res.json({ data: articles, search: substring })
+            res.json({
+                data: articles,
+                items: articles.length,
+                search: substring
+            });
         })
         .catch(console.error);
 });
