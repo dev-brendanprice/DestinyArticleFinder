@@ -6,7 +6,7 @@ import './css/tabGroup.css';
 import './css/spinner.css';
 import './css/viewports.css';
 
-import arrowhat from './assets/arrow_hat.svg';
+import arrowhat from './assets/match_arrow.svg';
 import buttonclose from './assets/button_close.svg';
 import bungieshield from './assets/bungie_shield.svg';
 import settingsicon from './assets/settings.svg';
