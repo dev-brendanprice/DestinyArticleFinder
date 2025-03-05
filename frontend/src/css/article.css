@@ -78,7 +78,7 @@
     align-content: center;
 }
 
-#controlSearchFeedbackResultsText {
+#controlSearchCountInner {
     display: none; /* flex */
     gap: 3px;
 }

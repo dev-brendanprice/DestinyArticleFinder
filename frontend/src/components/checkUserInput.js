@@ -1,4 +1,3 @@
-
 // Check if given user input has been changed and is not null
 let globalSearchTerm = '';
 export function isEntryValid(searchBar) {

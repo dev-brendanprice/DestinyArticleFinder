@@ -11,7 +11,6 @@ import buttonclose from './assets/button_close.svg';
 import bungieshield from './assets/bungie_shield.svg';
 import settingsicon from './assets/settings.svg';
 
-// import configureDom from './components/configureDom.js';
 import intializeEvents from './components/events.js';
 
 intializeEvents();

@@ -1,7 +1,7 @@
 import { isEntryValid } from './checkUserInput.js';
-import { parseArticles, clearResults } from './parseArticles.js';
+import { parseResults, clearResults } from './parseResults.js';
 import { positions, whatDoWeCallThisFunction, cleanseHighlightedSpans } from './controlSearch.js';
-import fetchResult from './fetch.js';
+import fetchResult from './fetchResult.js';
 
 export default async function intializeEvents() {
 
@@ -9,6 +9,7 @@ export default async function intializeEvents() {
     document.getElementById('bungieLogoIcon').addEventListener('click', () => window.open('https://www.bungie.net/7/en/News', '_blank').focus());
     const midSearchBar = document.getElementById('midSearchBar');
     const headSearchBar = document.getElementById('headSearchBar');
+    let positionIndex = 0; // index for reader controls
 
 
     // Wrap check and fetch logic in nested function
@@ -20,7 +21,7 @@ export default async function intializeEvents() {
         // Check if input is valid
         if (isValid) {
             const articles = await fetchResult(searchTerm);
-            parseArticles(articles, `${type}`);
+            parseResults(articles, `${type}`);
         }
         else if (searchTerm.length === 0) {
             clearResults(`${type}`);
@@ -73,15 +74,26 @@ export default async function intializeEvents() {
 
 
     // Nested function and index variable for reader controls
-    let posIndex = 0;
     function toggleActiveHighlight() { // Toggle active highlighted-text
 
         // remove class from everything but matching index
-        const target = positions[posIndex].el;
+        const target = positions[positionIndex].el;
         for (const item of positions) {
             item.el.className = 'highlight'; // remove class
         };
         target.className = 'activeHighlight';
+    };
+
+    // scroll to y pos on window
+    function scrollToY(pos) {
+        try {
+            // Scroll to index of matching substring
+            toggleActiveHighlight();
+            window.scroll(0, pos.y);
+        }
+        catch (error) {
+            console.error(error);
+        };
     };
 
 
@@ -93,22 +105,15 @@ export default async function intializeEvents() {
         let query = searchBar.value;
 
         // remove conflicting regex characters
-        query = query.replaceAll('?', '');
-        query = query.replaceAll('/', '');
-        query = query.replaceAll('\\', '');
-        query = query.replaceAll('.', '');
-        query = query.replaceAll('(', '');
-        query = query.replaceAll(')', '');
-        query = query.replaceAll('[', '');
-        query = query.replaceAll(']', '');
-        query = query.replaceAll('{', '');
-        query = query.replaceAll('}', '');
-        query = query.replaceAll('$', '');
+        const confict = ['?', '/', '\\', '.', '(', ')', '[', ']', '{', '}', '$'];
+        for (const char of confict) {
+            query = query.replaceAll(char, '');
+        };
 
         // entry is empty, remove all highlighting
         if (query.length === 0) {
-            document.getElementById('controlSearchFeedbackResultsText').style.display = 'none';
-            document.getElementById('controlSearchFeedbackDefaultText').style.display = 'flex';
+            document.getElementById('controlSearchCountInner').style.display = 'none';
+            document.getElementById('controlSearchCountDefault').style.display = 'flex';
             cleanseHighlightedSpans(el);
             return;
         };
@@ -118,50 +123,49 @@ export default async function intializeEvents() {
         
         // there are no matching substrings
         if (positions.length >= 1) {
-            document.getElementById('controlSearchFeedbackResultFirst').innerHTML = 1;
-            document.getElementById('controlSearchFeedbackResultSecond').innerHTML = positions.length;
-            document.getElementById('controlSearchFeedbackResultsText').style.display = 'flex';
-            document.getElementById('controlSearchFeedbackDefaultText').style.display = 'none';
+            document.getElementById('controlSearchCountPrefix').innerHTML = 1;
+            document.getElementById('controlSearchCountSuffix').innerHTML = positions.length;
+            document.getElementById('controlSearchCountInner').style.display = 'flex';
+            document.getElementById('controlSearchCountDefault').style.display = 'none';
         }
         else {
-            document.getElementById('controlSearchFeedbackResultsText').style.display = 'none';
-            document.getElementById('controlSearchFeedbackDefaultText').style.display = 'flex';
+            document.getElementById('controlSearchCountInner').style.display = 'none';
+            document.getElementById('controlSearchCountDefault').style.display = 'flex';
         };
     });
 
 
     // Event for reader control search query nav -> goes to previous index
-    document.getElementById('controlButtonUp').addEventListener('click', () => {
-        
-        // If first index, set to last
-        if (posIndex === 0) posIndex = positions.length-1;
-        else posIndex--;
-        document.getElementById('controlSearchFeedbackResultFirst').innerHTML = posIndex+1;
+    document.getElementById('controlButtonPrev').addEventListener('click', () => {
 
-        try {
-            // Scroll to index of matching substring
-            const pos = positions[posIndex];
-            toggleActiveHighlight();
-            window.scroll(0, pos.y);
+        // if first index, set to last
+        if (positionIndex === 0) {
+            positionIndex = positions.length - 1;
         }
-        catch (error) { console.error(error) };
+        else {
+            positionIndex--;
+        };
+        document.getElementById('controlSearchCountPrefix').innerHTML = positionIndex + 1; // ignore zero-based indexing
+
+        // Scroll to index of matching substring
+        const pos = positions[positionIndex];
+        scrollToY(pos);
     });
 
     // Event for reader control search query nav -> goes to next index
-    document.getElementById('controlButtonDown').addEventListener('click', () => {
+    document.getElementById('controlButtonNext').addEventListener('click', () => {
 
-        // If last index, set to first
-        if (posIndex === positions.length-1) posIndex = 0;
-        else posIndex++;
-        document.getElementById('controlSearchFeedbackResultFirst').innerHTML = posIndex+1;
-        
-
-        try {
-            // Scroll to index of matching substring
-            const pos = positions[posIndex];
-            toggleActiveHighlight();
-            window.scroll(0, pos.y);
+        // if last index, set to first
+        if (positionIndex === positions.length - 1) {
+            positionIndex = 0;
         }
-        catch (error) { console.error(error) };
+        else {
+            positionIndex++;
+        };
+        document.getElementById('controlSearchCountPrefix').innerHTML = positionIndex + 1; // ignore zero-based indexing
+        
+        // Scroll to index of matching substring
+        const pos = positions[positionIndex];
+        scrollToY(pos);
     });
 };
