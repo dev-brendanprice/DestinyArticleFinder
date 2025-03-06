@@ -3,6 +3,7 @@ import common from './webpack.common.js';
 import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import ESLintWebpackPlugin from 'eslint-webpack-plugin';
 
 
 const __dirname = path.resolve();
@@ -21,7 +22,8 @@ const config = merge(common, {
         }),
         new MiniCssExtractPlugin({
             filename: '[name].[contenthash].css'
-        })
+        }),
+        new ESLintWebpackPlugin()
     ]
 });
 
