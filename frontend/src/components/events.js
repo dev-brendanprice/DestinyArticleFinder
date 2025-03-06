@@ -1,6 +1,11 @@
 import { isEntryValid } from './checkUserInput.js';
 import { parseResults, clearResults } from './parseResults.js';
-import { positions, whatDoWeCallThisFunction, cleanseHighlightedSpans } from './controlSearch.js';
+import {
+    positions,
+    highlightSubstringPositions,
+    cleanseHighlightedSpans,
+    toggleCaseSensitive
+} from './controlSearch.js';
 import fetchResult from './fetchResult.js';
 
 export default async function intializeEvents() {
@@ -22,6 +27,7 @@ export default async function intializeEvents() {
         if (isValid) {
             const articles = await fetchResult(searchTerm);
             parseResults(articles, `${type}`);
+            positionIndex = 0; // reset index
         }
         else if (searchTerm.length === 0) {
             clearResults(`${type}`);
@@ -100,38 +106,51 @@ export default async function intializeEvents() {
     // Event for reader control search query input -> index all text and reformat
     document.getElementById('controlSearchBar').addEventListener('keyup', async (event) => {
 
-        let el = document.getElementById('articleContent');
-        let searchBar = document.getElementById('controlSearchBar');
-        let query = searchBar.value;
+        const articleElement = document.getElementById('articleContent');
+        const searchBar = document.getElementById('controlSearchBar');
+        let searchQuery = searchBar.value;
 
         // remove conflicting regex characters
         const confict = ['?', '/', '\\', '.', '(', ')', '[', ']', '{', '}', '$'];
         for (const char of confict) {
-            query = query.replaceAll(char, '');
+            searchQuery = searchQuery.replaceAll(char, '');
         };
 
-        // entry is empty, remove all highlighting
-        if (query.length === 0) {
-            document.getElementById('controlSearchCountInner').style.display = 'none';
-            document.getElementById('controlSearchCountDefault').style.display = 'flex';
-            cleanseHighlightedSpans(el);
+        // check entry validity
+        if (!isEntryValid(searchBar)) { // string has changed
+
+            if (searchQuery.length === 0) { // string is not empty
+                cleanseHighlightedSpans(articleElement);
+                document.getElementById('controlSearchCountInner').style.display = 'none';
+                document.getElementById('controlSearchCountDefault').style.display = 'flex';
+            };
             return;
         };
-        if (!isEntryValid(searchBar)) return; // return function if entry not valid
 
-        whatDoWeCallThisFunction(el, query); // highlight and substring match
+        highlightSubstringPositions(articleElement, searchQuery); // substring highlighting
         
-        // there are no matching substrings
+        // one or more matching substrings
         if (positions.length >= 1) {
             document.getElementById('controlSearchCountPrefix').innerHTML = 1;
             document.getElementById('controlSearchCountSuffix').innerHTML = positions.length;
             document.getElementById('controlSearchCountInner').style.display = 'flex';
             document.getElementById('controlSearchCountDefault').style.display = 'none';
-        }
-        else {
-            document.getElementById('controlSearchCountInner').style.display = 'none';
-            document.getElementById('controlSearchCountDefault').style.display = 'flex';
         };
+    });
+
+
+    // toggle case sensitivity
+    const caseSensitiveToggle = document.getElementById('controlSearchCaseSensitiveToggle');
+    caseSensitiveToggle.addEventListener('click', () => {
+
+        const searchBar = document.getElementById('controlSearchBar');
+        caseSensitiveToggle.classList.toggle('controlSearchCaseSensitiveToggleActive');
+        toggleCaseSensitive();
+        positionIndex = 0; // reset index
+        highlightSubstringPositions(document.getElementById('articleContent'), searchBar.value);
+
+        // document.getElementById('controlSearchCountPrefix').innerHTML = 1;
+        document.getElementById('controlSearchCountSuffix').innerHTML = positions.length;
     });
 
 
@@ -154,7 +173,7 @@ export default async function intializeEvents() {
 
     // Event for reader control search query nav -> goes to next index
     document.getElementById('controlButtonNext').addEventListener('click', () => {
-
+        
         // if last index, set to first
         if (positionIndex === positions.length - 1) {
             positionIndex = 0;
@@ -162,8 +181,8 @@ export default async function intializeEvents() {
         else {
             positionIndex++;
         };
-        document.getElementById('controlSearchCountPrefix').innerHTML = positionIndex + 1; // ignore zero-based indexing
-        
+        document.getElementById('controlSearchCountPrefix').innerHTML = positionIndex + 1;
+
         // Scroll to index of matching substring
         const pos = positions[positionIndex];
         scrollToY(pos);

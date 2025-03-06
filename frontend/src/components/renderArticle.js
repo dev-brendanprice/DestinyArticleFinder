@@ -1,4 +1,4 @@
-import { positions, whatDoWeCallThisFunction } from './controlSearch.js';
+import { positions, highlightSubstringPositions } from './controlSearch.js';
 
 export async function renderArticle(article, searchTerm) {
 
@@ -56,7 +56,7 @@ export async function renderArticle(article, searchTerm) {
         console.log('🍒 (selected) resources loaded!');
 
         // highlight substrings, then show find function results
-        whatDoWeCallThisFunction(document.getElementById('articleContent'), searchTerm);
+        highlightSubstringPositions(document.getElementById('articleContent'), searchTerm);
         document.getElementById('controlSearchBar').value = `${searchTerm}`;
 
         // remove blur & load notice

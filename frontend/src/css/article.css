@@ -69,12 +69,18 @@
 }
 
 #controlSearchBarContainer {
-    width: 25%;
+    background-color: #3b3b3b;
+    border: 1px solid #80808063;
+    width: 30%;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    border-radius: 3px;
 }
 
 #controlSearchBar {
-    border: 1px solid #80808026;
-    background-color: #3b3b3b;
+    border: none;
+    background-color: transparent;
     color: white;
     margin-bottom: 0px;
     padding-left: 5px;
@@ -100,6 +106,26 @@
     justify-content: left;
     gap: 10px;
     width: fit-content;
+}
+
+#controlSearchCaseSensitiveToggle {
+    border: 1px solid transparent;
+    padding: 3px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    transition: all 0.1s;
+}
+
+#controlSearchCaseSensitiveToggle:hover {
+    cursor: pointer;
+    filter: brightness(150%);
+    transition: all 0.1s;
+}
+
+.controlSearchCaseSensitiveToggleActive {
+    border: 1px solid #6767c8 !important;
+    background-color: #2e2e88;
+    border-radius: 3px;
 }
 
 .buttonArrow {

@@ -22,9 +22,15 @@ export function cleanseHighlightedSpans(el) {
     };
 };
 
-// Highlight substrings where matching, store topOffsetY for window scroll event
+// highlight matching substrings and store their Y positions
 export let positions = [];
-export async function whatDoWeCallThisFunction(el, query) {
+
+let isCaseSensitive = false;
+export function toggleCaseSensitive() { // get-set for case sensitivity
+    isCaseSensitive = !isCaseSensitive;
+};
+
+export async function highlightSubstringPositions(el, query) {
 
     positions = []; // reset matching substrings
     cleanseHighlightedSpans(el);
@@ -41,7 +47,7 @@ export async function whatDoWeCallThisFunction(el, query) {
     for (let node of nodes) {
 
         let text = node.textContent;
-        let regex = new RegExp(`(${query})`, 'gi');
+        let regex = new RegExp(`(${query})`, isCaseSensitive ? 'g' : 'gi'); // case-insensitive toggle
         let split = text.split(regex);
 
         // if array is longer than 1 item -> it contains the query
