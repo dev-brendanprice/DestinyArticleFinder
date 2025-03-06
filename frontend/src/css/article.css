@@ -76,6 +76,7 @@
     align-items: center;
     box-sizing: border-box;
     border-radius: 3px;
+    padding-right: 1px;
 }
 
 #controlSearchBar {
@@ -110,9 +111,9 @@
 
 #controlSearchCaseSensitiveToggle {
     border: 1px solid transparent;
-    padding: 3px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding: 2px;
+    padding-top: 4px;
+    padding-bottom: 4px;
     transition: all 0.1s;
 }
 

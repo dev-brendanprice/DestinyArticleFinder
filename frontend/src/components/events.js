@@ -4,7 +4,8 @@ import {
     positions,
     highlightSubstringPositions,
     cleanseHighlightedSpans,
-    toggleCaseSensitive
+    toggleCaseSensitive,
+    clearPositions
 } from './controlSearch.js';
 import fetchResult from './fetchResult.js';
 
@@ -104,7 +105,7 @@ export default async function intializeEvents() {
 
 
     // Event for reader control search query input -> index all text and reformat
-    document.getElementById('controlSearchBar').addEventListener('keyup', async (event) => {
+    document.getElementById('controlSearchBar').addEventListener('keyup', async () => {
 
         const articleElement = document.getElementById('articleContent');
         const searchBar = document.getElementById('controlSearchBar');
@@ -120,6 +121,7 @@ export default async function intializeEvents() {
         if (!isEntryValid(searchBar)) { // string has changed
 
             if (searchQuery.length === 0) { // string is not empty
+                clearPositions();
                 cleanseHighlightedSpans(articleElement);
                 document.getElementById('controlSearchCountInner').style.display = 'none';
                 document.getElementById('controlSearchCountDefault').style.display = 'flex';
@@ -128,13 +130,17 @@ export default async function intializeEvents() {
         };
 
         highlightSubstringPositions(articleElement, searchQuery); // substring highlighting
-        
+
         // one or more matching substrings
         if (positions.length >= 1) {
             document.getElementById('controlSearchCountPrefix').innerHTML = 1;
             document.getElementById('controlSearchCountSuffix').innerHTML = positions.length;
             document.getElementById('controlSearchCountInner').style.display = 'flex';
             document.getElementById('controlSearchCountDefault').style.display = 'none';
+        }
+        else if (positions.length === 0) {
+            document.getElementById('controlSearchCountInner').style.display = 'none';
+            document.getElementById('controlSearchCountDefault').style.display = 'flex';
         };
     });
 
@@ -145,17 +151,32 @@ export default async function intializeEvents() {
 
         const searchBar = document.getElementById('controlSearchBar');
         caseSensitiveToggle.classList.toggle('controlSearchCaseSensitiveToggleActive');
-        toggleCaseSensitive();
+
         positionIndex = 0; // reset index
+        toggleCaseSensitive();
         highlightSubstringPositions(document.getElementById('articleContent'), searchBar.value);
 
-        // document.getElementById('controlSearchCountPrefix').innerHTML = 1;
+        // no matching substrings
+        if (positions.length === 0) {
+            positionIndex = 0;
+            document.getElementById('controlSearchCountInner').style.display = 'none';
+            document.getElementById('controlSearchCountDefault').style.display = 'flex';
+            return;
+        };
+        
+        document.getElementById('controlSearchCountInner').style.display = 'flex';
+        document.getElementById('controlSearchCountDefault').style.display = 'none';
+        document.getElementById('controlSearchCountPrefix').innerHTML = positionIndex + 1;
         document.getElementById('controlSearchCountSuffix').innerHTML = positions.length;
     });
 
 
     // Event for reader control search query nav -> goes to previous index
     document.getElementById('controlButtonPrev').addEventListener('click', () => {
+        console.log(positionIndex);
+        if (positions.length === 0) {
+            return;
+        };
 
         // if first index, set to last
         if (positionIndex === 0) {
@@ -173,6 +194,10 @@ export default async function intializeEvents() {
 
     // Event for reader control search query nav -> goes to next index
     document.getElementById('controlButtonNext').addEventListener('click', () => {
+        console.log(positionIndex);
+        if (positions.length === 0) {
+            return;
+        };
         
         // if last index, set to first
         if (positionIndex === positions.length - 1) {

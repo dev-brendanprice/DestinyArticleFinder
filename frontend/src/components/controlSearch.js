@@ -24,9 +24,12 @@ export function cleanseHighlightedSpans(el) {
 
 // highlight matching substrings and store their Y positions
 export let positions = [];
+export function clearPositions() { // setter for positions array
+    positions = [];
+};
 
 let isCaseSensitive = false;
-export function toggleCaseSensitive() { // get-set for case sensitivity
+export function toggleCaseSensitive() { // setter for case sensitivity bool
     isCaseSensitive = !isCaseSensitive;
 };
 
