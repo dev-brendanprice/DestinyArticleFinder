@@ -10,11 +10,7 @@ export function parseResults(data, searchBarNamePrefix) {
     searchResultsDomElement.innerHTML = '';
     searchResultsDomElement.style.display = 'block';
 
-    // if (searchBarNamePrefix == 'midSearchBar') {
-    //     document.getElementById(`${searchBarNamePrefix}`).style.borderBottomLeftRadius = '0px';
-    //     document.getElementById(`${searchBarNamePrefix}`).style.borderBottomRightRadius = '0px';
-    // };
-
+    // Create a new list item for each article
     for (let i=0; i<articles.length; i++) {
 
         const article = articles[i];

@@ -17,52 +17,68 @@ const tabGroup = {
 export function addTabToGroup(article, searchTerm) {
 
     tabGroup.addTab(article, searchTerm); // Add tab to array
-    const tabObjLength = Object.keys(tabGroup.tabArticles).length;
-    const newTab = document.createElement('div');
-    const tabTitle = document.createElement('div');
-    const tabCloseButton = document.createElement('img');
+    const tabCount = Object.keys(tabGroup.tabArticles).length;
+    const newTabElement = document.createElement('div');
+    const newTabTitle = document.createElement('div');
+    const newTabCloseButton = document.createElement('img');
+    const tabGroupContainer = document.getElementById('tabGroupContainer');
 
-    newTab.classList.add('activeTab');
-    newTab.id = 'tabItem';
-    tabTitle.id = 'tabTitle';
-    tabCloseButton.id = 'btnCloseTab';
+    newTabElement.classList.add('activeTab');
+    newTabElement.id = 'tabItem';
+    newTabTitle.id = 'tabTitle';
+    newTabCloseButton.id = 'btnCloseTab';
 
-    tabTitle.innerHTML = `${article.type.toUpperCase()}, "${searchTerm}"`;
-    tabCloseButton.src = './assets/button_close.svg';
+    newTabTitle.innerHTML = `${article.type.toUpperCase()}, "${searchTerm}"`;
+    newTabCloseButton.src = './assets/button_close.svg';
 
-    newTab.append(tabCloseButton, tabTitle);
-    newTab.setAttribute('data-tabIndex', tabObjLength);
-    tabGroup.currentTabIndex = tabGroup.currentTabIndex+1;
+    newTabElement.append(newTabCloseButton, newTabTitle);
+    newTabElement.setAttribute('data-tabIndex', tabCount);
 
     // remove activeTab class from all tabs
-    const tabGroupContainer = document.getElementById('tabGroupContainer');
     for (let child of tabGroupContainer.children) {
         child.removeAttribute('class');
     };
-    
-    tabGroupContainer.appendChild(newTab);
 
-    // listen for tab close and tab click events
-    tabCloseButton.addEventListener('click', (e) => {
-        e.stopPropagation();
-        removeTabFromGroup(e)
-    });
-    newTab.addEventListener('click', (e) => {
+    tabGroup.currentTabIndex = tabCount-1; // set to new tab's index
+    console.log(tabGroup);
 
+    // tab click
+    newTabElement.addEventListener('click', (e) => {
+        
         const tabContainer = e.target;
         const tabGroupContainer = tabContainer.parentElement;
+        const selectedTabIndex = parseInt(tabContainer.getAttribute('data-tabIndex')) - 1;
 
+        // remove activeTab class from all tabs
         for (let child of tabGroupContainer.children) {
-            child.removeAttribute('class'); // remove activeTab class from all tabs
+            child.removeAttribute('class');
         };
-        tabContainer.classList.add('activeTab');
+        tabContainer.classList.add('activeTab'); // assign activeTab class to clicked tab
 
-        const selectedTabIndex = parseInt(newTab.getAttribute('data-tabIndex'));
-        if (selectedTabIndex !== tabGroup.currentTabIndex) {
+        
+        // set searchTerm tabGroup.[article].search
+        searchTerm = tabGroup.tabArticles[selectedTabIndex].search;
+
+        // when different tab is clicked
+        if (parseInt(selectedTabIndex) !== parseInt(tabGroup.currentTabIndex)) {
+
+            const prevTabIndex = tabGroup.currentTabIndex; // store previous tab's index
+            const prevTabString = document.getElementById('controlSearchBar').value; // store previous tab's search query
+            tabGroup.tabArticles[prevTabIndex].search = prevTabString; // store previous tab's search query
+
+            // render selected tab
             tabGroup.currentTabIndex = selectedTabIndex;
             renderArticle(article, searchTerm);
         };
     });
+
+    // tab close
+    newTabCloseButton.addEventListener('click', (e) => {
+        e.stopPropagation();
+        removeTabFromGroup(e)
+    });
+
+    tabGroupContainer.appendChild(newTabElement);
 };
 
 function removeTabFromGroup(e) {

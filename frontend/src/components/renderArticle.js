@@ -20,7 +20,6 @@ export async function renderArticle(article, searchTerm) {
     document.getElementById('articleSubtitle').innerHTML = articleSubTitle;
     document.getElementById('articleContent').innerHTML = article.htmlContent;
     document.getElementById('articleTitleLink').addEventListener('click', () => window.open(article.url, '_blank').focus());
-    console.log(article);
 
     // wait for iframes to load
     function iframesLoaded() {
@@ -64,10 +63,17 @@ export async function renderArticle(article, searchTerm) {
         document.getElementById('articleSubContainer').style.filter = 'none';
         document.getElementById('loadNoticeText').style.display = 'none';
 
-        document.getElementById('controlSearchCountPrefix').innerHTML = 1;
-        document.getElementById('controlSearchCountSuffix').innerHTML = positions.length;
-        document.getElementById('controlSearchCountInner').style.display = 'flex';
-        document.getElementById('controlSearchCountDefault').style.display = 'none';
+        // show find function results
+        if (positions.length === 0) {
+            document.getElementById('controlSearchCountInner').style.display = 'none';
+            document.getElementById('controlSearchCountDefault').style.display = 'flex';
+        }
+        else {
+            document.getElementById('controlSearchCountPrefix').innerHTML = 1;
+            document.getElementById('controlSearchCountSuffix').innerHTML = positions.length;
+            document.getElementById('controlSearchCountInner').style.display = 'flex';
+            document.getElementById('controlSearchCountDefault').style.display = 'none';
+        };
     });
 };
 

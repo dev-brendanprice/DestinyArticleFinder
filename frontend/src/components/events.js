@@ -173,7 +173,7 @@ export default async function intializeEvents() {
 
     // Event for reader control search query nav -> goes to previous index
     document.getElementById('controlButtonPrev').addEventListener('click', () => {
-        console.log(positionIndex);
+
         if (positions.length === 0) {
             return;
         };
@@ -194,7 +194,7 @@ export default async function intializeEvents() {
 
     // Event for reader control search query nav -> goes to next index
     document.getElementById('controlButtonNext').addEventListener('click', () => {
-        console.log(positionIndex);
+
         if (positions.length === 0) {
             return;
         };
