@@ -183,15 +183,14 @@
 #articleImage {
     overflow: hidden;
     width: 100%;
-    object-fit: cover;
+    object-fit: contain;
     height: 550px;
     border: 0.2px dashed #80808066;
-    background: url('https://placehold.co/1000x550/transparent/80808010?text=resource+loading..+or+is+unavailable.') no-repeat center center;
+    background: url('https://placehold.co/500x250/transparent/80808010?text=resource+loading..+or+is+unavailable.') no-repeat center center;
 }
 #articleIframe {
     width: 100%;
-    height: 400px;
-    max-height: 500px;
+    height: 550px;
 }
 #articleTagA {
     text-decoration: none;

@@ -61,9 +61,10 @@ export default async function intializeEvents() {
 
 
 
-    // Hide header search bar results when user clicks away
+    // hide certain elements when user clicks away
     document.addEventListener('mouseup', async (event) => {
 
+        // for header search bar
         const headResultsContainer = document.getElementById('headSearchBarResults');
         const headSearchBar = document.getElementById('headSearchBar');
 
@@ -75,6 +76,26 @@ export default async function intializeEvents() {
         // If click event target is the head search bar, show search results
         if (headSearchBar.contains(event.target) && headSearchBar.value.length !== 0) {
             document.getElementById('headSearchBarResults').style.display = 'block';
+        };
+
+        // for image "More" context menu
+        const eventTargetViaClass = event.target.className;
+        if (eventTargetViaClass !== 'imageCtrlInner') {
+
+            const ctrlMoreContainers = document.getElementsByClassName('ctrlMoreContainer');
+            Array.prototype.forEach.call(ctrlMoreContainers, (el) => {
+                el.style.display = 'none';
+            });
+
+            const imageCtrlElements = document.getElementsByClassName('imageCtrl');
+            Array.prototype.forEach.call(imageCtrlElements, (el) => {
+                el.style.backgroundColor = '';
+            });
+
+            const imageControlElements = document.getElementsByClassName('imageControls');
+            Array.prototype.forEach.call(imageControlElements, (el) => {
+                el.style.opacity = '';
+            });
         };
     });
 

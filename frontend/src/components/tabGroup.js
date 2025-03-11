@@ -29,7 +29,7 @@ export function addTabToGroup(article, searchTerm) {
     newTabCloseButton.id = 'btnCloseTab';
 
     newTabTitle.innerHTML = `${article.type.toUpperCase()}, "${searchTerm}"`;
-    newTabCloseButton.src = './assets/button_close.svg';
+    newTabCloseButton.src = './assets/close.svg';
 
     newTabElement.append(newTabCloseButton, newTabTitle);
     newTabElement.setAttribute('data-tabIndex', tabCount);

@@ -5,12 +5,20 @@ import './css/scroll.css';
 import './css/tabGroup.css';
 import './css/spinner.css';
 import './css/viewports.css';
+import './css/imageControls.css';
 
-import arrowhat from './assets/match_arrow.svg';
-import buttonclose from './assets/button_close.svg';
-import bungieshield from './assets/bungie_shield.svg';
-import settingsicon from './assets/settings.svg';
-import casesensitive from './assets/Aa.svg';
+import './assets/match_arrow.svg';
+import './assets/close.svg';
+import './assets/bungie_shield.svg';
+import './assets/settings.svg';
+import './assets/Aa.svg';
+import './assets/download.svg';
+import './assets/magnify.svg';
+import './assets/more.svg';
+import './assets/open.svg';
+import './assets/more.svg';
+import './assets/copy.svg';
+import './assets/link.svg';
 
 import intializeEvents from './components/events.js';
 

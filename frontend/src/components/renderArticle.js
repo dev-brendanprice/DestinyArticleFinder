@@ -1,15 +1,14 @@
 import { positions, highlightSubstringPositions } from './controlSearch.js';
+import { parseDOM } from './parseDOM.js';
+import { addImageControls } from './addImageControls.js'
 
 export async function renderArticle(article, searchTerm) {
 
     // remove unnecessary text/attributes
     const articleSubTitle = article.dateShortForm + ' - ' + article.author;
-    article.htmlContent = removeDataAttrs(article.htmlContent, 'img');
-    article.htmlContent = removeDataAttrs(article.htmlContent, 'iframe');
-    article.htmlContent = removeDataAttrs(article.htmlContent, 'a');
-    article.htmlContent = addIdToTags(article.htmlContent, 'img', 'articleImage');
-    article.htmlContent = addIdToTags(article.htmlContent, 'iframe', 'articleIframe');
-    article.htmlContent = addIdToTags(article.htmlContent, 'iframe', 'articleTagA');
+    let articleContent = article.htmlContent;
+    
+    articleContent = parseDOM(articleContent);
 
     document.getElementById('midContainer').style.display = 'none';
     document.getElementById('headSearchBarContainer').style.display = 'flex';
@@ -18,17 +17,19 @@ export async function renderArticle(article, searchTerm) {
     document.getElementById('articleControlsTitleText').innerHTML = `${article.title} (${article.dateShortForm})`;
     document.getElementById('articleTitle').innerHTML = article.title;
     document.getElementById('articleSubtitle').innerHTML = articleSubTitle;
-    document.getElementById('articleContent').innerHTML = article.htmlContent;
+    document.getElementById('articleContent').innerHTML = articleContent;
     document.getElementById('articleTitleLink').addEventListener('click', () => window.open(article.url, '_blank').focus());
+
+    addImageControls(); // buttons for like "Copy Image", "Download", etc.
 
     // wait for iframes to load
     function iframesLoaded() {
         return new Promise((resolve, reject) => {
 
             // store to-be-loaded iframes
-            let articleContainer = document.getElementById('articleContainer');
-            let iframes = articleContainer.querySelectorAll('iframe');
-            let elements = Array.from(iframes)//.concat(Array.from(images));
+            const articleContainer = document.getElementById('articleContainer');
+            const iframes = articleContainer.querySelectorAll('iframe');
+            const elements = Array.from(iframes);
             if (elements.length === 0) {
                 resolve();
                 return;
@@ -75,24 +76,4 @@ export async function renderArticle(article, searchTerm) {
             document.getElementById('controlSearchCountDefault').style.display = 'none';
         };
     });
-};
-
-// reformat returned HTML content
-// nuke this code; it's shit and not needed
-function removeDataAttrs(htmlContent) {
-    const pattern = /\s*asset_uid="[^"]*"/gi;
-    const modifiedContent = htmlContent.replace(pattern, '');
-    return modifiedContent;
-};
-function addIdToTags(htmlContent, tagName, idName) {
-    const pattern = new RegExp(`<${tagName}([^>]*)>`, 'gi');
-    const addId = (match, attrs) => {
-        if (/id\s*=\s*['"]?[^'"]*['"]?/.test(attrs)) {
-            return match;
-        };
-        return `<${tagName} id="${idName}"${attrs}>`;
-    };
-
-    const modifiedContent = htmlContent.replace(pattern, addId);
-    return modifiedContent;
 };
