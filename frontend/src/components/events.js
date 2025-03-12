@@ -26,7 +26,10 @@ export default async function intializeEvents() {
 
         // Check if input is valid
         if (isValid) {
+
             const articles = await fetchResult(searchTerm);
+            document.getElementById(`midSearchBarContainer`).style.borderBottomLeftRadius = '0px';
+            document.getElementById(`midSearchBarContainer`).style.borderBottomRightRadius = '0px';
             parseResults(articles, `${type}`);
             positionIndex = 0; // reset index
         }
@@ -47,10 +50,7 @@ export default async function intializeEvents() {
     // Event for search bar the user initially sees
     midSearchBar.addEventListener('keyup', async () => {
 
-        document.getElementById(`midSearchBarContainer`).style.borderBottomLeftRadius = '0px';
-        document.getElementById(`midSearchBarContainer`).style.borderBottomRightRadius = '0px';
         document.getElementsByClassName(`spinner`)[0].style.opacity = '0.5';
-
         await doFetch(midSearchBar, 'midSearchBar', () => {
             document.getElementById(`midSearchBarContainer`).style.borderBottomLeftRadius = '5px';
             document.getElementById(`midSearchBarContainer`).style.borderBottomRightRadius = '5px';

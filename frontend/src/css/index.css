@@ -115,6 +115,8 @@ input[data-autocompleted] {
 
 /* every list result */
 #midSearchBarResults > div {
+    /* display: flex;
+    gap: 5px; */
     text-align: left;
     font-size: 14px;
     padding: 5px;
@@ -127,6 +129,11 @@ input[data-autocompleted] {
 #midSearchBarResults > div:hover {
     background-color: #322c57;
     color: #bfbfbf;
+}
+
+.listItemSubtitle {
+    font-size: 14px;
+    font-weight: normal;
 }
 
 /* last result in the list */
@@ -142,4 +149,14 @@ input[data-autocompleted] {
     font-weight: normal;
     font-style: italic;
     text-align: left;
+}
+
+.searchResultsCount {
+    display: flex;
+    justify-content: left;
+    margin-top: 5px;
+    margin-left: 5px;
+    font-size: 12px;
+    font-style: italic;
+    user-select: none;
 }

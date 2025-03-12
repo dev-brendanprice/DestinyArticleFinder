@@ -14,18 +14,32 @@ export function parseResults(data, searchBarNamePrefix) {
     for (let i=0; i<articles.length; i++) {
 
         const article = articles[i];
-        const newDomElement = document.createElement('div');
-        newDomElement.innerHTML = article.title;
-        newDomElement.setAttribute('data-index', i);
+        const listItemContainer = document.createElement('div');
+        const listItemTitle = document.createElement('div');
+        const listItemSubtitle = document.createElement('span');
 
-        newDomElement.addEventListener('click', async () => {
+        listItemTitle.innerHTML = article.title;
+        listItemSubtitle.innerHTML = article.dateShortForm;
+        listItemSubtitle.className = 'listItemSubtitle';
+        
+        listItemContainer.setAttribute('data-index', i);
+
+        listItemContainer.addEventListener('click', async () => {
 
             document.getElementById('headSearchBarResults').style.display = 'none';
             addTabToGroup(article, searchTerm); // make new tab
             renderArticle(article, searchTerm) // render article
         });
-        searchResultsDomElement.appendChild(newDomElement);
+
+        listItemContainer.append(listItemTitle, listItemSubtitle);
+        searchResultsDomElement.appendChild(listItemContainer);
     };
+
+    // create "x results" as last child
+    const resultsCount = document.createElement('div');
+    resultsCount.innerHTML = `${articles.length} results`;
+    resultsCount.className = 'searchResultsCount';
+    searchResultsDomElement.after(resultsCount);
 
     if (data.data.length === 0) { // if no data is returned
         document.getElementById('noResultsFoundText').style.display = 'block';
