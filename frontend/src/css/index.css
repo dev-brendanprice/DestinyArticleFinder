@@ -115,8 +115,6 @@ input[data-autocompleted] {
 
 /* every list result */
 #midSearchBarResults > div {
-    /* display: flex;
-    gap: 5px; */
     text-align: left;
     font-size: 14px;
     padding: 5px;

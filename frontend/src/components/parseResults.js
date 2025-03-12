@@ -17,11 +17,9 @@ export function parseResults(data, searchBarNamePrefix) {
         const listItemContainer = document.createElement('div');
         const listItemTitle = document.createElement('div');
         const listItemSubtitle = document.createElement('span');
-
         listItemTitle.innerHTML = article.title;
         listItemSubtitle.innerHTML = article.dateShortForm;
         listItemSubtitle.className = 'listItemSubtitle';
-        
         listItemContainer.setAttribute('data-index', i);
 
         listItemContainer.addEventListener('click', async () => {
