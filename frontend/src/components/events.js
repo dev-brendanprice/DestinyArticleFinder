@@ -28,6 +28,7 @@ export default async function intializeEvents() {
         if (isValid) {
 
             const articles = await fetchResult(searchTerm);
+            document.getElementById('searchResultsCount').style.display = 'flex';
             document.getElementById(`midSearchBarContainer`).style.borderBottomLeftRadius = '0px';
             document.getElementById(`midSearchBarContainer`).style.borderBottomRightRadius = '0px';
             parseResults(articles, `${type}`);
@@ -52,6 +53,7 @@ export default async function intializeEvents() {
 
         document.getElementsByClassName(`spinner`)[0].style.opacity = '0.5';
         await doFetch(midSearchBar, 'midSearchBar', () => {
+            document.getElementById('searchResultsCount').style.display = 'none';
             document.getElementById(`midSearchBarContainer`).style.borderBottomLeftRadius = '5px';
             document.getElementById(`midSearchBarContainer`).style.borderBottomRightRadius = '5px';
         });

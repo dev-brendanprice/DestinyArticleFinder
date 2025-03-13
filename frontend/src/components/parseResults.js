@@ -34,13 +34,13 @@ export function parseResults(data, searchBarNamePrefix) {
     };
 
     // create "x results" as last child
-    const resultsCount = document.createElement('div');
+    const resultsCount = document.getElementById('searchResultsCount');
     resultsCount.innerHTML = `${articles.length} results`;
-    resultsCount.className = 'searchResultsCount';
-    searchResultsDomElement.after(resultsCount);
 
     if (data.data.length === 0) { // if no data is returned
         document.getElementById('noResultsFoundText').style.display = 'block';
+        resultsCount.style.display = 'none';
+        resultsCount.innerHTML = '';
         clearResults(searchBarNamePrefix);
     }
     else {

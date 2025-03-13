@@ -149,7 +149,7 @@ input[data-autocompleted] {
     text-align: left;
 }
 
-.searchResultsCount {
+#searchResultsCount {
     display: flex;
     justify-content: left;
     margin-top: 5px;
