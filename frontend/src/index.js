@@ -19,6 +19,7 @@ import './assets/open.svg';
 import './assets/more.svg';
 import './assets/copy.svg';
 import './assets/link.svg';
+import './assets/bg.png';
 
 import intializeEvents from './components/events.js';
 

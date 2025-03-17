@@ -25,6 +25,7 @@ export function parseResults(data, searchBarNamePrefix) {
         listItemContainer.addEventListener('click', async () => {
 
             document.getElementById('headSearchBarResults').style.display = 'none';
+            document.getElementsByTagName('body')[0].style.backgroundImage = 'unset'; // remove background (png)
             addTabToGroup(article, searchTerm); // make new tab
             renderArticle(article, searchTerm) // render article
         });
