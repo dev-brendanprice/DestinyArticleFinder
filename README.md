@@ -5,7 +5,7 @@ This is a third-party API tool, which provides string-matching and " CTRL+F " fu
 
 Repository contains full-stack project (front-end and back-end) for Destiny Article Finder.
 
-> *Inspired by: https://destiny.bungie.org/patchnotes/*
+> *Inspired by: https://destiny.bungie.org/patchnotes/ and https://groogle.zip/twab_search*
 
 ## License
 Published under MIT license.
