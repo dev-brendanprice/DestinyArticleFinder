@@ -7,96 +7,126 @@
     <title>Destiny Article Finder</title>
 </head>
 <body>
+    <div id="headNavigation">
+        <div>DAF</div>
 
-    <div>
-        <div id="headerContainer">
-
-            <div class="headerFlexItem" style="justify-content: left;">Destiny Article Finder</div>
-            <div class="headerFlexItem" id="headSearchBarContainer">
-                <input id="headSearchBar" type="text" placeholder="Search for Articles..">
-                <div id="headSearchBarResults"></div>
-            </div>
-            <div class="headerFlexItem" id="headButtonsContainer">
-                <img id="bungieLogoIcon" src="./assets/bungie_shield.svg" href="https://www.bungie.net/7/en/News" target="_blank">
-                <!-- <img id="settingsIcon" src="./assets/settings.svg"> -->
-            </div>
-
-        </div>
-
-        <div id="midContainer">
-            <div id="midContainerTitle">Search Bungie Articles via Search Term</div>
-            <div>
-
-                <div id="midSearchBarContainer">
-
-                    <input id="midSearchBar" type="text" placeholder="Search for Articles.."></input>
-                    <div style="margin-right: 32px;margin-top: 6px;">
-                        <div class="spinner"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 62.08 71.68"><g><polygon points="30.04 59.7 10.87 48.64 1 54.34 30.04 71.1 30.04 59.7" fill-opacity="0"><animate attributeName="fill-opacity" values="1;0;0;0;0;0;1" dur="3" repeatCount="indefinite"></animate></polygon><polygon points="61.08 54.34 51.2 48.64 32.04 59.7 32.04 71.1 61.08 54.34" fill-opacity="0"><animate attributeName="fill-opacity" values="0;1;0;0;0;0;0" dur="3" repeatCount="indefinite"></animate></polygon><polygon points="52.2 24.77 52.2 46.91 62.08 52.6 62.08 19.07 52.2 24.77" fill-opacity="0"><animate attributeName="fill-opacity" values="0;0;1;0;0;0;0" dur="3" repeatCount="indefinite"></animate></polygon><polygon points="32.04 0.58 32.04 11.97 51.2 23.04 61.08 17.34 32.04 0.58" fill-opacity="0"><animate attributeName="fill-opacity" values="0;0;0;1;0;0;0" dur="3" repeatCount="indefinite"></animate></polygon><polygon points="1 17.34 10.87 23.04 30.04 11.97 30.04 0.58 1 17.34" fill-opacity="0"><animate attributeName="fill-opacity" values="0;0;0;0;1;0;0" dur="3" repeatCount="indefinite"></animate></polygon><polygon points="9.87 46.91 9.87 24.77 0 19.07 0 52.6 9.87 46.91" fill-opacity="0"><animate attributeName="fill-opacity" values="0;0;0;0;0;1;0" dur="3" repeatCount="indefinite"></animate></polygon></g><g><polygon points="30.04 47.09 21.8 42.33 12.9 47.47 30.04 57.36 30.04 47.09" fill-opacity="0"><animate attributeName="fill-opacity" values="1;1;0;0;0;0;1" dur="1.5" repeatCount="indefinite"></animate></polygon><polygon points="20.8 40.6 20.8 31.08 11.9 25.95 11.9 45.73 20.8 40.6" fill-opacity="0"><animate attributeName="fill-opacity" values="0;1;1;0;0;0;0" dur="1.5" repeatCount="indefinite"></animate></polygon><polygon points="21.8 29.35 30.04 24.59 30.04 14.32 12.9 24.21 21.8 29.35" fill-opacity="0"><animate attributeName="fill-opacity" values="0;0;1;1;0;0;0" dur="1.5" repeatCount="indefinite"></animate></polygon><polygon points="32.04 14.32 32.04 24.59 40.28 29.35 49.17 24.21 32.04 14.32" fill-opacity="0"><animate attributeName="fill-opacity" values="0;0;0;1;1;0;0" dur="1.5" repeatCount="indefinite"></animate></polygon><polygon points="41.28 31.08 41.28 40.6 50.17 45.73 50.17 25.95 41.28 31.08" fill-opacity="0"><animate attributeName="fill-opacity" values="0;0;0;0;1;1;0" dur="1.5" repeatCount="indefinite"></animate></polygon><polygon points="40.28 42.33 32.04 47.09 32.04 57.36 49.17 47.47 40.28 42.33" fill-opacity="0"><animate attributeName="fill-opacity" values="1;0;0;0;0;1;1" dur="1.5" repeatCount="indefinite"></animate></polygon></g></svg></div>
-                    </div>
-
+        <div id="outerSearchContainer">
+            <div class="searchBarContainer">
+            
+                <input id="searchBar" type="text" placeholder="Search for Articles..">
+                <div id="spinnerContainer">
+                    <div class="spinner"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 62.08 71.68"><g><polygon points="30.04 59.7 10.87 48.64 1 54.34 30.04 71.1 30.04 59.7" fill-opacity="0"><animate attributeName="fill-opacity" values="1;0;0;0;0;0;1" dur="3" repeatCount="indefinite"></animate></polygon><polygon points="61.08 54.34 51.2 48.64 32.04 59.7 32.04 71.1 61.08 54.34" fill-opacity="0"><animate attributeName="fill-opacity" values="0;1;0;0;0;0;0" dur="3" repeatCount="indefinite"></animate></polygon><polygon points="52.2 24.77 52.2 46.91 62.08 52.6 62.08 19.07 52.2 24.77" fill-opacity="0"><animate attributeName="fill-opacity" values="0;0;1;0;0;0;0" dur="3" repeatCount="indefinite"></animate></polygon><polygon points="32.04 0.58 32.04 11.97 51.2 23.04 61.08 17.34 32.04 0.58" fill-opacity="0"><animate attributeName="fill-opacity" values="0;0;0;1;0;0;0" dur="3" repeatCount="indefinite"></animate></polygon><polygon points="1 17.34 10.87 23.04 30.04 11.97 30.04 0.58 1 17.34" fill-opacity="0"><animate attributeName="fill-opacity" values="0;0;0;0;1;0;0" dur="3" repeatCount="indefinite"></animate></polygon><polygon points="9.87 46.91 9.87 24.77 0 19.07 0 52.6 9.87 46.91" fill-opacity="0"><animate attributeName="fill-opacity" values="0;0;0;0;0;1;0" dur="3" repeatCount="indefinite"></animate></polygon></g><g><polygon points="30.04 47.09 21.8 42.33 12.9 47.47 30.04 57.36 30.04 47.09" fill-opacity="0"><animate attributeName="fill-opacity" values="1;1;0;0;0;0;1" dur="1.5" repeatCount="indefinite"></animate></polygon><polygon points="20.8 40.6 20.8 31.08 11.9 25.95 11.9 45.73 20.8 40.6" fill-opacity="0"><animate attributeName="fill-opacity" values="0;1;1;0;0;0;0" dur="1.5" repeatCount="indefinite"></animate></polygon><polygon points="21.8 29.35 30.04 24.59 30.04 14.32 12.9 24.21 21.8 29.35" fill-opacity="0"><animate attributeName="fill-opacity" values="0;0;1;1;0;0;0" dur="1.5" repeatCount="indefinite"></animate></polygon><polygon points="32.04 14.32 32.04 24.59 40.28 29.35 49.17 24.21 32.04 14.32" fill-opacity="0"><animate attributeName="fill-opacity" values="0;0;0;1;1;0;0" dur="1.5" repeatCount="indefinite"></animate></polygon><polygon points="41.28 31.08 41.28 40.6 50.17 45.73 50.17 25.95 41.28 31.08" fill-opacity="0"><animate attributeName="fill-opacity" values="0;0;0;0;1;1;0" dur="1.5" repeatCount="indefinite"></animate></polygon><polygon points="40.28 42.33 32.04 47.09 32.04 57.36 49.17 47.47 40.28 42.33" fill-opacity="0"><animate attributeName="fill-opacity" values="1;0;0;0;0;1;1" dur="1.5" repeatCount="indefinite"></animate></polygon></g></svg></div>
                 </div>
+            </div>
 
-                <div id="midSearchBarResults"></div>
+            <div id="searchFiltersContainer">
+                <div>
+                    <div class="filterItem" id="filterFold">
+                        <div class="filterCheckboxLabel">Filters</div>
+                        <img class="filterSVG" src="./assets/fold.svg">
+                    </div>
+                    <div class="filterItem fli">
+                        <div class="filterCheckboxLabel">News</div>
+                        <input type="checkbox" id="filterCheckbox" value="typeNews">
+                    </div>
+                    <div class="filterItem fli">
+                        <div class="filterCheckboxLabel">Updates</div>
+                        <input type="checkbox" id="filterCheckbox" value="typeUpdate">
+                    </div>
+                    <div class="filterItem fli">
+                        <div class="filterCheckboxLabel">Hotfixes</div>
+                        <input type="checkbox" id="filterCheckbox" value="typeHotfix">
+                    </div>
+                    <div class="filterItem fli">
+                        <div class="filterCheckboxLabel">All <span>(default)</span></div>
+                        <input type="checkbox" id="filterCheckbox" value="typeAll">
+                    </div>
+                </div>
+                <div>
+                    <div class="sortbyItem" id="sortbyFold">
+                        <div class="filterCheckboxLabel">Sort by</div>
+                        <img class="filterSVG" src="./assets/fold.svg">
+                    </div>
+                    <div class="sortbyItem sli">
+                        <div class="filterCheckboxLabel">Date <span>ASC</span></div>
+                        <input type="radio" id="filterCheckbox" value="typeDateASC">
+                    </div>
+                    <div class="sortbyItem sli">
+                        <div class="filterCheckboxLabel">Date <span>DES</span></div>
+                        <input type="radio" id="filterCheckbox" value="typeDateDES">
+                    </div>
+                    <div class="sortbyItem sli">
+                        <div class="filterCheckboxLabel">ABC</div>
+                        <input type="radio" id="filterCheckbox" value="typeABC">
+                    </div>
+                </div>
+            </div>
 
+            <div id="searchResultsContainer">
+                <div id="searchBarResults"></div>
                 <div id="searchResultsCount"></div>
-                <div id="noResultsFoundText">No Results found</div>
+                <div id="noSearchResultsFoundText">No Results found</div>
             </div>
         </div>
-    
-        <div id="articleMainContainer">
-            <div id="tabGroupsAndControls">
-                <div id="tabGroupContainer"></div>
-                <div id="articleControls">
 
-                    <div id="controlSearchBarContainer">
-                        <input type="text" id="controlSearchBar" placeholder="Find (&#8593;&#8595; for history)">
-                        <img id="controlSearchCaseSensitiveToggle" src="./assets/Aa.svg" title="Case Sensitive"></img>
-                    </div>
-                    <div id="controlSearchFeedbackContainer">
-                        <div id="controlSearchCountDefault" style="font-size:11px;">No results</div>
-                        <div id="controlSearchCountInner">
-                            <div id="controlSearchCountPrefix">0</div>
-                            <div>of</div>
-                            <div id="controlSearchCountSuffix">1</div>
-                        </div>
-                    </div>
-                    <div id="controlButtonsContainer">
-                        <img id="controlButtonPrev" class="buttonArrow" src="./assets/match_arrow.svg" title="Previous Match"></img>
-                        <img id="controlButtonNext" class="buttonArrow" src="./assets/match_arrow.svg" title="Next Match" style="rotate: 180deg;"></img>
-                    </div>
-                    <div id="loadNoticeText">
-                        Loading Article..
-                    </div>
+        <div id="headNavIcons">
+            <img id="bungieLogoIcon" src="./assets/bungie_shield.svg" href="https://www.bungie.net/7/en/News" target="_blank">
+        </div>
+    </div>
 
+    <div id="articleMainContainer">
+        <div id="tabGroupsAndControls">
+            <div id="tabGroupContainer"></div>
+            <div id="articleControls">
+
+                <div id="controlSearchBarContainer">
+                    <input type="text" id="controlSearchBar" placeholder="Find (&#8593;&#8595; for history)">
+                    <img id="controlSearchCaseSensitiveToggle" src="./assets/Aa.svg" title="Case Sensitive"></img>
                 </div>
-                <div id="articleControlsTitle">
-                    <div style="font-weight: bold;margin-right: 5px;">Viewing:</div>
-                    <div id="articleControlsTitleText">This Week in Destiny: 27 Feb</div>
-                </div>
-                <div id="articleControlsFade"></div>
-            </div>
-            <div id="articleSubContainer">
-
-                <div id="articleContainer">
-                    <div id="articleTitleContainer">
-                        <h1 id="articleTitle"></h1>
-                        <svg id="articleTitleLink" viewBox="0 0 16 16" height="16" aria-hidden="true"><path fill="#8585C5" d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+                <div id="controlSearchFeedbackContainer">
+                    <div id="controlSearchCountDefault" style="font-size:11px;">No results</div>
+                    <div id="controlSearchCountInner">
+                        <div id="controlSearchCountPrefix">0</div>
+                        <div>of</div>
+                        <div id="controlSearchCountSuffix">1</div>
                     </div>
-                    <span id="articleSubtitle"></span>
-                    <div id="articleContent"></div>
                 </div>
-
-                <!-- first article container is a template -->
-                <div class="articleContainer" id="articleContainerTemplate">
-                    <div id="articleTitleContainer">
-                        <h1 id="articleTitle"></h1>
-                        <svg id="articleTitleLink" viewBox="0 0 16 16" height="16" aria-hidden="true"><path fill="#8585C5" d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
-                    </div>
-                    <span id="articleSubtitle"></span>
-                    <div id="articleContent"></div>
+                <div id="controlButtonsContainer">
+                    <img id="controlButtonPrev" class="buttonArrow" src="./assets/match_arrow.svg" title="Previous Match"></img>
+                    <img id="controlButtonNext" class="buttonArrow" src="./assets/match_arrow.svg" title="Next Match" style="rotate: 180deg;"></img>
+                </div>
+                <div id="loadNoticeText">
+                    Loading Article..
                 </div>
 
             </div>
+            <div id="articleControlsTitle">
+                <div style="font-weight: bold;margin-right: 5px;">Viewing:</div>
+                <div id="articleControlsTitleText">This Week in Destiny: 27 Feb</div>
+            </div>
+            <div id="articleControlsFade"></div>
+        </div>
+        <div id="articleSubContainer">
+
+            <div id="articleContainer">
+                <div id="articleTitleContainer">
+                    <h1 id="articleTitle"></h1>
+                    <svg id="articleTitleLink" viewBox="0 0 16 16" height="16" aria-hidden="true"><path fill="#8585C5" d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+                </div>
+                <span id="articleSubtitle"></span>
+                <div id="articleContent"></div>
+            </div>
+
+            <!-- first article container is a template -->
+            <div class="articleContainer" id="articleContainerTemplate">
+                <div id="articleTitleContainer">
+                    <h1 id="articleTitle"></h1>
+                    <svg id="articleTitleLink" viewBox="0 0 16 16" height="16" aria-hidden="true"><path fill="#8585C5" d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+                </div>
+                <span id="articleSubtitle"></span>
+                <div id="articleContent"></div>
+            </div>
+
         </div>
     </div>
 </body>

@@ -19,9 +19,12 @@ import './assets/open.svg';
 import './assets/more.svg';
 import './assets/copy.svg';
 import './assets/link.svg';
+import './assets/fold.svg';
 import './assets/bg.png';
 
-import intializeEvents from './components/events.js';
+import intializeEvents from './components/initEvents.js';
+import intializeSettings from './components/initSettings.js';
 
-intializeEvents();
+intializeEvents(); // config UI/UX events
+intializeSettings(); // load user settings/defaults
 console.log('Welcome to Destiny Article Finder!');

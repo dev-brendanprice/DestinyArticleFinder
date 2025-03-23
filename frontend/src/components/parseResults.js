@@ -1,5 +1,6 @@
 import { addTabToGroup } from './tabGroup.js';
 import { renderArticle } from './renderArticle.js';
+import { activeSortByValues } from './config/variables.js';
 
 // Parse a given article, sanitise content, format into HTML DOM content
 export function parseResults(data, searchBarNamePrefix) {
@@ -9,6 +10,20 @@ export function parseResults(data, searchBarNamePrefix) {
     const searchResultsDomElement = document.getElementById(`${searchBarNamePrefix}Results`);
     searchResultsDomElement.innerHTML = '';
     searchResultsDomElement.style.display = 'block';
+
+    // sort articles
+    let sortBy = Object.keys(activeSortByValues)
+        .filter(key => activeSortByValues[key] && key !== 'set')[0]
+        .replace('type', '');
+    
+    if (sortBy === 'DateASC') {
+        articles.sort((a, b) => new Date(a.date) - new Date(b.date));
+    } else if (sortBy === 'DateDES') {
+        articles.sort((a, b) => new Date(b.date) - new Date(a.date));
+    } else if (sortBy === 'ABC') {
+        articles.sort((a, b) => a.title.localeCompare(b.title));
+    };
+
 
     // Create a new list item for each article
     for (let i=0; i<articles.length; i++) {
@@ -24,7 +39,6 @@ export function parseResults(data, searchBarNamePrefix) {
 
         listItemContainer.addEventListener('click', async () => {
 
-            document.getElementById('headSearchBarResults').style.display = 'none';
             document.getElementsByTagName('body')[0].style.backgroundImage = 'unset'; // remove background (png)
             addTabToGroup(article, searchTerm); // make new tab
             renderArticle(article, searchTerm) // render article
@@ -39,13 +53,13 @@ export function parseResults(data, searchBarNamePrefix) {
     resultsCount.innerHTML = `${articles.length} results`;
 
     if (data.data.length === 0) { // if no data is returned
-        document.getElementById('noResultsFoundText').style.display = 'block';
+        document.getElementById('noSearchResultsFoundText').style.display = 'block';
         resultsCount.style.display = 'none';
         resultsCount.innerHTML = '';
         clearResults(searchBarNamePrefix);
     }
     else {
-        document.getElementById('noResultsFoundText').style.display = 'none';
+        document.getElementById('noSearchResultsFoundText').style.display = 'none';
     };
 };
 

@@ -1,4 +1,4 @@
-// ..
+// parse a HTML document that is in the format of a string
 export function parseDOM(htmlContent) {
 
     htmlContent = new DOMParser().parseFromString(htmlContent, 'text/html'); // parse string to HTML

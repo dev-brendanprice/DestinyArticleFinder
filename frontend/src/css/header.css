@@ -103,3 +103,138 @@
     cursor: pointer;
     width: 20px;
 }
+
+.searchBarContainer {
+    display: flex;
+    /* height: 36px; */
+    border: 1px solid #595385;
+    background-color: #211D3D;
+    border-radius: 5px;
+}
+
+#spinnerContainer {
+    display: flex;
+    margin-top: 6px;
+    padding-right: 10px;
+    justify-content: right;
+    align-items: center;
+    align-self: flex-start;
+}
+
+#searchFiltersContainer {
+    display: flex;
+    margin-top: 7px;
+    gap: 7px;
+    z-index: 99;
+}
+
+#filterFold, #sortbyFold {
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.filterItem, .sortbyItem {
+    display: flex;
+    border: 1px solid #595385;
+    border-top: none;
+    padding: 6px;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 70px;
+    justify-content: space-between;
+    font-size: 13px;
+    font-weight: normal;
+    background-color:#211D3D;
+    user-select: none;
+    transition: background-color 0.2s;
+    color: #e6e6e6;
+}
+
+.fli, .sli {
+    display: none;
+}
+
+#filterCheckbox {
+    accent-color: #4EC760;
+    cursor: pointer;
+    pointer-events: none;
+}
+
+.filterCheckboxLabel {
+    pointer-events: none;
+}
+
+.filterCheckboxLabel > span {
+    font-size: 10px;
+    font-style: italic;
+    color: gray;
+    pointer-events: none;
+}
+
+.filterItem:first-child {
+    color: #A0A0A0;
+    border: 1px solid #595385;
+    border-radius: 5px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+.filterItem:last-child {
+    border-radius: 5px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}
+
+.filterItem:hover {
+    cursor: pointer;
+    background-color: #2b2649;
+    transition: background-color 0.2s;
+}
+
+.filterItem > div {
+    align-self: center;
+}
+
+.filterItem > input {
+    margin: 0;
+    width: 12px;
+}
+
+.sortbyItem:first-child {
+    color: #A0A0A0;
+    border: 1px solid #595385;
+    border-radius: 5px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+.sortbyItem:last-child {
+    border-radius: 5px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}
+
+.sortbyItem:hover {
+    cursor: pointer;
+    background-color: #2b2649;
+    transition: background-color 0.2s;
+}
+
+.sortbyItem > div {
+    align-self: center;
+}
+
+.sortbyItem > input {
+    margin: 0;
+    width: 12px;
+}
+
+.filterSVG {
+    width: 12px;
+    pointer-events: none;
+}
+
+#headNavIcons {
+    display: flex;
+    justify-content: right;
+}

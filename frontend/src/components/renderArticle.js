@@ -1,6 +1,6 @@
 import { positions, highlightSubstringPositions } from './controlSearch.js';
 import { parseDOM } from './parseDOM.js';
-import { addImageControls } from './addImageControls.js'
+import { addImageControls } from './addImageControls.js';
 
 export async function renderArticle(article, searchTerm) {
 
@@ -9,11 +9,8 @@ export async function renderArticle(article, searchTerm) {
     let articleContent = article.htmlContent;
     
     articleContent = parseDOM(articleContent);
-
-    document.getElementById('midContainer').style.display = 'none';
-    document.getElementById('headSearchBarContainer').style.display = 'flex';
+    document.getElementById('searchResultsContainer').style.display = 'none';
     document.getElementById('articleMainContainer').style.display = 'flex';
-
     document.getElementById('articleControlsTitleText').innerHTML = `${article.title} (${article.dateShortForm})`;
     document.getElementById('articleTitle').innerHTML = article.title;
     document.getElementById('articleSubtitle').innerHTML = articleSubTitle;

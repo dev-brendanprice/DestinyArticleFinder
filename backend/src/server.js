@@ -23,11 +23,13 @@ const connectionPool = mysql.createPool(variables.dbConf);
 // query articles database
 app.get('/api/v1/articles', async (req, res) => {
 
-    const searchTerm = req.query.search;
-    const limit = parseInt(req.query.limit);
+    let types = Array.from(new Set(req.query.types?.split(','))); // Set() ignores duplicates
+    types = types.map(v => { return v.toLowerCase() });
+
     const options = {
-        searchTerm: searchTerm,
-        limit: limit || 25
+        searchTerm: req.query.search,
+        types: types,
+        limit: parseInt(req.query.limit) || 25
     };
 
     await findArticleWithSubstring(connectionPool, options)
@@ -35,7 +37,7 @@ app.get('/api/v1/articles', async (req, res) => {
             res.json({
                 data: articles,
                 items: articles.length,
-                search: searchTerm
+                search: options.searchTerm
             });
         })
         .catch(console.error);

@@ -8,13 +8,11 @@ import {
     clearPositions
 } from './controlSearch.js';
 import fetchResult from './fetchResult.js';
+import { activeFilterValues, activeSortByValues } from './config/variables.js';
 
 export default async function intializeEvents() {
 
-    // Bungie logo redirect
-    document.getElementById('bungieLogoIcon').addEventListener('click', () => window.open('https://www.bungie.net/7/en/News', '_blank').focus());
-    const midSearchBar = document.getElementById('midSearchBar');
-    const headSearchBar = document.getElementById('headSearchBar');
+    const searchBarElement = document.getElementById('searchBar');
     let positionIndex = 0; // index for reader controls
 
 
@@ -28,9 +26,8 @@ export default async function intializeEvents() {
         if (isValid) {
 
             const articles = await fetchResult(searchTerm);
+            document.getElementById('searchResultsContainer').style.display = 'flex';
             document.getElementById('searchResultsCount').style.display = 'flex';
-            document.getElementById(`midSearchBarContainer`).style.borderBottomLeftRadius = '0px';
-            document.getElementById(`midSearchBarContainer`).style.borderBottomRightRadius = '0px';
             parseResults(articles, `${type}`);
             positionIndex = 0; // reset index
         }
@@ -41,48 +38,41 @@ export default async function intializeEvents() {
     };
 
 
+    // Bungie logo redirect
+    document.getElementById('bungieLogoIcon').addEventListener('click', () => {
+        window.open('https://www.bungie.net/7/en/News', '_blank').focus();
+    });
 
     // Event for search bar located in the header, which is seen after the intial search query
-    headSearchBar.addEventListener('keyup', async () => {
-        await doFetch(headSearchBar, 'headSearchBar');
-    });
+    // headSearchBar.addEventListener('keyup', async () => {
+    //     await doFetch(headSearchBar, 'headSearchBar');
+    // });
 
     
     // Event for search bar the user initially sees
-    midSearchBar.addEventListener('keyup', async () => {
+    searchBarElement.addEventListener('keyup', async () => {
 
         document.getElementsByClassName(`spinner`)[0].style.opacity = '0.5';
-        await doFetch(midSearchBar, 'midSearchBar', () => {
+        await doFetch(searchBarElement, 'searchBar', () => {
             document.getElementById('searchResultsCount').style.display = 'none';
-            document.getElementById(`midSearchBarContainer`).style.borderBottomLeftRadius = '5px';
-            document.getElementById(`midSearchBarContainer`).style.borderBottomRightRadius = '5px';
         });
-
         document.getElementsByClassName(`spinner`)[0].style.opacity = '0';
     });
 
 
 
+    // do this but for "esc" key press too
     // hide certain elements when user clicks away
     document.addEventListener('mouseup', async (event) => {
 
-        // for header search bar
-        const headResultsContainer = document.getElementById('headSearchBarResults');
-        const headSearchBar = document.getElementById('headSearchBar');
+        const targetClass = event.target.className;
+        const targetClassList = targetClass.split(' ');
 
-        // If click event target is NOT the head search bar, hide search results
-        if (!headResultsContainer.contains(event.target)) {
-            document.getElementById('headSearchBarResults').style.display = 'none';
-        };
-
-        // If click event target is the head search bar, show search results
-        if (headSearchBar.contains(event.target) && headSearchBar.value.length !== 0) {
-            document.getElementById('headSearchBarResults').style.display = 'block';
-        };
+        // hide search bar results
+        // document.getElementById('searchResultsContainer').style.display = 'none';
 
         // for image "More" context menu
-        const eventTargetViaClass = event.target.className;
-        if (eventTargetViaClass !== 'imageCtrlInner') {
+        if (targetClass !== 'imageCtrlInner') {
 
             const ctrlMoreContainers = document.getElementsByClassName('ctrlMoreContainer');
             Array.prototype.forEach.call(ctrlMoreContainers, (el) => {
@@ -98,6 +88,14 @@ export default async function intializeEvents() {
             Array.prototype.forEach.call(imageControlElements, (el) => {
                 el.style.opacity = '';
             });
+        };
+
+        // hide when clicking away from filter/sort-by lists
+        if (!targetClassList.includes('filterItem')) {
+            hideFilterList();
+        };
+        if (!targetClassList.includes('sortbyItem')) {
+            hideSortList();
         };
     });
 
@@ -235,4 +233,174 @@ export default async function intializeEvents() {
         const pos = positions[positionIndex];
         scrollToY(pos);
     });
+
+    
+    // search filter list
+    const filterParent = document.getElementById('filterFold');
+    let filtersOpen = false;
+    filterParent.addEventListener('click', () => {
+
+        const listItems = document.getElementsByClassName('fli');
+        let displayMode = 'none';
+
+        // parent style
+        if (filtersOpen) {
+            // console.log('close');
+            filterParent.style.borderBottomRightRadius = '5px';
+            filterParent.style.borderBottomLeftRadius = '5px';
+            filtersOpen = false;
+        }
+        else if (!filtersOpen) {
+            // console.log('open');
+            filterParent.style.borderBottomRightRadius = '0px';
+            filterParent.style.borderBottomLeftRadius = '0px';
+            filtersOpen = true;
+            displayMode = 'flex';
+        };
+
+        // hide list items
+        for (let item of listItems) {
+            item.style.display = displayMode;
+        };
+    });
+
+    // search sort-by list
+    const sortbyParent = document.getElementById('sortbyFold');
+    let sortbyOpen = false;
+    sortbyParent.addEventListener('click', () => {
+
+        const listItems = document.getElementsByClassName('sli');
+        let displayMode = 'none';
+
+        if (sortbyOpen) {
+            displayMode = 'none';
+            sortbyParent.style.borderBottomRightRadius = '5px';
+            sortbyParent.style.borderBottomLeftRadius = '5px';
+            sortbyOpen = false;
+        }
+        else if (!sortbyOpen) {
+            displayMode = 'flex';
+            sortbyParent.style.borderBottomRightRadius = '0px';
+            sortbyParent.style.borderBottomLeftRadius = '0px';
+            sortbyOpen = true;
+        };
+
+        for (let item of listItems) {
+            item.style.display = displayMode;
+        };
+    });
+
+
+    // filter list items
+    const filterListItems = document.getElementsByClassName('fli');
+    const filterListValues = ['typeNews', 'typeUpdate', 'typeHotfix'];
+    const typeAllCheckbox = document.querySelector('[value=typeAll]');
+    const getCheckbox = (value) => document.querySelector(`[value=${value}]`);
+    
+    function hideFilterList() {
+        filterParent.style.borderBottomRightRadius = '5px';
+        filterParent.style.borderBottomLeftRadius = '5px';
+    
+        for (let item of filterListItems) {
+            item.style.display = 'none';
+        };
+
+        filtersOpen = false;
+    };
+    
+    function getActiveFilterCount() {
+        return filterListValues.filter(key => activeFilterValues[key]).length;
+    };
+    
+    // event listener for each list item
+    for (const listItem of filterListItems) {
+        listItem.addEventListener('click', () => {
+
+            const checkbox = listItem.querySelector('input');
+            const checkboxValue = checkbox.value;
+    
+            if (checkboxValue !== 'typeAll') {
+
+                const newState = !checkbox.checked;
+                checkbox.checked = newState;
+                activeFilterValues.set(checkboxValue, newState);
+    
+                const activeCount = getActiveFilterCount();
+    
+                if (activeCount === filterListValues.length) {
+                    // Reset individual filters and enable 'typeAll'
+                    filterListValues.forEach(val => {
+                        getCheckbox(val).checked = false;
+                        activeFilterValues.set(val, false);
+                    });
+                    typeAllCheckbox.checked = true;
+                    activeFilterValues.set('typeAll', true);
+                }
+                else {
+                    typeAllCheckbox.checked = false;
+                    activeFilterValues.set('typeAll', false);
+                };
+    
+                if (activeCount === 0) {
+                    typeAllCheckbox.checked = true;
+                    activeFilterValues.set('typeAll', true);
+                };
+    
+                hideFilterList();
+            }
+            else if (checkboxValue === 'typeAll' && getActiveFilterCount() > 0) {
+                filterListValues.forEach(val => {
+                    getCheckbox(val).checked = false;
+                    activeFilterValues.set(val, false);
+                });
+                typeAllCheckbox.checked = true;
+                activeFilterValues.set('typeAll', true);
+                hideFilterList();
+            };
+        });
+    };
+    
+
+    // sort-by list items
+    const sortByListItems = document.getElementsByClassName('sli');
+    const sortByValues = ['typeDateASC', 'typeDateDES', 'typeABC'];
+    const getSortCheckbox = (value) => document.querySelector(`[value=${value}]`);
+
+    // hide list after click
+    function hideSortList() {
+
+        sortbyParent.style.borderBottomRightRadius = '5px';
+        sortbyParent.style.borderBottomLeftRadius = '5px';
+
+        for (let item of sortByListItems) {
+            item.style.display = 'none';
+        };
+
+        sortbyOpen = false;
+    };
+
+    // assign listener to each list item
+    for (let listItem of sortByListItems) {
+        listItem.addEventListener('click', () => {
+
+            // radio checkbox (only one in list can be active)
+            const checkbox = listItem.querySelector('input');
+            const checkboxValue = checkbox.value;
+
+            // only change if clicked checkbox is false
+            if (!checkbox.checked) {
+
+                // set all to false
+                for (const value of sortByValues) {
+                    const checkbox = getSortCheckbox(value);
+                    checkbox.checked = false;
+                    activeSortByValues.set(value, false);
+                };
+
+                checkbox.checked = true;
+                activeSortByValues.set(checkboxValue, true);
+                hideSortList();
+            };
+        });
+    };
 };

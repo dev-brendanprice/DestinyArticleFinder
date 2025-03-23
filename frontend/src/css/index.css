@@ -14,13 +14,22 @@ body {
     margin-top: 0;
 }
 
-#head {
+#headNavigation {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding-top: 20px;
+    height: 64px;
     padding-left: 20px;
     padding-right: 20px;
+}
+
+#headNavigation > div {
+    flex: 1;
+    align-content: center;
+}
+
+#headNavigation:last-child {
+    display: flex;
+    justify-content: right;
 }
 
 #headNav {
@@ -64,9 +73,7 @@ body {
     display: flex;
     height: 36px;
     max-width: 400px;
-    margin: 0 auto;
-    margin-top: 20px;
-    align-content: center;
+    align-items: center;
     text-align: left;
     justify-content: space-between;
     box-sizing: border-box;
@@ -75,18 +82,19 @@ body {
     border-radius: 5px;
 }
 
-#midSearchBar {
+#searchBar {
     outline: none;
     color: #9b96bb;
     background-color: #211D3D;
     border: none;
     border-radius: 5px;
-    width: 100%;
+    width: 400px;
+    height: 32px;
     box-sizing: border-box;
     padding-left: 10px;
 }
 
-#midSearchBar::placeholder {
+#searchBar::placeholder {
     color: #686484;
 }
 
@@ -108,27 +116,60 @@ input[data-autocompleted] {
     background-color: transparent !important;
 }
 
-#midSearchBarResults {
+#outerSearchContainer {
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+}
+
+#searchResultsContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-self: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+    z-index: 99;
+}
+
+#searchBarResults {
     display: none;
-    max-width: 400px;
     margin: 0 auto;
     user-select: none;
+    width: 100%;
 }
 
 /* every list result */
-#midSearchBarResults > div {
+#searchBarResults > div {
+    width: 100%;
+    box-sizing: border-box;
     text-align: left;
     font-size: 14px;
     padding: 5px;
     border: 1px solid #333b41;
+    background-color: #211D3D;
     border-top: none;
     cursor: pointer;
 }
 
 /* on hover for every list result */
-#midSearchBarResults > div:hover {
+#searchBarResults > div:hover {
     background-color: #322c57;
     color: #bfbfbf;
+}
+
+/* first result in the list */
+#searchBarResults > div:first-child {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-top: 1px solid #333b41;
+}
+
+/* last result in the list */
+#searchBarResults > div:last-child {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 
 .listItemSubtitle {
@@ -136,13 +177,7 @@ input[data-autocompleted] {
     font-weight: normal;
 }
 
-/* last result in the list */
-#midSearchBarResults > div:last-child {
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-}
-
-#noResultsFoundText {
+#noSearchResultsFoundText {
     display: none;
     margin-top: 5px;
     font-size: 12px;
