@@ -5,7 +5,7 @@
     margin-top: 50px;
     align-items: center;
     justify-content: center;
-    width: 85%;
+    width: 86%;
 }
 
 #articleSubContainer {
@@ -263,4 +263,13 @@ figcaption {
     font-style: italic;
     text-align: center;
     margin-top: 0.5rem;
+}
+
+figure {
+    margin: 0;
+    text-align: unset;
+}
+
+figure > div {
+    display: block !important;
 }
