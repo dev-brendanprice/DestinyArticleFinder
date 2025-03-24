@@ -1,0 +1,9 @@
+{
+    "prettier.trailingComma": "none",
+    "prettier.tabWidth": 4,
+    "prettier.singleQuote": true,
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": false,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "files.autoSave": "off"
+}
