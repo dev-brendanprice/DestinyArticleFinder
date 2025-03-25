@@ -5,7 +5,7 @@
     margin-top: 50px;
     align-items: center;
     justify-content: center;
-    width: 86%;
+    width: 85%;
 }
 
 #articleSubContainer {
@@ -19,7 +19,7 @@
     width: 100%;
     position: sticky;
     top: 0px;
-    /* background-color: #100f18; */
+    z-index: 99;
 }
 
 #articleControls {
@@ -65,7 +65,11 @@
 #articleControlsFade {
     height: 25px;
     margin-bottom: -25px;
-    background: linear-gradient(to bottom, rgb(23 23 23) 0%, rgba(255, 0, 0, 0) 100%);
+    background: linear-gradient(
+        to bottom,
+        rgb(23 23 23) 0%,
+        rgba(255, 0, 0, 0) 100%
+    );
 }
 
 #controlSearchBarContainer {
@@ -186,7 +190,8 @@
     object-fit: contain;
     height: 550px;
     border: 0.2px dashed #80808066;
-    background: url('https://placehold.co/500x250/transparent/80808010?text=resource+loading..+or+is+unavailable.') no-repeat center center;
+    background: url('https://placehold.co/500x250/transparent/80808010?text=resource+loading..+or+is+unavailable.')
+        no-repeat center center;
 }
 #articleIframe {
     width: 100%;
@@ -194,21 +199,33 @@
 }
 #articleTagA {
     text-decoration: none;
-    color: rgba(255,206,31,.8);
+    color: rgba(255, 206, 31, 0.8);
 }
 #articleContent > a {
     text-decoration: none;
-    color: rgba(255,206,31,.8);
+    color: rgba(255, 206, 31, 0.8);
 }
 
-h1, h2, h3, h4, h5, h6, li, ul {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+li,
+ul {
     margin: 0;
     padding: 0;
 }
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
     text-transform: uppercase;
 }
-h2, h3, h4 {
+h2,
+h3,
+h4 {
     margin-top: 2rem;
     margin-bottom: 1rem;
     font-weight: 600;
@@ -245,7 +262,7 @@ hr {
     height: 0;
     margin: 1rem 0;
     border: 0;
-    border-bottom: 2px solid hsla(0,0%,96.1%,.1);
+    border-bottom: 2px solid hsla(0, 0%, 96.1%, 0.1);
 }
 
 .highlight {
