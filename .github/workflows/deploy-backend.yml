@@ -18,7 +18,9 @@ jobs:
                 echo "${{ secrets.SSH_USERAPI_PRIVATE_KEY }}" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
             - name: Deploy using SCP
               run: scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -r ./backend/* ${{ secrets.SSH_USERAPI }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USERAPI }}/htdocs/api.destinyarticlefinder.com/
-            - name: Install & Prune dependencies + Remove nodemon
-              run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SSH_USERAPI }}@${{ secrets.SSH_HOST }} "cd /home/${{ secrets.SSH_USERAPI }}/htdocs/api.destinyarticlefinder.com/ && pnpm install && pnpm uninstall nodemon && pnpm prune"
+            - name: Install & Prune dependencies
+              run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SSH_USERAPI }}@${{ secrets.SSH_HOST }} "cd /home/${{ secrets.SSH_USERAPI }}/htdocs/api.destinyarticlefinder.com/ && pnpm install && pnpm prune"
+            - name: Compile TypeScript files
+              run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SSH_USERAPI }}@${{ secrets.SSH_HOST }} "pnpm run compile"
             - name: Restart pm2 process
               run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SSH_USERAPI }}@${{ secrets.SSH_HOST }} "pm2 restart all"
