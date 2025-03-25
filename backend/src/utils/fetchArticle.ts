@@ -1,13 +1,10 @@
 import getCaseVariants from './getCaseVariants';
 
-export default function fetchArticle(
-    connectionPool: any,
-    options: any
-): Promise<object> {
+export default function fetchArticle(connectionPool: any, options: any): Promise<object> {
     const variations = getCaseVariants(<string>options.searchTerm);
     let sqlQuery: String = `
         SELECT * FROM articles
-        WHERE ${variations.map((variation) => `htmlContent LIKE '%${variation}%'`).join(' OR ')}
+        WHERE ${variations.map(variation => `htmlContent LIKE '%${variation}%'`).join(' OR ')}
         LIMIT 0, ${options.limit}
     `;
 

@@ -4,7 +4,7 @@ export default function parseTypes(types: String): Array<string> {
     let returnVal: Array<string> = (<string>types)?.split(',');
 
     // change all items to lowercase
-    returnVal = returnVal.map((item) => {
+    returnVal = returnVal.map(item => {
         return item.toLowerCase();
     });
 

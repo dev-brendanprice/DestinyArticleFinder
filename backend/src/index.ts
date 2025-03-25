@@ -1,5 +1,5 @@
-import express from 'express';
 import cors from 'cors';
+import express from 'express';
 import mysql from 'mysql';
 import fetchArticle from './utils/fetchArticle';
 import parseTypes from './utils/parseTypes';
