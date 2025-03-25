@@ -24,4 +24,4 @@ jobs:
             - name: Compile TypeScript files
               run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SSH_USERAPI }}@${{ secrets.SSH_HOST }} "cd /home/${{ secrets.SSH_USERAPI }}/htdocs/api.destinyarticlefinder.com/ && pnpm run compile"
             - name: Restart pm2 process
-              run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SSH_USERAPI }}@${{ secrets.SSH_HOST }} "pm2 kill && pm2 start dist/index.js"
+              run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SSH_USERAPI }}@${{ secrets.SSH_HOST }} "cd /home/user-api/htdocs/api.destinyarticlefinder.com/ && pm2 kill && pm2 start dist/index.js"
