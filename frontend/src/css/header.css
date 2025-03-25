@@ -74,7 +74,7 @@
     min-width: 100%;
     border-radius: 5px;
     border: 1px solid #333b41;
-    background-color: #211D3D;
+    background-color: #211d3d;
     outline: none;
     caret-color: #8c85b6;
     color: #8c85b6;
@@ -108,7 +108,7 @@
     display: flex;
     /* height: 36px; */
     border: 1px solid #595385;
-    background-color: #211D3D;
+    background-color: #211d3d;
     border-radius: 5px;
 }
 
@@ -128,12 +128,21 @@
     z-index: 99;
 }
 
-#filterFold, #sortbyFold {
+#filterFold {
+    display: flex;
+    width: 100px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    text-overflow: ellipsis;
+}
+
+#sortbyFold {
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
 }
 
-.filterItem, .sortbyItem {
+.filterItem,
+.sortbyItem {
     display: flex;
     border: 1px solid #595385;
     border-top: none;
@@ -144,24 +153,34 @@
     justify-content: space-between;
     font-size: 13px;
     font-weight: normal;
-    background-color:#211D3D;
+    background-color: #211d3d;
     user-select: none;
     transition: background-color 0.2s;
     color: #e6e6e6;
 }
 
-.fli, .sli {
+.filterItem {
+    width: 100px;
+}
+
+.fli,
+.sli {
     display: none;
 }
 
 #filterCheckbox {
-    accent-color: #4EC760;
+    accent-color: #4ec760;
     cursor: pointer;
     pointer-events: none;
 }
 
 .filterCheckboxLabel {
+    width: 100px;
+    font-style: italic;
     pointer-events: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .filterCheckboxLabel > span {
@@ -172,7 +191,7 @@
 }
 
 .filterItem:first-child {
-    color: #A0A0A0;
+    color: #a0a0a0;
     border: 1px solid #595385;
     border-radius: 5px;
     border-bottom-right-radius: 0px;
@@ -201,7 +220,7 @@
 }
 
 .sortbyItem:first-child {
-    color: #A0A0A0;
+    color: #a0a0a0;
     border: 1px solid #595385;
     border-radius: 5px;
     border-bottom-right-radius: 0px;

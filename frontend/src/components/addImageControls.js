@@ -1,10 +1,8 @@
 // also configures events for each control (button)
 export function addImageControls() {
-
     const els = document.getElementsByClassName('articleImageContainer');
 
     for (let imageContainer of els) {
-
         const imageControls = document.createElement('div');
         const imageCtrlLink = document.createElement('div');
         const imageCtrlDownload = document.createElement('a');
@@ -83,7 +81,6 @@ export function addImageControls() {
             window.open(imageURL, '_blank').focus();
         });
 
-
         // moreCopyContainer.append(moreCopyText, moreCopyIco);
         // moreLinkContainer.append(moreLinkText, moreLinkIco);
         // ctrlMoreContainer.append(moreCopyContainer, moreLinkContainer);
@@ -96,5 +93,5 @@ export function addImageControls() {
         imageControls.append(imageCtrlLink, imageCtrlDownload, imageCtrlOpen, imageCtrlMore);
         imageContainer.append(imageControls);
         // imageContainer.append(imageControls, ctrlMoreContainer);
-    };
-};
+    }
+}

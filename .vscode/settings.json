@@ -2,8 +2,24 @@
     "prettier.trailingComma": "none",
     "prettier.tabWidth": 4,
     "prettier.singleQuote": true,
+    "prettier.bracketSpacing": true,
+    "prettier.printWidth": 120,
+    "prettier.arrowParens": "avoid",
+    "prettier.proseWrap": "preserve",
+    "prettier.semi": true,
+    "prettier.endOfLine": "lf",
+    "prettier.useTabs": false,
+    "prettier.insertPragma": false,
+    "prettier.requirePragma": false,
     "editor.formatOnSave": true,
     "editor.formatOnPaste": false,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "files.autoSave": "off"
+    "files.autoSave": "off",
+    "editor.codeActionsOnSave": {
+        "source.fixAll": "always",
+        "source.fixAll.eslint": "always",
+        "source.organizeImports": "always"
+    },
+    "eslint.validate": ["javascript"],
+    "eslint.run": "onSave"
 }

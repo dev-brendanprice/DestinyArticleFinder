@@ -1,13 +1,12 @@
-import { positions, highlightSubstringPositions } from './controlSearch.js';
-import { parseDOM } from './parseDOM.js';
 import { addImageControls } from './addImageControls.js';
+import { highlightSubstringPositions, positions } from './controlSearch.js';
+import { parseDOM } from './parseDOM.js';
 
 export async function renderArticle(article, searchTerm) {
-
     // remove unnecessary text/attributes
     const articleSubTitle = article.dateShortForm + ' - ' + article.author;
     let articleContent = article.htmlContent;
-    
+
     articleContent = parseDOM(articleContent);
     document.getElementById('searchResultsContainer').style.display = 'none';
     document.getElementById('articleMainContainer').style.display = 'flex';
@@ -15,14 +14,15 @@ export async function renderArticle(article, searchTerm) {
     document.getElementById('articleTitle').innerHTML = article.title;
     document.getElementById('articleSubtitle').innerHTML = articleSubTitle;
     document.getElementById('articleContent').innerHTML = articleContent;
-    document.getElementById('articleTitleLink').addEventListener('click', () => window.open(article.url, '_blank').focus());
+    document
+        .getElementById('articleTitleLink')
+        .addEventListener('click', () => window.open(article.url, '_blank').focus());
 
     addImageControls(); // buttons for like "Copy Image", "Download", etc.
 
     // wait for iframes to load
     function iframesLoaded() {
         return new Promise((resolve, reject) => {
-
             // store to-be-loaded iframes
             const articleContainer = document.getElementById('articleContainer');
             const iframes = articleContainer.querySelectorAll('iframe');
@@ -30,24 +30,25 @@ export async function renderArticle(article, searchTerm) {
             if (elements.length === 0) {
                 resolve();
                 return;
-            };
-    
+            }
+
             let loadedCount = 0;
-            elements.forEach((el) => { // wait for each element
-    
+            elements.forEach(el => {
+                // wait for each element
+
                 el.onload = () => {
                     loadedCount++;
                     if (loadedCount === elements.length) {
                         resolve();
-                    };
+                    }
                 };
-    
+
                 el.onerror = () => {
                     reject(new Error('An element failed to load'));
                 };
             });
         });
-    };
+    }
 
     iframesLoaded().then(() => {
         console.log('🍒 (selected) resources loaded!');
@@ -65,12 +66,11 @@ export async function renderArticle(article, searchTerm) {
         if (positions.length === 0) {
             document.getElementById('controlSearchCountInner').style.display = 'none';
             document.getElementById('controlSearchCountDefault').style.display = 'flex';
-        }
-        else {
+        } else {
             document.getElementById('controlSearchCountPrefix').innerHTML = 1;
             document.getElementById('controlSearchCountSuffix').innerHTML = positions.length;
             document.getElementById('controlSearchCountInner').style.display = 'flex';
             document.getElementById('controlSearchCountDefault').style.display = 'none';
-        };
+        }
     });
-};
+}

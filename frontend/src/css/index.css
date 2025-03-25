@@ -48,11 +48,9 @@ body {
 }
 
 /* Remove text decoration when visit history */
-.navButtonControl:visited { color: #8c85b6; }
-
-
-
-
+.navButtonControl:visited {
+    color: #8c85b6;
+}
 
 #midContainer {
     display: flex;
@@ -77,7 +75,7 @@ body {
     text-align: left;
     justify-content: space-between;
     box-sizing: border-box;
-    background-color: #211D3D;
+    background-color: #211d3d;
     border: 1px solid #595385;
     border-radius: 5px;
 }
@@ -85,7 +83,7 @@ body {
 #searchBar {
     outline: none;
     color: #9b96bb;
-    background-color: #211D3D;
+    background-color: #211d3d;
     border: none;
     border-radius: 5px;
     width: 400px;
@@ -97,11 +95,6 @@ body {
 #searchBar::placeholder {
     color: #686484;
 }
-
-
-
-
-
 
 .activeSearchBar {
     border-bottom-left-radius: 0px;
@@ -148,7 +141,7 @@ input[data-autocompleted] {
     font-size: 14px;
     padding: 5px;
     border: 1px solid #333b41;
-    background-color: #211D3D;
+    background-color: #211d3d;
     border-top: none;
     cursor: pointer;
 }
