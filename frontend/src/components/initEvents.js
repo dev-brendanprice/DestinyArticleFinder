@@ -15,19 +15,20 @@ export default async function intializeEvents() {
     let positionIndex = 0; // index for reader controls
 
     // Wrap check and fetch logic in nested function
-    async function doFetch(element, type, callback) {
-        const isValid = isEntryValid(element);
-        const searchTerm = `${element.value}`;
+    async function doFetch(callback, isResend = false) {
+        const searchBar = document.getElementById('searchBar');
+        const isValid = isEntryValid(searchBar, isResend);
+        const searchTerm = `${searchBar.value}`;
 
         // Check if input is valid
         if (isValid) {
             const articles = await fetchResult(searchTerm);
             document.getElementById('searchResultsContainer').style.display = 'flex';
             document.getElementById('searchResultsCount').style.display = 'flex';
-            parseResults(articles, `${type}`);
+            parseResults(articles, 'searchBar');
             positionIndex = 0; // reset index
         } else if (searchTerm.length === 0) {
-            clearResults(`${type}`);
+            clearResults('searchBar');
             callback();
         }
     }
@@ -37,15 +38,10 @@ export default async function intializeEvents() {
         window.open('https://www.bungie.net/7/en/News', '_blank').focus();
     });
 
-    // Event for search bar located in the header, which is seen after the intial search query
-    // headSearchBar.addEventListener('keyup', async () => {
-    //     await doFetch(headSearchBar, 'headSearchBar');
-    // });
-
     // Event for search bar the user initially sees
     searchBarElement.addEventListener('keyup', async () => {
         document.getElementsByClassName(`spinner`)[0].style.opacity = '0.5';
-        await doFetch(searchBarElement, 'searchBar', () => {
+        await doFetch(() => {
             document.getElementById('searchResultsCount').style.display = 'none';
         });
         document.getElementsByClassName(`spinner`)[0].style.opacity = '0';
@@ -286,7 +282,7 @@ export default async function intializeEvents() {
 
     // event listener for each list item
     for (const listItem of filterListItems) {
-        listItem.addEventListener('click', () => {
+        listItem.addEventListener('click', async () => {
             const checkbox = listItem.querySelector('input');
             const checkboxValue = checkbox.value;
 
@@ -340,6 +336,13 @@ export default async function intializeEvents() {
 
             if (filtersString.length === 0) filtersString = 'All (default)';
             document.getElementById('filterParentLabel').innerHTML = filtersString;
+
+            // .. search for article again (?)
+            document.getElementsByClassName(`spinner`)[0].style.opacity = '0.5';
+            await doFetch(() => {
+                document.getElementById('searchResultsCount').style.display = 'none';
+            }, true);
+            document.getElementsByClassName(`spinner`)[0].style.opacity = '0';
         });
     }
 
