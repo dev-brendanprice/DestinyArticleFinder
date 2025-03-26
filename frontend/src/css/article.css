@@ -19,7 +19,7 @@
     width: 100%;
     position: sticky;
     top: 0px;
-    z-index: 99;
+    z-index: 2;
 }
 
 #articleControls {
@@ -65,11 +65,7 @@
 #articleControlsFade {
     height: 25px;
     margin-bottom: -25px;
-    background: linear-gradient(
-        to bottom,
-        rgb(23 23 23) 0%,
-        rgba(255, 0, 0, 0) 100%
-    );
+    background: linear-gradient(to bottom, rgb(23 23 23) 0%, rgba(255, 0, 0, 0) 100%);
 }
 
 #controlSearchBarContainer {

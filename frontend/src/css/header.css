@@ -134,11 +134,17 @@
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
     text-overflow: ellipsis;
+    color: #a0a0a0;
+    border: 1px solid #595385;
+    border-radius: 5px;
 }
 
 #sortbyFold {
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
+    color: #a0a0a0;
+    border: 1px solid #595385;
+    border-radius: 5px;
 }
 
 .filterItem,
@@ -190,13 +196,13 @@
     pointer-events: none;
 }
 
-.filterItem:first-child {
+/* .filterItem:first-child {
     color: #a0a0a0;
     border: 1px solid #595385;
     border-radius: 5px;
     border-bottom-right-radius: 0px;
     border-bottom-left-radius: 0px;
-}
+} */
 
 .filterItem:last-child {
     border-radius: 5px;
@@ -219,13 +225,13 @@
     width: 12px;
 }
 
-.sortbyItem:first-child {
+/* .sortbyItem:first-child {
     color: #a0a0a0;
     border: 1px solid #595385;
     border-radius: 5px;
     border-bottom-right-radius: 0px;
     border-bottom-left-radius: 0px;
-}
+} */
 
 .sortbyItem:last-child {
     border-radius: 5px;
