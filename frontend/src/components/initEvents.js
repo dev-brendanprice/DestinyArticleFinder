@@ -337,7 +337,7 @@ export default async function intializeEvents() {
             if (filtersString.length === 0) filtersString = 'All (default)';
             document.getElementById('filterParentLabel').innerHTML = filtersString;
 
-            // .. search for article again (?)
+            // search for articles again
             document.getElementsByClassName(`spinner`)[0].style.opacity = '0.5';
             await doFetch(() => {
                 document.getElementById('searchResultsCount').style.display = 'none';
