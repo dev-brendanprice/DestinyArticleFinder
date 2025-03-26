@@ -365,7 +365,7 @@ export default async function intializeEvents() {
 
     // assign listener to each list item
     for (let listItem of sortByListItems) {
-        listItem.addEventListener('click', () => {
+        listItem.addEventListener('click', async () => {
             // radio checkbox (only one in list can be active)
             const checkbox = listItem.querySelector('input');
             const checkboxValue = checkbox.value;
@@ -390,6 +390,13 @@ export default async function intializeEvents() {
                 .map(([key]) => (key = key.replace(/^type/, '')));
 
             document.getElementById('sortbyParentLabel').innerHTML = sortbyString[0];
+
+            // search for articles again
+            document.getElementsByClassName(`spinner`)[0].style.opacity = '0.5';
+            await doFetch(() => {
+                document.getElementById('searchResultsCount').style.display = 'none';
+            }, true);
+            document.getElementsByClassName(`spinner`)[0].style.opacity = '0';
         });
     }
 }
