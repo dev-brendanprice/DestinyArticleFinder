@@ -265,7 +265,7 @@ export default async function intializeEvents() {
 
     // filter list items
     const filterListItems = document.getElementsByClassName('fli');
-    const filterListValues = ['typeNews', 'typeUpdate', 'typeHotfix'];
+    const filterListValues = ['typeTwab', 'typeNews', 'typeUpdate', 'typeHotfix'];
     const typeAllCheckbox = document.querySelector('[value=typeAll]');
     const getCheckbox = value => document.querySelector(`[value=${value}]`);
 

@@ -26,6 +26,7 @@ export default function initSettings() {
     }
 
     // filter DOM
+    parent.querySelectorAll('[value=typeTwab]')[0].checked = filterValues.typeTwab;
     parent.querySelectorAll('[value=typeNews]')[0].checked = filterValues.typeNews;
     parent.querySelectorAll('[value=typeUpdate]')[0].checked = filterValues.typeUpdate;
     parent.querySelectorAll('[value=typeHotfix]')[0].checked = filterValues.typeHotfix;
