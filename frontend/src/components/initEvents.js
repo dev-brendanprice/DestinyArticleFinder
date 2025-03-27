@@ -85,7 +85,6 @@ export default async function intializeEvents() {
 
     // Nested function and index variable for reader controls
     function toggleActiveHighlight() {
-
         // Toggle active highlighted-text
 
         // remove class from everything but matching index
@@ -99,7 +98,6 @@ export default async function intializeEvents() {
     // scroll to y pos on window
     function scrollToY(pos) {
         try {
-
             // Scroll to index of matching substring
             toggleActiveHighlight();
             window.scroll(0, pos.y);
@@ -122,11 +120,9 @@ export default async function intializeEvents() {
 
         // check entry validity
         if (!isEntryValid(searchBar)) {
-
             // string has changed
 
             if (searchQuery.length === 0) {
-
                 // string is not empty
                 clearPositions();
                 cleanseHighlightedSpans(articleElement);
@@ -221,13 +217,11 @@ export default async function intializeEvents() {
 
         // parent style
         if (filtersOpen) {
-
             // console.log('close');
             filterParent.style.borderBottomRightRadius = '5px';
             filterParent.style.borderBottomLeftRadius = '5px';
             filtersOpen = false;
         } else if (!filtersOpen) {
-
             // console.log('open');
             filterParent.style.borderBottomRightRadius = '0px';
             filterParent.style.borderBottomLeftRadius = '0px';
@@ -300,7 +294,6 @@ export default async function intializeEvents() {
                 const activeCount = getActiveFilterCount();
 
                 if (activeCount === filterListValues.length) {
-
                     // Reset individual filters and enable 'typeAll'
                     filterListValues.forEach(val => {
                         getCheckbox(val).checked = false;
@@ -335,13 +328,19 @@ export default async function intializeEvents() {
                 .filter(([key, value]) => value && key !== 'typeAll' && key !== 'set')
                 .map(([key]) => {
                     key = key.replace(/^type/, '');
-                    if (key === 'Hotfix') {key += 'es';}
-                    if (key === 'Update') {key += 's';}
+                    if (key === 'Hotfix') {
+                        key += 'es';
+                    }
+                    if (key === 'Update') {
+                        key += 's';
+                    }
                     return key;
                 })
                 .join(',');
 
-            if (filtersString.length === 0) {filtersString = 'All (default)';}
+            if (filtersString.length === 0) {
+                filtersString = 'All (default)';
+            }
             document.getElementById('filterParentLabel').innerHTML = filtersString;
 
             // search for articles again
@@ -373,14 +372,12 @@ export default async function intializeEvents() {
     // assign listener to each list item
     for (let listItem of sortByListItems) {
         listItem.addEventListener('click', async () => {
-
             // radio checkbox (only one in list can be active)
             const checkbox = listItem.querySelector('input');
             const checkboxValue = checkbox.value;
 
             // only change if clicked checkbox is false
             if (!checkbox.checked) {
-
                 // set all to false
                 for (const value of sortByValues) {
                     const checkbox = getSortCheckbox(value);

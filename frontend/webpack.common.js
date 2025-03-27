@@ -1,6 +1,5 @@
-import path from 'path';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-
+import path from 'path';
 
 const __dirname = path.resolve();
 const config = {

@@ -10,7 +10,6 @@ export function parseDOM(htmlContent) {
         }
 
         if (item.tagName === 'DIV') {
-
             // remove (potentially) conflicting classes
 
             item.classList.remove('content');

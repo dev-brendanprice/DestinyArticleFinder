@@ -1,10 +1,9 @@
-import { merge } from 'webpack-merge';
-import common from './webpack.common.js';
-import path from 'path';
+import ESLintWebpackPlugin from 'eslint-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import ESLintWebpackPlugin from 'eslint-webpack-plugin';
-
+import path from 'path';
+import { merge } from 'webpack-merge';
+import common from './webpack.common.js';
 
 const __dirname = path.resolve();
 const config = merge(common, {
