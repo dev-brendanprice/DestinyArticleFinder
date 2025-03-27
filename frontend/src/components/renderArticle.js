@@ -3,6 +3,7 @@ import { highlightSubstringPositions, positions } from './controlSearch.js';
 import { parseDOM } from './parseDOM.js';
 
 export async function renderArticle(article, searchTerm) {
+
     // remove unnecessary text/attributes
     const articleSubTitle = article.dateShortForm + ' - ' + article.author;
     let articleContent = article.htmlContent;
@@ -23,6 +24,7 @@ export async function renderArticle(article, searchTerm) {
     // wait for iframes to load
     function iframesLoaded() {
         return new Promise((resolve, reject) => {
+
             // store to-be-loaded iframes
             const articleContainer = document.getElementById('articleContainer');
             const iframes = articleContainer.querySelectorAll('iframe');
@@ -34,6 +36,7 @@ export async function renderArticle(article, searchTerm) {
 
             let loadedCount = 0;
             elements.forEach(el => {
+
                 // wait for each element
 
                 el.onload = () => {

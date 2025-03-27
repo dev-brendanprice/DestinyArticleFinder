@@ -10,6 +10,7 @@ export function parseDOM(htmlContent) {
         }
 
         if (item.tagName === 'DIV') {
+
             // remove (potentially) conflicting classes
 
             item.classList.remove('content');
@@ -22,6 +23,7 @@ export function parseDOM(htmlContent) {
         if (item.tagName === 'IMG') {
             item.id = 'articleImage';
             item.removeAttribute('style');
+
             // item.removeAttribute('loading'); // (toggleable lazy-loading!)
 
             // wrap image in a container

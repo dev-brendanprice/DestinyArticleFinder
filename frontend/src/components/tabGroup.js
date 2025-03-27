@@ -84,7 +84,7 @@ function removeTabFromGroup(e) {
     tabGroup.currentTabIndex = tabIndex;
     tabGroup.removeTab(tabIndex); // remove tab from array
     tabContainer.remove(); // remove tab from DOM
-    if (tabGroup.tabArticles.length === 0) location.reload(); // if no tabs left
+    if (tabGroup.tabArticles.length === 0) {location.reload();} // if no tabs left
 
     // assign activeTab class to now-open tab
     for (let child of tabGroupContainer.children) {

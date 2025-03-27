@@ -1,5 +1,6 @@
 // Remove wrapping span elements that have the highlight class
 export function cleanseHighlightedSpans(el) {
+
     // Remove all span.highlight elements -> replace with their textContent
     let highlightedSpans = el.querySelectorAll('span.highlight');
     for (let span of highlightedSpans) {
@@ -22,12 +23,14 @@ export function cleanseHighlightedSpans(el) {
 // highlight matching substrings and store their Y positions
 export let positions = [];
 export function clearPositions() {
+
     // setter for positions array
     positions = [];
 }
 
 let isCaseSensitive = false;
 export function toggleCaseSensitive() {
+
     // setter for case sensitivity bool
     isCaseSensitive = !isCaseSensitive;
 }
@@ -52,10 +55,12 @@ export async function highlightSubstringPositions(el, query) {
 
         // if array is longer than 1 item -> it contains the query
         if (split.length > 1) {
+
             // loop over fragments in split array -> reconstruct text node
             let parent = node.parentNode;
             for (let fragment of split) {
                 if (regex.test(fragment)) {
+
                     // wrap matching text in highlight span
                     const span = document.createElement('span');
                     span.className = 'highlight';
@@ -70,6 +75,7 @@ export async function highlightSubstringPositions(el, query) {
 
                     positions.push(anbar);
                 } else {
+
                     // create text node for non-matching text
                     const textNode = document.createTextNode(fragment);
                     parent.insertBefore(textNode, node);

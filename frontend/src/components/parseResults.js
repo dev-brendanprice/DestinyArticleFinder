@@ -49,6 +49,7 @@ export function parseResults(data, searchBarNamePrefix) {
     resultsCount.innerHTML = `${articles.length} results`;
 
     if (data.data.length === 0) {
+
         // if no data is returned
         document.getElementById('noSearchResultsFoundText').style.display = 'block';
         resultsCount.style.display = 'none';

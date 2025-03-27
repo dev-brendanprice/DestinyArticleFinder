@@ -2,6 +2,7 @@ import { activeFilterValues, activeSortByValues } from './config/variables.js';
 
 // set all DOM elements to saved content in localStorage
 export default function initSettings() {
+
     // set default filter/sort-by values
     const storedFilters = window.localStorage.getItem('activeFilterValues');
     const storedSortBys = window.localStorage.getItem('activeSortByValues');
@@ -43,13 +44,13 @@ export default function initSettings() {
         .filter(([key, value]) => value && key !== 'typeAll' && key !== 'set')
         .map(([key]) => {
             key = key.replace(/^type/, '');
-            if (key === 'Hotfix') key += 'es';
-            if (key === 'Update') key += 's';
+            if (key === 'Hotfix') {key += 'es';}
+            if (key === 'Update') {key += 's';}
             return key;
         })
         .join(',');
 
-    if (filtersString.length === 0) filtersString = 'All (default)';
+    if (filtersString.length === 0) {filtersString = 'All (default)';}
     document.getElementById('filterParentLabel').innerHTML = filtersString;
 
     // transform active sortby into a string

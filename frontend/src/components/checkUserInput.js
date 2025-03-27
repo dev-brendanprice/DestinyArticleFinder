@@ -5,7 +5,7 @@ export function isEntryValid(searchBar, isResend) {
     let isValid = searchTerm.length !== 0 && globalSearchTerm !== searchTerm; // value is not empty and has changed
 
     if (isResend) {
-        if (searchTerm.length !== 0) isValid = true;
+        if (searchTerm.length !== 0) {isValid = true;}
     }
 
     globalSearchTerm = searchTerm; // store search term for next check

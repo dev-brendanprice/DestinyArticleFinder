@@ -11,21 +11,25 @@ export function addImageControls() {
         const icoMagnify = document.createElement('img');
         const icoDownload = document.createElement('img');
         const icoOpen = document.createElement('img');
+
         // const icoMore = document.createElement('img');
 
         imageControls.className = 'imageControls';
         imageCtrlLink.className = 'imageCtrl';
         imageCtrlDownload.className = 'imageCtrl';
         imageCtrlOpen.className = 'imageCtrl';
+
         // imageCtrlMore.className = 'imageCtrl';
         icoMagnify.className = 'imageCtrlInner';
         icoDownload.className = 'imageCtrlInner';
         icoOpen.className = 'imageCtrlInner';
+
         // icoMore.className = 'imageCtrlInner';
 
         icoMagnify.src = './assets/link.svg';
         icoDownload.src = './assets/download.svg';
         icoOpen.src = './assets/open.svg';
+
         // icoMore.src = './assets/more.svg';
 
         // for "More" context menu
@@ -89,9 +93,11 @@ export function addImageControls() {
         imageCtrlLink.appendChild(icoMagnify);
         imageCtrlDownload.appendChild(icoDownload);
         imageCtrlOpen.appendChild(icoOpen);
+
         // imageCtrlMore.appendChild(icoMore);
         imageControls.append(imageCtrlLink, imageCtrlDownload, imageCtrlOpen, imageCtrlMore);
         imageContainer.append(imageControls);
+
         // imageContainer.append(imageControls, ctrlMoreContainer);
     }
 }
