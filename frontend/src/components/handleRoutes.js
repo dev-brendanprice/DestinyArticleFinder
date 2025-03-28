@@ -14,7 +14,7 @@ export async function handleRoutes() {
         const articles = response.data;
         const term = urlParams.get('s').split(',');
 
-        console.log(urlParams.get('a').split(','), urlParams.get('s').split(','));
+        console.log(urlParams.get('a').split(','), urlParams.get('s').split(','), articles);
 
         // load articles
         document.getElementsByTagName('body')[0].style.backgroundImage = 'unset'; // remove background (png)
@@ -27,6 +27,28 @@ export async function handleRoutes() {
         // update URL without reloading URL
         window.history.pushState(null, '', window.location.origin);
     }
+}
+
+// remove article and search from route
+export function removeArticleFromRoute(articleName, search) {
+    console.log(articleName, search);
+    // get params
+    const params = new URLSearchParams(window.location.search);
+
+    let searchParams = params.get('s').split(',');
+    searchParams.splice(searchParams.indexOf(search), 1);
+
+    let nameParams = params.get('a').split(',');
+    nameParams.splice(nameParams.indexOf(articleName), 1);
+
+    // set remaining params
+    params.set('a', nameParams.join(','));
+    params.set('s', searchParams.join(','));
+
+    let newPath = window.location.origin + '/article';
+    newPath += '?' + params.toString();
+
+    window.history.pushState(null, '', newPath);
 }
 
 export function mapArticleToRoute(articleName, searchTerm) {

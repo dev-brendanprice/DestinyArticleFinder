@@ -1,3 +1,4 @@
+import { removeArticleFromRoute } from './handleRoutes.js';
 import { resetPositionIndex } from './initEvents.js';
 import { renderArticle } from './renderArticle.js';
 
@@ -40,14 +41,19 @@ export function addTabToGroup(article, searchTerm) {
     }
 
     tabGroup.currentTabIndex = tabCount - 1; // set to new tab's index
-    console.log(tabGroup);
-
+    console.log(tabGroup.tabArticles.length);
     // tab click
     newTabElement.addEventListener('click', e => {
+        // idk how but this stops the active being rendered again
+        console.log(tabGroup.tabArticles.length);
+        if (tabGroup.tabArticles.length === 1) {
+            return;
+        }
+
         const tabContainer = e.target;
         const tabGroupContainer = tabContainer.parentElement;
         const selectedTabIndex = parseInt(tabContainer.getAttribute('data-tabIndex')) - 1;
-        resetPositionIndex(); // reset the positionIndex for reader controls string matching
+        resetPositionIndex(); // reset the positionIndex for reader controls' string matching
 
         // remove activeTab class from all tabs
         for (let child of tabGroupContainer.children) {
@@ -59,11 +65,8 @@ export function addTabToGroup(article, searchTerm) {
         searchTerm = tabGroup.tabArticles[selectedTabIndex].search;
 
         // when different tab is clicked
-        if (parseInt(selectedTabIndex) !== parseInt(tabGroup.currentTabIndex)) {
-            const prevTabIndex = tabGroup.currentTabIndex; // store previous tab's index
-            const prevTabString = document.getElementById('controlSearchBar').value; // store previous tab's search query
-            tabGroup.tabArticles[prevTabIndex].search = prevTabString; // store previous tab's search query
-
+        if (selectedTabIndex !== tabGroup.currentTabIndex) {
+            console.log(tabGroup);
             // render selected tab
             tabGroup.currentTabIndex = selectedTabIndex;
             renderArticle(article, searchTerm);
@@ -84,12 +87,17 @@ function removeTabFromGroup(e) {
     const tabGroupContainer = tabContainer.parentElement;
     const tabIndex = parseInt(tabContainer.getAttribute('data-tabIndex')) - 1;
 
+    const tabThatsBeingRemoved = tabGroup.tabArticles[tabIndex];
+    removeArticleFromRoute(tabThatsBeingRemoved.article.hostedUrl, tabThatsBeingRemoved.search);
+
     tabGroup.currentTabIndex = tabIndex;
     tabGroup.removeTab(tabIndex); // remove tab from array
     tabContainer.remove(); // remove tab from DOM
+
+    // if closed tab was the last tab
     if (tabGroup.tabArticles.length === 0) {
-        location.reload();
-    } // if no tabs left
+        window.location.href = window.location.origin;
+    }
 
     // assign activeTab class to now-open tab
     for (let child of tabGroupContainer.children) {
@@ -103,5 +111,6 @@ function removeTabFromGroup(e) {
         child.setAttribute('data-tabIndex', i + 1);
     }
 
-    renderArticle(tabGroup.tabArticles[0].article);
+    const nowActiveTab = tabGroup.tabArticles[0];
+    renderArticle(nowActiveTab.article, nowActiveTab.search);
 }

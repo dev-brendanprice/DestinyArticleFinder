@@ -3,7 +3,7 @@ import getCaseVariants from './getCaseVariants';
 export function fetchArticleByName(connectionPool: any, articles: Array<string>): Promise<object> {
     const sqlQuery = `
         SELECT * FROM articles
-        WHERE ${articles.map(v => `lower(hostedUrl) LIKE lower('%${v}%')`).join(' OR ')}
+        WHERE ${articles.map(v => `lower(hostedUrl)=lower('${v}')`).join(' OR ')}
     `;
 
     return new Promise((resolve, reject) => {

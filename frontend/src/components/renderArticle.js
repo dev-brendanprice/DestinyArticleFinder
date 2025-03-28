@@ -20,6 +20,10 @@ export async function renderArticle(article, searchTerm) {
 
     addImageControls(); // buttons for like "Copy Image", "Download", etc.
 
+    // highlight substrings, then show find function results
+    highlightSubstringPositions(document.getElementById('articleContent'), searchTerm);
+    document.getElementById('controlSearchBar').value = `${searchTerm}`;
+
     // wait for iframes to load
     function iframesLoaded() {
         return new Promise((resolve, reject) => {
@@ -52,10 +56,6 @@ export async function renderArticle(article, searchTerm) {
 
     iframesLoaded().then(() => {
         console.log('🍒 (selected) resources loaded!');
-
-        // highlight substrings, then show find function results
-        highlightSubstringPositions(document.getElementById('articleContent'), searchTerm);
-        document.getElementById('controlSearchBar').value = `${searchTerm}`;
 
         // remove blur & load notice
         document.getElementById('articleControls').style.filter = 'none';

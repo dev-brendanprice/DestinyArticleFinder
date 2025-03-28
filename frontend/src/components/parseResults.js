@@ -35,14 +35,11 @@ export function parseResults(data, searchBarNamePrefix) {
         listItemSubtitle.className = 'listItemSubtitle';
         listItemContainer.setAttribute('data-index', i);
 
-        // remove "/" from hostedUrl (i have no idea why its there, but it is)
-        const hostedUrl = article.hostedUrl.replace('/', '');
-
         listItemContainer.addEventListener('click', async () => {
             document.getElementsByTagName('body')[0].style.backgroundImage = 'unset'; // remove background (png)
             addTabToGroup(article, searchTerm); // make new tab
             renderArticle(article, searchTerm); // render article
-            mapArticleToRoute(hostedUrl, searchTerm);
+            mapArticleToRoute(article.hostedUrl, searchTerm);
         });
 
         listItemContainer.append(listItemTitle, listItemSubtitle);
