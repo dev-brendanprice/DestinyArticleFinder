@@ -1,7 +1,24 @@
 import { activeFilterValues, variables } from './config/variables.js';
 
+// fetch articles by name (hostedUrl) from server
+export async function fetchArticlesByName(articleNames) {
+    let url = `${variables.HOST}/api/v1/articlesByName?a=${articleNames}`;
+
+    const articles = await fetch(url)
+        .then(res => res.json())
+        .then(data => {
+            return data;
+        })
+        .catch(err => {
+            console.error(err);
+            return [];
+        });
+
+    return articles;
+}
+
 // Tell server to return matching articles, using specified search term
-export default async function fetchResult(searchTerm) {
+export async function fetchArticles(searchTerm) {
     let url = `${variables.HOST}/api/v1/articles?search=${encodeURIComponent(searchTerm)}`;
 
     if (!activeFilterValues.typeAll) {

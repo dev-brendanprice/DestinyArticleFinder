@@ -1,15 +1,17 @@
-import { merge } from 'webpack-merge';
-import common from './webpack.common.js';
-import path from 'path';
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
-import TerserPlugin from 'terser-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-
+import path from 'path';
+import TerserPlugin from 'terser-webpack-plugin';
+import { merge } from 'webpack-merge';
+import common from './webpack.common.js';
 
 const __dirname = path.resolve();
 const config = merge(common, {
     mode: 'production',
+    output: {
+        publicPath: '/' // SPA routes
+    },
     optimization: {
         minimize: true,
         minimizer: [

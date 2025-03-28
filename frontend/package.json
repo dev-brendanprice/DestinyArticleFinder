@@ -4,7 +4,7 @@
     "description": "This directory contains the front-end code for Destiny Article Finder.",
     "main": "webpack.config.js",
     "scripts": {
-        "dev": "webpack serve --open --config webpack.dev.js",
+        "dev": "webpack serve --config webpack.dev.js",
         "build": "webpack --config webpack.prod.js"
     },
     "author": "Brendan Price",

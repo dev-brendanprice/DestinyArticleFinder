@@ -1,3 +1,4 @@
+import { resetPositionIndex } from './initEvents.js';
 import { renderArticle } from './renderArticle.js';
 
 // tabGroup object with getter/setter functions
@@ -15,6 +16,7 @@ const tabGroup = {
 
 export function addTabToGroup(article, searchTerm) {
     tabGroup.addTab(article, searchTerm); // Add tab to array
+
     const tabCount = Object.keys(tabGroup.tabArticles).length;
     const newTabElement = document.createElement('div');
     const newTabTitle = document.createElement('div');
@@ -26,7 +28,7 @@ export function addTabToGroup(article, searchTerm) {
     newTabTitle.id = 'tabTitle';
     newTabCloseButton.id = 'btnCloseTab';
 
-    newTabTitle.innerHTML = `${article.type.toUpperCase()}, "${searchTerm}"`;
+    newTabTitle.innerHTML = `${article.type}, "${searchTerm}"`;
     newTabCloseButton.src = './assets/close.svg';
 
     newTabElement.append(newTabCloseButton, newTabTitle);
@@ -45,6 +47,7 @@ export function addTabToGroup(article, searchTerm) {
         const tabContainer = e.target;
         const tabGroupContainer = tabContainer.parentElement;
         const selectedTabIndex = parseInt(tabContainer.getAttribute('data-tabIndex')) - 1;
+        resetPositionIndex(); // reset the positionIndex for reader controls string matching
 
         // remove activeTab class from all tabs
         for (let child of tabGroupContainer.children) {

@@ -13,7 +13,8 @@ const config = merge(common, {
         static: false,
         port: 3300,
         hot: true,
-        liveReload: true
+        liveReload: true,
+        historyApiFallback: true
     },
     plugins: [
         new HtmlWebpackPlugin({

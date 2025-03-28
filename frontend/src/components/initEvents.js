@@ -7,12 +7,16 @@ import {
     positions,
     toggleCaseSensitive
 } from './controlSearch.js';
-import fetchResult from './fetchResult.js';
+import { fetchArticles } from './fetchArticles.js';
 import { clearResults, parseResults } from './parseResults.js';
+
+let positionIndex = 0; // index for reader controls
+export function resetPositionIndex() {
+    positionIndex = 0; // bruh
+}
 
 export default async function intializeEvents() {
     const searchBarElement = document.getElementById('searchBar');
-    let positionIndex = 0; // index for reader controls
 
     // Wrap check and fetch logic in nested function
     async function doFetch(callback, isResend = false) {
@@ -22,11 +26,11 @@ export default async function intializeEvents() {
 
         // Check if input is valid
         if (isValid) {
-            const articles = await fetchResult(searchTerm);
+            const articles = await fetchArticles(searchTerm);
             document.getElementById('searchResultsContainer').style.display = 'flex';
             document.getElementById('searchResultsCount').style.display = 'flex';
             parseResults(articles, 'searchBar');
-            positionIndex = 0; // reset index
+            resetPositionIndex();
         } else if (searchTerm.length === 0) {
             clearResults('searchBar');
             callback();

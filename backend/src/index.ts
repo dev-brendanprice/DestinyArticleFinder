@@ -1,7 +1,7 @@
 import cors from 'cors';
 import express from 'express';
 import mysql from 'mysql';
-import fetchArticle from './utils/fetchArticle';
+import { fetchArticle, fetchArticleByName } from './utils/fetchArticle';
 import parseTypes from './utils/parseTypes';
 import { variables } from './utils/variables';
 
@@ -29,6 +29,27 @@ app.use(
     })
 );
 
+// get articles by name (hostedUrl)
+app.get('/api/v1/articlesByName', async (req, res) => {
+    const articleNames: Array<string> = (<string>req.query.a)?.split(',');
+
+    if (!articleNames || (articleNames.length === 1 && articleNames[0] === '')) {
+        res.json({ error: 'Please provide article names!' });
+        return;
+    }
+
+    await fetchArticleByName(connectionPool, articleNames)
+        .then((articles: Array<any>) => {
+            let response: APIResponse = {
+                data: articles,
+                items: articles.length,
+                search: <string>req.query.articles // doesnt return ??
+            };
+            res.json(response);
+        })
+        .catch(console.error);
+});
+
 // query articles database
 app.get('/api/v1/articles', async (req, res) => {
     const types: Array<string> = parseTypes(<string>req.query.types); // parse param "types"
@@ -39,7 +60,7 @@ app.get('/api/v1/articles', async (req, res) => {
     };
 
     if (!options.searchTerm) {
-        res.end('Please provide a search query param');
+        res.json({ error: 'Please provide a search query param' });
         return;
     }
 
