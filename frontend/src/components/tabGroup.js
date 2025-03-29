@@ -41,11 +41,11 @@ export function addTabToGroup(article, searchTerm) {
     }
 
     tabGroup.currentTabIndex = tabCount - 1; // set to new tab's index
-    console.log(tabGroup.tabArticles.length);
+
     // tab click
     newTabElement.addEventListener('click', e => {
         // idk how but this stops the active being rendered again
-        console.log(tabGroup.tabArticles.length);
+
         if (tabGroup.tabArticles.length === 1) {
             return;
         }

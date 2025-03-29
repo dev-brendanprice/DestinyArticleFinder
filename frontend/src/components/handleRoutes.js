@@ -6,22 +6,24 @@ export async function handleRoutes() {
     // get URL
     const path = window.location.pathname;
     const urlParams = new URLSearchParams(window.location.search);
-    const articleNames = urlParams.get('a');
+    let articleNames = urlParams.get('a');
 
     // if path is article and query params exist
     if (path === '/article' && articleNames) {
-        const response = await fetchArticlesByName(articleNames);
-        const articles = response.data;
-        const term = urlParams.get('s').split(',');
-
-        console.log(urlParams.get('a').split(','), urlParams.get('s').split(','), articles);
+        const articles = await fetchArticlesByName(articleNames);
+        const searchQueries = urlParams.get('s').split(',');
 
         // load articles
         document.getElementsByTagName('body')[0].style.backgroundImage = 'unset'; // remove background (png)
-        for (let i = 0; i < articles.length; i++) {
-            let article = articles[i];
-            addTabToGroup(article, term[i]);
-            renderArticle(article, term[i]);
+        articleNames = articleNames.split(',');
+
+        // uses indexes of search and article name queries to find matching article for each
+        for (let query of articleNames) {
+            const matchedArticle = articles.data.filter(v => v.hostedUrl === query);
+            const indexOfArticleName = articleNames.indexOf(query);
+            const matchedSearchQuery = searchQueries[indexOfArticleName];
+            addTabToGroup(matchedArticle[0], matchedSearchQuery);
+            renderArticle(matchedArticle[0], matchedSearchQuery);
         }
     } else {
         // update URL without reloading URL
