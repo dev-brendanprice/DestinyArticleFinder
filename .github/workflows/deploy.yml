@@ -1,4 +1,4 @@
-name: Deploy and bump version
+name: Deploy++, Version++
 
 on:
     push:
