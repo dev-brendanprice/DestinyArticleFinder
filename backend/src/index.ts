@@ -19,15 +19,11 @@ interface APIResponse {
 
 // globals
 const expressPort = process.env.PORT || 3000;
-const connectionPool = mysql.createPool(variables.dbConf);
+const connectionPool = mysql.createPool(variables.dbConfig);
 
 // config express and middleware
 const app = express();
-app.use(
-    cors({
-        origin: `${variables.origin}` // allow from dev/prod frontend
-    })
-);
+app.use(cors({ origin: variables.origins })); // allow from dev/prod frontend
 
 // get articles by name (hostedUrl)
 app.get('/api/v1/articlesByName', async (req, res) => {

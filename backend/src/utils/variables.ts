@@ -10,12 +10,12 @@ interface DatabaseConfig {
 }
 
 interface Variables {
-    readonly origin: String;
-    readonly dbConf: Object;
+    readonly origins: Array<string>;
+    readonly dbConfig: Object;
 }
 
 // default to prod
-let originURL: String = process.env.PROD_ORIGIN;
+let allowedOrigins: Array<string> = [process.env.PROD_ORIGIN, 'dev.destinyarticlefinder.com'];
 let databaseConfig: DatabaseConfig = {
     connectionLimit: 10,
     host: process.env.DB_HOST,
@@ -24,8 +24,9 @@ let databaseConfig: DatabaseConfig = {
     database: process.env.DB_NAME
 };
 
+// change config for development if mode='development'
 if (process.env.MODE === 'development') {
-    originURL = process.env.DEV_ORIGIN;
+    allowedOrigins = [process.env.DEV_ORIGIN];
     databaseConfig = {
         connectionLimit: 10,
         host: process.env.DEV_DB_HOST,
@@ -36,6 +37,6 @@ if (process.env.MODE === 'development') {
 }
 
 export const variables: Variables = {
-    origin: originURL,
-    dbConf: databaseConfig
+    origins: allowedOrigins,
+    dbConfig: databaseConfig
 };
