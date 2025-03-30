@@ -1,0 +1,78 @@
+name: Deploy Services
+
+on:
+    push:
+        branches:
+            - main
+    workflow_dispatch:
+
+env:
+    VERSION: '' # leave empty
+
+# bump version, deploy backend, deploy frontend
+# TODO: clear cf cache once deployment completes
+jobs:
+    bump-version:
+        name: Bump Version
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v3
+
+            - name: Read and Increment Version
+              id: versioning
+              run: |
+                  VERSION_FILE="VERSION"
+                  if [ ! -f "$VERSION_FILE" ]; then echo "1" > "$VERSION_FILE"; fi
+                  VERSION=$(cat "$VERSION_FILE")
+                  NEW_VERSION=$((VERSION + 1))
+                  echo "$NEW_VERSION" > "$VERSION_FILE"
+                  echo "VERSION=$NEW_VERSION" >> $GITHUB_ENV  # saves new version to env.VERSION for other jobs
+
+            - name: Commit and Push New Version
+              run: |
+                  git config --global user.name "github-actions[bot]"
+                  git config --global user.email "github-actions[bot]@users.noreply.github.com"
+                  git add VERSION
+                  git commit -m "v$(cat VERSION)"
+                  git push
+
+    deploy-backend:
+        needs: bump-version # only deploy after version bump
+        name: Deploy Backend
+        runs-on: ubuntu-latest
+        container:
+            image: node:22
+        steps:
+            - uses: actions/checkout@v3
+            - name: Get SSH key and set permissions
+              run: |
+                  mkdir -p ~/.ssh
+                  echo "${{ secrets.SSH_USERAPI_PRIVATE_KEY }}" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
+            - name: Deploy using SCP
+              run: scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -r ./backend/* ${{ secrets.SSH_USERAPI }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USERAPI }}/htdocs/api.destinyarticlefinder.com/
+            - name: Install & Prune dependencies
+              run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SSH_USERAPI }}@${{ secrets.SSH_HOST }} "cd /home/${{ secrets.SSH_USERAPI }}/htdocs/api.destinyarticlefinder.com/ && pnpm install && pnpm prune"
+            - name: Compile TypeScript files
+              run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SSH_USERAPI }}@${{ secrets.SSH_HOST }} "cd /home/${{ secrets.SSH_USERAPI }}/htdocs/api.destinyarticlefinder.com/ && pnpm run compile"
+            - name: Restart pm2 process
+              run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SSH_USERAPI }}@${{ secrets.SSH_HOST }} "cd /home/user-api/htdocs/api.destinyarticlefinder.com/ && pm2 kill && pm2 start dist/index.js"
+
+    deploy-frontend:
+        needs: bump-version
+        name: Deploy Frontend
+        runs-on: ubuntu-latest
+        container:
+            image: node:22
+        steps:
+            - uses: actions/checkout@v3
+            - name: Get SSH key and set permissions
+              run: |
+                  mkdir -p ~/.ssh
+                  echo "${{ secrets.SSH_USERSTATIC_PRIVATE_KEY }}" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
+            - name: Copy repo with SCP
+              run: scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -r ./frontend/* ${{ secrets.SSH_USERSTATIC }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USERSTATIC }}/htdocs/www.destinyarticlefinder.com/
+            - name: Build at root using webpack
+              run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SSH_USERSTATIC }}@${{ secrets.SSH_HOST }} "cd /home/${{ secrets.SSH_USERSTATIC }}/htdocs/www.destinyarticlefinder.com/ && pnpm install && pnpm run build && pnpm prune"
