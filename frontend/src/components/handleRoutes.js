@@ -3,63 +3,56 @@ import { renderArticle } from './renderArticle.js';
 import { addTabToGroup } from './tabGroup.js';
 
 export async function handleRoutes() {
-    // get URL
-    const path = window.location.pathname;
-    const urlParams = new URLSearchParams(window.location.search);
-    let articleNames = urlParams.get('a');
+    const locationPathname = window.location.pathname;
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    let nameQueries = urlSearchParams.get('a');
+    let searchQueries = urlSearchParams.get('s');
 
-    // if path is article and query params exist
-    if (path === '/article' && articleNames) {
-        const articles = await fetchArticlesByName(articleNames);
-        const searchQueries = urlParams.get('s').split(',');
+    // fetch articles and match articles based on the index of queries in .split() array results
+    if (locationPathname === '/article' && nameQueries && searchQueries) {
+        const articles = await fetchArticlesByName(nameQueries);
+        searchQueries = searchQueries.split(',');
+        nameQueries = nameQueries.split(',');
 
-        // load articles
-        document.getElementsByTagName('body')[0].style.backgroundImage = 'unset'; // remove background (png)
-        articleNames = articleNames.split(',');
+        document.getElementsByTagName('body')[0].style.backgroundImage = 'unset'; // remove DOM background as we are loading articles (png)
 
         // uses indexes of search and article name queries to find matching article for each
-        for (let query of articleNames) {
+        for (let query of nameQueries) {
             const matchedArticle = articles.data.filter(v => v.hostedUrl === query);
-            const indexOfArticleName = articleNames.indexOf(query);
+            const indexOfArticleName = nameQueries.indexOf(query);
             const matchedSearchQuery = searchQueries[indexOfArticleName];
             addTabToGroup(matchedArticle[0], matchedSearchQuery);
             renderArticle(matchedArticle[0], matchedSearchQuery);
         }
     } else {
-        // update URL without reloading URL
+        // redirect back to origin, if not equal to above pathname(s)
         window.history.pushState(null, '', window.location.origin);
     }
 }
 
 // remove article and search from route
 export function removeArticleFromRoute(articleName, search) {
-    console.log(articleName, search);
-    // get params
     const params = new URLSearchParams(window.location.search);
+    const searchParams = params.get('s').split(',');
+    const nameParams = params.get('a').split(',');
 
-    let searchParams = params.get('s').split(',');
+    // remove specified articleName and search from param arrays
     searchParams.splice(searchParams.indexOf(search), 1);
-
-    let nameParams = params.get('a').split(',');
     nameParams.splice(nameParams.indexOf(articleName), 1);
 
-    // set remaining params
+    // set params again
     params.set('a', nameParams.join(','));
     params.set('s', searchParams.join(','));
 
-    let newPath = window.location.origin + '/article';
-    newPath += '?' + params.toString();
-
-    window.history.pushState(null, '', newPath);
+    // set new location path
+    const newPath = window.location.origin + '/article';
+    window.history.pushState(null, '', newPath + '?' + params.toString());
 }
 
 export function mapArticleToRoute(articleName, searchTerm) {
-    // force articleName and searchTerm to String()
-    const articleNameStr = String(articleName);
-    const searchTermStr = String(searchTerm);
-
-    // get query params
     const params = window.location.search;
+    const articleNameStr = articleName;
+    const searchTermStr = searchTerm;
     let newPath = window.location.origin + '/article';
 
     // maintain existing params if they exist
@@ -76,13 +69,10 @@ export function mapArticleToRoute(articleName, searchTerm) {
         searchParams.set('a', existingArticles.join(','));
         searchParams.set('s', existingSearches.join(','));
 
-        // append new query params
-        newPath += '?' + searchParams.toString();
+        // append new query params, update URL without reloading
+        window.history.pushState(null, '', newPath + '?' + searchParams.toString());
     } else {
-        // create query params if none exist
-        newPath += `?a=${articleNameStr}&s=${searchTermStr}`;
+        // create query params if none exist, update URL without reloading
+        window.history.pushState(null, '', newPath + `?a=${articleNameStr}&s=${searchTermStr}`);
     }
-
-    // update URL without reloading
-    window.history.pushState(null, '', newPath);
 }

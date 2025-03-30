@@ -2,8 +2,8 @@ import { removeArticleFromRoute } from './handleRoutes.js';
 import { resetPositionIndex } from './initEvents.js';
 import { renderArticle } from './renderArticle.js';
 
-// tabGroup object with getter/setter functions
-const tabGroup = {
+// 'searchTerm' in addTab() is so reader controls retains its search term between tab loads/removal
+const TabGroup = {
     tabArticles: [],
     currentTabIndex: 0, // used to distinguish tabs
 
@@ -16,70 +16,68 @@ const tabGroup = {
 };
 
 export function addTabToGroup(article, searchTerm) {
-    tabGroup.addTab(article, searchTerm); // Add tab to array
-
-    const tabCount = Object.keys(tabGroup.tabArticles).length;
-    const newTabElement = document.createElement('div');
-    const newTabTitle = document.createElement('div');
-    const newTabCloseButton = document.createElement('img');
+    TabGroup.addTab(article, searchTerm); // Add tab to group
+    const amountOfTabs = Object.keys(TabGroup.tabArticles).length;
+    const tabElement = document.createElement('div');
+    const tabTitle = document.createElement('div');
+    const tabClose = document.createElement('img');
     const tabGroupContainer = document.getElementById('tabGroupContainer');
 
-    newTabElement.classList.add('activeTab');
-    newTabElement.id = 'tabItem';
-    newTabTitle.id = 'tabTitle';
-    newTabCloseButton.id = 'btnCloseTab';
+    tabElement.classList.add('activeTab');
+    tabElement.id = 'tabItem';
+    tabTitle.id = 'tabTitle';
+    tabClose.id = 'btnCloseTab';
 
-    newTabTitle.innerHTML = `${article.type}, "${searchTerm}"`;
-    newTabCloseButton.src = './assets/close.svg';
+    tabTitle.innerHTML = `${article.type}, "${searchTerm}"`;
+    tabClose.src = './assets/close.svg';
 
-    newTabElement.append(newTabCloseButton, newTabTitle);
-    newTabElement.setAttribute('data-tabIndex', tabCount);
+    tabElement.append(tabClose, tabTitle);
+    tabElement.setAttribute('data-tabIndex', amountOfTabs);
 
-    // remove activeTab class from all tabs
+    // remove active style class from all tabs, add it to new tab
     for (let child of tabGroupContainer.children) {
         child.removeAttribute('class');
     }
 
-    tabGroup.currentTabIndex = tabCount - 1; // set to new tab's index
+    TabGroup.currentTabIndex = amountOfTabs - 1; // set current index to new tab (array.length - 1; the article is appended to the right)
 
     // tab click
-    newTabElement.addEventListener('click', e => {
-        // idk how but this stops the active being rendered again
-
-        if (tabGroup.tabArticles.length === 1) {
+    tabElement.addEventListener('click', e => {
+        // if there is only tab in the tab group, ignore the click event (don't load the contents of the tab)
+        if (TabGroup.tabArticles.length === 1) {
             return;
         }
 
-        const tabContainer = e.target;
-        const tabGroupContainer = tabContainer.parentElement;
-        const selectedTabIndex = parseInt(tabContainer.getAttribute('data-tabIndex')) - 1;
-        resetPositionIndex(); // reset the positionIndex for reader controls' string matching
+        console.log(e.target);
 
-        // remove activeTab class from all tabs
-        for (let child of tabGroupContainer.children) {
+        const targetTab = e.target;
+        const targetTabParent = targetTab.parentElement;
+        const targetTabIndex = parseInt(targetTab.getAttribute('data-tabIndex')) - 1;
+        resetPositionIndex(); // reset the positionIndex for reader controls' string-matching
+
+        // remove active style class from all tabs, add it to target tab
+        for (let child of targetTabParent.children) {
             child.removeAttribute('class');
         }
-        tabContainer.classList.add('activeTab'); // assign activeTab class to clicked tab
+        targetTab.classList.add('activeTab');
 
-        // set searchTerm tabGroup.[article].search
-        searchTerm = tabGroup.tabArticles[selectedTabIndex].search;
+        // set searchTerm to TabGroup.[article].search
+        searchTerm = TabGroup.tabArticles[targetTabIndex].search;
 
-        // when different tab is clicked
-        if (selectedTabIndex !== tabGroup.currentTabIndex) {
-            console.log(tabGroup);
-            // render selected tab
-            tabGroup.currentTabIndex = selectedTabIndex;
+        // when different tab is clicked, render target tab
+        if (targetTabIndex !== TabGroup.currentTabIndex) {
+            TabGroup.currentTabIndex = targetTabIndex;
             renderArticle(article, searchTerm);
         }
     });
 
     // tab close
-    newTabCloseButton.addEventListener('click', e => {
+    tabClose.addEventListener('click', e => {
         e.stopPropagation();
         removeTabFromGroup(e);
     });
 
-    tabGroupContainer.appendChild(newTabElement);
+    tabGroupContainer.appendChild(tabElement);
 }
 
 function removeTabFromGroup(e) {
@@ -87,15 +85,15 @@ function removeTabFromGroup(e) {
     const tabGroupContainer = tabContainer.parentElement;
     const tabIndex = parseInt(tabContainer.getAttribute('data-tabIndex')) - 1;
 
-    const tabThatsBeingRemoved = tabGroup.tabArticles[tabIndex];
+    const tabThatsBeingRemoved = TabGroup.tabArticles[tabIndex];
     removeArticleFromRoute(tabThatsBeingRemoved.article.hostedUrl, tabThatsBeingRemoved.search);
 
-    tabGroup.currentTabIndex = tabIndex;
-    tabGroup.removeTab(tabIndex); // remove tab from array
+    TabGroup.currentTabIndex = tabIndex;
+    TabGroup.removeTab(tabIndex); // remove tab from array
     tabContainer.remove(); // remove tab from DOM
 
     // if closed tab was the last tab
-    if (tabGroup.tabArticles.length === 0) {
+    if (TabGroup.tabArticles.length === 0) {
         window.location.href = window.location.origin;
     }
 
@@ -111,6 +109,6 @@ function removeTabFromGroup(e) {
         child.setAttribute('data-tabIndex', i + 1);
     }
 
-    const nowActiveTab = tabGroup.tabArticles[0];
+    const nowActiveTab = TabGroup.tabArticles[0];
     renderArticle(nowActiveTab.article, nowActiveTab.search);
 }
