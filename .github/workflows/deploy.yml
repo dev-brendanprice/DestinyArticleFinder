@@ -30,40 +30,40 @@ jobs:
             - name: Run frontend bash script
               run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.STATIC_USER }}@${{ secrets.SERVER_HOST }} "bash /home/${{ secrets.SSH_USERSTATIC }}${{ secrets.SSH_USERSTATIC_DOMAINPATH }}increment_version.sh"
 
-        deploy-backend:
-            needs: bump-version # only deploy after version bump
-            name: Deploy Backend
-            runs-on: ubuntu-latest
-            container:
-                image: node:22
-            steps:
-                - uses: actions/checkout@v3
-                - name: Get SSH key and set permissions
-                  run: |
-                      mkdir -p ~/.ssh
-                      echo "${{ secrets.SSH_USERAPI_PRIVATE_KEY }}" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
-                - name: Deploy using SCP
-                  run: scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -r ./backend/* ${{ secrets.SSH_USERAPI }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USERAPI }}${{ secrets.SSH_USERAPI_DOMAINPATH }}
-                - name: Install & Prune dependencies
-                  run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SSH_USERAPI }}@${{ secrets.SSH_HOST }} "cd /home/${{ secrets.SSH_USERAPI }}${{ secrets.SSH_USERAPI_DOMAINPATH }} && pnpm install && pnpm prune"
-                - name: Compile TypeScript files
-                  run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SSH_USERAPI }}@${{ secrets.SSH_HOST }} "cd /home/${{ secrets.SSH_USERAPI }}${{ secrets.SSH_USERAPI_DOMAINPATH }} && pnpm run compile"
-                - name: Restart pm2 process
-                  run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SSH_USERAPI }}@${{ secrets.SSH_HOST }} "cd /home/${{ secrets.SSH_USERAPI }}${{ secrets.SSH_USERAPI_DOMAINPATH }} && pm2 kill && pm2 start dist/index.js"
+    deploy-backend:
+        needs: bump-version # only deploy after version bump
+        name: Deploy Backend
+        runs-on: ubuntu-latest
+        container:
+            image: node:22
+        steps:
+            - uses: actions/checkout@v3
+            - name: Get SSH key and set permissions
+              run: |
+                  mkdir -p ~/.ssh
+                  echo "${{ secrets.SSH_USERAPI_PRIVATE_KEY }}" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
+            - name: Deploy using SCP
+              run: scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -r ./backend/* ${{ secrets.SSH_USERAPI }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USERAPI }}${{ secrets.SSH_USERAPI_DOMAINPATH }}
+            - name: Install & Prune dependencies
+              run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SSH_USERAPI }}@${{ secrets.SSH_HOST }} "cd /home/${{ secrets.SSH_USERAPI }}${{ secrets.SSH_USERAPI_DOMAINPATH }} && pnpm install && pnpm prune"
+            - name: Compile TypeScript files
+              run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SSH_USERAPI }}@${{ secrets.SSH_HOST }} "cd /home/${{ secrets.SSH_USERAPI }}${{ secrets.SSH_USERAPI_DOMAINPATH }} && pnpm run compile"
+            - name: Restart pm2 process
+              run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SSH_USERAPI }}@${{ secrets.SSH_HOST }} "cd /home/${{ secrets.SSH_USERAPI }}${{ secrets.SSH_USERAPI_DOMAINPATH }} && pm2 kill && pm2 start dist/index.js"
 
-        deploy-frontend:
-            needs: bump-version
-            name: Deploy Frontend
-            runs-on: ubuntu-latest
-            container:
-                image: node:22
-            steps:
-                - uses: actions/checkout@v3
-                - name: Get SSH key and set permissions
-                  run: |
-                      mkdir -p ~/.ssh
-                      echo "${{ secrets.SSH_USERSTATIC_PRIVATE_KEY }}" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
-                - name: Copy repo with SCP
-                  run: scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -r ./frontend/* ${{ secrets.SSH_USERSTATIC }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USERSTATIC }}${{ secrets.SSH_USERSTATIC_DOMAINPATH }}
-                - name: Build at root using webpack
-                  run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SSH_USERSTATIC }}@${{ secrets.SSH_HOST }} "cd /home/${{ secrets.SSH_USERSTATIC }}${{ secrets.SSH_USERSTATIC_DOMAINPATH }} && pnpm install && pnpm run build && pnpm prune"
+    deploy-frontend:
+        needs: bump-version
+        name: Deploy Frontend
+        runs-on: ubuntu-latest
+        container:
+            image: node:22
+        steps:
+            - uses: actions/checkout@v3
+            - name: Get SSH key and set permissions
+              run: |
+                  mkdir -p ~/.ssh
+                  echo "${{ secrets.SSH_USERSTATIC_PRIVATE_KEY }}" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
+            - name: Copy repo with SCP
+              run: scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -r ./frontend/* ${{ secrets.SSH_USERSTATIC }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USERSTATIC }}${{ secrets.SSH_USERSTATIC_DOMAINPATH }}
+            - name: Build at root using webpack
+              run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SSH_USERSTATIC }}@${{ secrets.SSH_HOST }} "cd /home/${{ secrets.SSH_USERSTATIC }}${{ secrets.SSH_USERSTATIC_DOMAINPATH }} && pnpm install && pnpm run build && pnpm prune"
