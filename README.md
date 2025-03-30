@@ -1,6 +1,6 @@
 # Destiny Article Finder
 
-[![Deploy and bump version](https://github.com/dev-brendanprice/DestinyArticleFinder/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/dev-brendanprice/DestinyArticleFinder/actions/workflows/deploy.yml)
+[![Deploy++, Version++](https://github.com/dev-brendanprice/DestinyArticleFinder/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/dev-brendanprice/DestinyArticleFinder/actions/workflows/deploy.yml)
 
 This is a third-party API tool, which provides string-matching and " CTRL+F " functionality for Bungie.net News articles. Visit the website: https://destinyarticlefinder.com
 
