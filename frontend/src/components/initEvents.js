@@ -8,32 +8,37 @@ import {
     toggleCaseSensitive
 } from './controlSearch.js';
 import { fetchArticles } from './fetchArticles.js';
-import { clearResults, parseResults } from './parseResults.js';
+import { clearSearchBarResults, parseResults } from './parseResults.js';
+import { TabGroup } from './tabGroup.js';
 
 let positionIndex = 0; // index for reader controls
 export function resetPositionIndex() {
-    positionIndex = 0; // bruh
+    positionIndex = 0; // allow other scripts change the value with this function (TODO: test var instead)
 }
 
 export default async function intializeEvents() {
     const searchBarElement = document.getElementById('searchBar');
 
-    // Wrap check and fetch logic in nested function
-    async function doFetch(callback, isResend = false) {
+    // check search bar value then fetch and parse articles
+    async function fetchAndParseArticles(isResend) {
         const searchBar = document.getElementById('searchBar');
         const isValid = isEntryValid(searchBar, isResend);
         const searchTerm = `${searchBar.value}`;
 
+        if (searchTerm.length === 0) {
+            clearSearchBarResults('searchBar');
+            return;
+        }
+
         // Check if input is valid
         if (isValid) {
+            document.getElementsByClassName(`spinner`)[0].style.opacity = '0.5';
             const articles = await fetchArticles(searchTerm);
+            document.getElementById('searchStatsContainer').style.display = 'flex';
             document.getElementById('searchResultsContainer').style.display = 'flex';
-            document.getElementById('searchResultsCount').style.display = 'flex';
             parseResults(articles, 'searchBar');
             resetPositionIndex();
-        } else if (searchTerm.length === 0) {
-            clearResults('searchBar');
-            callback();
+            document.getElementsByClassName(`spinner`)[0].style.opacity = '0';
         }
     }
 
@@ -44,21 +49,28 @@ export default async function intializeEvents() {
 
     // Event for search bar the user initially sees
     searchBarElement.addEventListener('keyup', async () => {
-        document.getElementsByClassName(`spinner`)[0].style.opacity = '0.5';
-        await doFetch(() => {
-            document.getElementById('searchResultsCount').style.display = 'none';
-        });
-        document.getElementsByClassName(`spinner`)[0].style.opacity = '0';
+        await fetchAndParseArticles(false);
     });
 
-    // do this but for "esc" key press too
+    // only show results if at-least 1 tab is loaded and the search bar already has a value typed in
+    searchBarElement.addEventListener('click', () => {
+        if (TabGroup.tabArticles.length >= 1 && searchBarElement.value !== '') {
+            document.getElementById('searchStatsContainer').style.display = 'flex';
+            document.getElementById('searchResultsContainer').style.display = 'flex';
+        }
+    });
+
     // hide certain elements when user clicks away
+    // TODO: "esc" key press for certain UI's (??)
     document.addEventListener('mouseup', async event => {
         const targetClass = event.target.className;
         const targetClassList = targetClass.split(' ');
 
-        // hide search bar results
-        // document.getElementById('searchResultsContainer').style.display = 'none';
+        // hide search results, only when at-least one tab is loaded
+        if (TabGroup.tabArticles.length >= 1) {
+            document.getElementById('searchStatsContainer').style.display = 'none';
+            document.getElementById('searchResultsContainer').style.display = 'none';
+        }
 
         // for image "More" context menu
         if (targetClass !== 'imageCtrlInner') {
@@ -348,11 +360,7 @@ export default async function intializeEvents() {
             document.getElementById('filterParentLabel').innerHTML = filtersString;
 
             // search for articles again
-            document.getElementsByClassName(`spinner`)[0].style.opacity = '0.5';
-            await doFetch(() => {
-                document.getElementById('searchResultsCount').style.display = 'none';
-            }, true);
-            document.getElementsByClassName(`spinner`)[0].style.opacity = '0';
+            await fetchAndParseArticles(true);
         });
     }
 
@@ -402,11 +410,7 @@ export default async function intializeEvents() {
             document.getElementById('sortbyParentLabel').innerHTML = sortbyString[0];
 
             // search for articles again
-            document.getElementsByClassName(`spinner`)[0].style.opacity = '0.5';
-            await doFetch(() => {
-                document.getElementById('searchResultsCount').style.display = 'none';
-            }, true);
-            document.getElementsByClassName(`spinner`)[0].style.opacity = '0';
+            await fetchAndParseArticles(true);
         });
     }
 }

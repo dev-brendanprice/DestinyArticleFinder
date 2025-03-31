@@ -110,6 +110,7 @@
     background-color: #211d3d;
     border-radius: 5px;
     justify-content: space-between;
+    z-index: 5;
 }
 
 #spinnerContainer {
@@ -123,7 +124,7 @@
     display: flex;
     margin-top: 7px;
     gap: 7px;
-    z-index: 99;
+    z-index: 5;
 }
 
 #filterFold {
@@ -260,4 +261,5 @@
 #headNavIcons {
     display: flex;
     justify-content: right;
+    user-select: none;
 }

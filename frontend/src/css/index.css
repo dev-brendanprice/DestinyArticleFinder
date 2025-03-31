@@ -103,7 +103,9 @@ body {
 
 input:-webkit-autofill,
 input:-webkit-autofill:focus {
-    transition: background-color 600000s 0s, color 600000s 0s;
+    transition:
+        background-color 600000s 0s,
+        color 600000s 0s;
 }
 input[data-autocompleted] {
     background-color: transparent !important;
@@ -115,6 +117,11 @@ input[data-autocompleted] {
     margin-top: 15px;
 }
 
+#allResultsDropShadow {
+    z-index: 3;
+    filter: drop-shadow(0px 0px 50px black);
+}
+
 #searchResultsContainer {
     display: flex;
     flex-direction: column;
@@ -122,8 +129,7 @@ input[data-autocompleted] {
     align-self: center;
     align-items: center;
     width: 100%;
-    margin-top: 20px;
-    z-index: 3;
+    margin-top: 10px;
 }
 
 #searchBarResults {
@@ -131,6 +137,74 @@ input[data-autocompleted] {
     margin: 0 auto;
     user-select: none;
     width: 100%;
+}
+
+#searchStatsContainer {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+    background-color: #211d3d;
+    border: 1px solid #595385;
+    font-size: 14px;
+    font-weight: normal;
+    color: white;
+    box-sizing: border-box;
+    padding: 10px;
+    padding-top: 15px;
+}
+
+#searchStatsContainer > div {
+    display: flex;
+    gap: 5px;
+    align-items: baseline;
+}
+
+#searchStatsContainer > div > a {
+    background-color: #262323;
+    border: 1px solid #626262;
+    box-sizing: border-box;
+    padding: 2px;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 3px;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    cursor: pointer;
+    user-select: none;
+    color: #49b5dd;
+    transition: all 0.1s;
+}
+
+#searchStatsContainer > div > a:hover {
+    color: #7acfee;
+    transition: all 0.1s;
+}
+
+#searchStatsContainer > div > a > img {
+    margin-left: 5px;
+    width: 9px;
+}
+
+.statDate {
+    font-size: 12px;
+    color: #989898;
+}
+
+.statArticleLink {
+    width: 160px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#subStatistics {
+    display: flex;
+    gap: 20px !important;
+    margin-top: 10px;
+    font-size: 13px;
+    font-style: italic;
+    color: #989898;
 }
 
 /* every list result */

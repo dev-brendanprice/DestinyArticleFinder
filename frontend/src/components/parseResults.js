@@ -1,7 +1,8 @@
 import { activeSortByValues } from './config/variables.js';
+import { getSearchStats } from './getSearchStats.js';
 import { mapArticleToRoute } from './handleRoutes.js';
 import { renderArticle } from './renderArticle.js';
-import { addTabToGroup } from './tabGroup.js';
+import { addTabToGroup, TabGroup } from './tabGroup.js';
 
 // Parse a given article, sanitise content, format into HTML DOM content
 export function parseResults(data, searchBarNamePrefix) {
@@ -10,6 +11,24 @@ export function parseResults(data, searchBarNamePrefix) {
     const searchResultsDomElement = document.getElementById(`${searchBarNamePrefix}Results`);
     searchResultsDomElement.innerHTML = '';
     searchResultsDomElement.style.display = 'block';
+
+    function loadArticle(article, searchTerm) {
+        document.getElementsByTagName('body')[0].style.backgroundImage = 'unset'; // remove background (png)
+        addTabToGroup(article, searchTerm); // make new tab
+        renderArticle(article, searchTerm); // render article
+        mapArticleToRoute(article.hostedUrl, searchTerm);
+    }
+
+    function openUrlOnElement(e) {
+        e.preventDefault();
+        window.open(e.target.href, '_blank').focus();
+    }
+
+    // no articles are found with given searchTerm
+    if (data.data.length === 0) {
+        clearSearchBarResults(searchBarNamePrefix);
+        return;
+    }
 
     // sort articles
     let sortBy = Object.keys(activeSortByValues)
@@ -24,6 +43,36 @@ export function parseResults(data, searchBarNamePrefix) {
         articles.sort((a, b) => a.title.localeCompare(b.title));
     }
 
+    // get, and set DOM, search statistics for results which are based on search term
+    const searchStatistics = getSearchStats(articles, searchTerm);
+    console.log(searchStatistics);
+    document.getElementById('statFirstDate').innerHTML = searchStatistics.firstMention.dateShortForm;
+    document.getElementById('statLastDate').innerHTML = searchStatistics.lastMention.dateShortForm;
+    document.getElementById('statMostDate').innerHTML = searchStatistics.mostMentions[1].dateShortForm;
+
+    document.getElementById('statFirstTitle').innerHTML = searchStatistics.firstMention.title;
+    document.getElementById('statLastTitle').innerHTML = searchStatistics.lastMention.title;
+    document.getElementById('statMostTitle').innerHTML = searchStatistics.mostMentions[1].title;
+    document.getElementById('statFirstBnet').href = searchStatistics.firstMention.url;
+    document.getElementById('statLastBnet').href = searchStatistics.lastMention.url;
+    document.getElementById('statMostBnet').href = searchStatistics.mostMentions[1].url;
+    document.getElementById('statFirstBnet').addEventListener('click', openUrlOnElement);
+    document.getElementById('statLastBnet').addEventListener('click', openUrlOnElement);
+    document.getElementById('statMostBnet').addEventListener('click', openUrlOnElement);
+
+    document
+        .getElementById('statFirstTitle')
+        .addEventListener('click', () => loadArticle(searchStatistics.firstMention, searchTerm));
+    document
+        .getElementById('statLastTitle')
+        .addEventListener('click', () => loadArticle(searchStatistics.lastMention, searchTerm));
+    document
+        .getElementById('statMostTitle')
+        .addEventListener('click', () => loadArticle(searchStatistics.mostMentions[1], searchTerm));
+
+    document.getElementById('statResults').innerHTML = articles.length;
+    document.getElementById('statTotalMentions').innerHTML = searchStatistics.totalMentions;
+
     // Create a new list item for each article
     for (let i = 0; i < articles.length; i++) {
         const article = articles[i];
@@ -37,6 +86,7 @@ export function parseResults(data, searchBarNamePrefix) {
 
         listItemContainer.addEventListener('click', async () => {
             document.getElementsByTagName('body')[0].style.backgroundImage = 'unset'; // remove background (png)
+            document.getElementById('allResultsDropShadow').style.filter = 'drop-shadow(0px 0px 50px black)'; // add drop shadow back to search results
             addTabToGroup(article, searchTerm); // make new tab
             renderArticle(article, searchTerm); // render article
             mapArticleToRoute(article.hostedUrl, searchTerm);
@@ -46,24 +96,17 @@ export function parseResults(data, searchBarNamePrefix) {
         searchResultsDomElement.appendChild(listItemContainer);
     }
 
-    // create "x results" as last child
-    const resultsCount = document.getElementById('searchResultsCount');
-    resultsCount.innerHTML = `${articles.length} results`;
-
-    if (data.data.length === 0) {
-        // if no data is returned
-        document.getElementById('noSearchResultsFoundText').style.display = 'block';
-        resultsCount.style.display = 'none';
-        resultsCount.innerHTML = '';
-        clearResults(searchBarNamePrefix);
-    } else {
-        document.getElementById('noSearchResultsFoundText').style.display = 'none';
+    // show search stats
+    document.getElementById('searchStatsContainer').style.display = 'flex';
+    if (!(TabGroup.tabArticles.length >= 1)) {
+        document.getElementById('allResultsDropShadow').style.filter = 'unset';
     }
 }
 
 // Clear results from a results container, via a specified parent-element
-export function clearResults(searchBarNamePrefix) {
-    const searchResultsDomElement = document.getElementById(`${searchBarNamePrefix}Results`);
-    searchResultsDomElement.style.display = 'none';
-    searchResultsDomElement.innerHTML = '';
+export function clearSearchBarResults() {
+    const searchResultsElement = document.getElementById(`searchBarResults`);
+    searchResultsElement.style.display = 'none';
+    searchResultsElement.innerHTML = '';
+    document.getElementById('searchStatsContainer').style.display = 'none';
 }

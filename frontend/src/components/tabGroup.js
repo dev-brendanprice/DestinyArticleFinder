@@ -3,7 +3,7 @@ import { resetPositionIndex } from './initEvents.js';
 import { renderArticle } from './renderArticle.js';
 
 // 'searchTerm' in addTab() is so reader controls retains its search term between tab loads/removal
-const TabGroup = {
+export const TabGroup = {
     tabArticles: [],
     currentTabIndex: 0, // used to distinguish tabs
 

@@ -8,6 +8,7 @@ export async function renderArticle(article, searchTerm) {
     let articleContent = article.htmlContent;
 
     articleContent = parseDOM(articleContent);
+    document.getElementById('searchStatsContainer').style.display = 'none';
     document.getElementById('searchResultsContainer').style.display = 'none';
     document.getElementById('articleMainContainer').style.display = 'flex';
     document.getElementById('articleControlsTitleText').innerHTML = `${article.title} (${article.dateShortForm})`;
