@@ -1,5 +1,3 @@
-import getCaseVariants from './getCaseVariants';
-
 export function fetchArticleByName(connectionPool: any, articles: Array<string>): Promise<object> {
     const sqlQuery = `
         SELECT * FROM articles
@@ -15,10 +13,12 @@ export function fetchArticleByName(connectionPool: any, articles: Array<string>)
 }
 
 export function fetchArticle(connectionPool: any, options: any): Promise<object> {
-    const variations = getCaseVariants(<string>options.searchTerm);
+    // const variations = getCaseVariants(<string>options.searchTerm);
+
+    const searchTerm = options.searchTerm.replaceAll("'", "''");
     let sqlQuery: String = `
         SELECT * FROM articles
-        WHERE ${variations.map(variation => `htmlContent LIKE '%${variation}%'`).join(' OR ')}
+        WHERE lower(htmlContent) LIKE lower('%${searchTerm}%')
         LIMIT 0, ${options.limit}
     `;
 
@@ -26,12 +26,11 @@ export function fetchArticle(connectionPool: any, options: any): Promise<object>
     if (!options.types.includes('all')) {
         sqlQuery = `
             SELECT * FROM articles
-            WHERE (${variations.map((variation: String) => `htmlContent LIKE '%${variation}%'`).join(' OR ')})
+            WHERE lower(htmlContent) LIKE lower('%${searchTerm}%')
             AND (${options.types.map((type: String) => `type = '${type}'`).join(' OR ')})
             LIMIT 0, ${options.limit}
         `;
     }
-    // fubar
 
     return new Promise((resolve, reject) => {
         connectionPool.query(sqlQuery, (err, results) => {
