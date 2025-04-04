@@ -8,7 +8,7 @@ import { addTabToGroup, TabGroup } from './tabGroup.js';
 export function parseResults(data, searchBarNamePrefix) {
     const articles = data.data;
     const searchTerm = data.search;
-    const searchResultsDomElement = document.getElementById(`${searchBarNamePrefix}Results`);
+    const searchResultsDomElement = document.getElementById(`${searchBarNamePrefix}Results`); // nuke this prefix stuff
     searchResultsDomElement.innerHTML = '';
     searchResultsDomElement.style.display = 'block';
 
@@ -76,12 +76,14 @@ export function parseResults(data, searchBarNamePrefix) {
     // Create a new list item for each article
     for (let i = 0; i < articles.length; i++) {
         const article = articles[i];
-        const listItemContainer = document.createElement('div');
+        const listItemContainer = document.createElement('a');
         const listItemTitle = document.createElement('div');
         const listItemSubtitle = document.createElement('span');
+
         listItemTitle.innerHTML = article.title;
         listItemSubtitle.innerHTML = article.dateShortForm;
         listItemSubtitle.className = 'listItemSubtitle';
+        listItemContainer.href = `${window.location.origin}/article?a=${article.hostedUrl}&s=${searchTerm}`;
         listItemContainer.setAttribute('data-index', i);
 
         listItemContainer.addEventListener('click', async () => {

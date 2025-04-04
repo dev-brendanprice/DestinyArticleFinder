@@ -218,7 +218,9 @@ input[data-autocompleted] {
 }
 
 /* every list result */
-#searchBarResults > div {
+#searchBarResults > a {
+    display: flex;
+    flex-direction: column;
     width: 100%;
     box-sizing: border-box;
     text-align: left;
@@ -228,23 +230,25 @@ input[data-autocompleted] {
     background-color: #211d3d;
     border-top: none;
     cursor: pointer;
+    color: #8c85b6;
+    text-decoration: none;
 }
 
 /* on hover for every list result */
-#searchBarResults > div:hover {
+#searchBarResults > a:hover {
     background-color: #322c57;
     color: #bfbfbf;
 }
 
 /* first result in the list */
-#searchBarResults > div:first-child {
+#searchBarResults > a:first-child {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     border-top: 1px solid #333b41;
 }
 
 /* last result in the list */
-#searchBarResults > div:last-child {
+#searchBarResults > a:last-child {
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
 }
