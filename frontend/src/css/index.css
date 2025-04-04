@@ -161,6 +161,8 @@ input[data-autocompleted] {
 }
 
 #searchStatsContainer > div > a {
+    display: flex;
+    justify-content: space-between;
     background-color: #262323;
     border: 1px solid #626262;
     box-sizing: border-box;
@@ -192,7 +194,15 @@ input[data-autocompleted] {
 }
 
 .statArticleLink {
-    width: 160px;
+    width: 140px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border: 1px solid red;
+}
+
+.statArticleLink > div {
+    width: 115px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

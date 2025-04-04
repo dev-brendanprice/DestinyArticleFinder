@@ -14,6 +14,7 @@ import './assets/close.svg';
 import './assets/copy.svg';
 import './assets/download.svg';
 import './assets/fold.svg';
+import './assets/fwd_blue.svg';
 import './assets/link.svg';
 import './assets/link_blue.svg';
 import './assets/magnify.svg';
