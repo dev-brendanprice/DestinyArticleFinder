@@ -9,7 +9,27 @@ on:
 # bump version, [deploy backend, deploy frontend]
 # TODO: clear cf cache once deployment completes
 jobs:
-    deploy-backend:
+    bump-version:
+        name: Bump versions
+        runs-on: ubuntu-latest
+		steps:
+            - name: Checkout repo
+              uses: actions/checkout@v3
+
+            - name: Increment version in package.json
+              run: |
+                jq '.version |= (tonumber + 1 | tostring)' package.json > package.tmp.json && mv package.tmp.json package.json
+
+            - name: Commit and push changes
+              run: |
+                git config user.name "github-actions[bot]"
+                git config user.email "github-actions[bot]@users.noreply.github.com"
+                git add package.json
+                git commit -m "v$(jq -r .version package.json)"
+                git push
+                
+	deploy-backend:
+        needs: bump-version
         name: Deploy Backend
         runs-on: ubuntu-latest
         container:
@@ -22,8 +42,6 @@ jobs:
                   echo "${{ secrets.SSH_USERAPI_PRIVATE_KEY }}" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
             - name: Copy repo with SCP
               run: scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -r ./backend/* ${{ secrets.SSH_USERAPI }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USERAPI }}${{ secrets.SSH_USERAPI_DOMAINPATH }}
-            - name: Bump backend version
-              run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SSH_USERAPI }}@${{ secrets.SSH_HOST }} "cd /home/${{ secrets.SSH_USERAPI }}${{ secrets.SSH_USERAPI_DOMAINPATH }} && bash increment_version.sh"
             - name: Install & Prune dependencies
               run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SSH_USERAPI }}@${{ secrets.SSH_HOST }} "cd /home/${{ secrets.SSH_USERAPI }}${{ secrets.SSH_USERAPI_DOMAINPATH }} && pnpm install && pnpm prune"
             - name: Compile TypeScript files
@@ -32,6 +50,7 @@ jobs:
               run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SSH_USERAPI }}@${{ secrets.SSH_HOST }} "cd /home/${{ secrets.SSH_USERAPI }}${{ secrets.SSH_USERAPI_DOMAINPATH }} && pm2 kill && pm2 start dist/index.js"
 
     deploy-frontend:
+        needs: bump-version
         name: Deploy Frontend
         runs-on: ubuntu-latest
         container:
@@ -44,7 +63,5 @@ jobs:
                   echo "${{ secrets.SSH_USERSTATIC_PRIVATE_KEY }}" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
             - name: Copy repo with SCP
               run: scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -r ./frontend/* ${{ secrets.SSH_USERSTATIC }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USERSTATIC }}${{ secrets.SSH_USERSTATIC_DOMAINPATH }}
-            - name: Bump frontend version
-              run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SSH_USERSTATIC }}@${{ secrets.SSH_HOST }} "cd /home/${{ secrets.SSH_USERSTATIC }}${{ secrets.SSH_USERSTATIC_DOMAINPATH }} && bash increment_version.sh"
             - name: Build at root using webpack
               run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SSH_USERSTATIC }}@${{ secrets.SSH_HOST }} "cd /home/${{ secrets.SSH_USERSTATIC }}${{ secrets.SSH_USERSTATIC_DOMAINPATH }} && pnpm install && pnpm run build && pnpm prune"
