@@ -1,31 +1,31 @@
 {
-    "name": "backend",
-    "version": "1",
-    "description": "This directory contains the backend code for Destiny Article Finder project.",
-    "main": "index.js",
-    "scripts": {
-        "start": "node dist/index.js",
-        "compile": "tsc",
-        "dev": "ts-node-dev --respawn --transpile-only src/index.ts"
-    },
-    "author": "Brendan Price",
-    "license": "ISC",
-    "dependencies": {
-        "cors": "^2.8.5",
-        "dotenv": "^16.4.7",
-        "express": "^4.21.2",
-        "mysql": "^2.18.1"
-    },
-    "devDependencies": {
-        "@eslint/js": "^9.21.0",
-        "@types/cors": "^2.8.17",
-        "@types/express": "^5.0.1",
-        "@types/mysql": "^2.15.26",
-        "@types/node": "^22.13.13",
-        "eslint": "^9.21.0",
-        "globals": "^16.0.0",
-        "ts-node-dev": "^2.0.0",
-        "typescript": "^5.8.2"
-    },
-    "keywords": []
+  "name": "backend",
+  "version": "2",
+  "description": "This directory contains the backend code for Destiny Article Finder project.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node dist/index.js",
+    "compile": "tsc",
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts"
+  },
+  "author": "Brendan Price",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.21.0",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.1",
+    "@types/mysql": "^2.15.26",
+    "@types/node": "^22.13.13",
+    "eslint": "^9.21.0",
+    "globals": "^16.0.0",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.8.2"
+  },
+  "keywords": []
 }
