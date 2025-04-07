@@ -6,13 +6,29 @@ on:
             - main
     workflow_dispatch:
 
-env:
-    VERSION: '' # leave empty
-
-# bump version, deploy backend, deploy frontend
+# bump version, [deploy backend, deploy frontend]
 # TODO: clear cf cache once deployment completes
 jobs:
+    bump-version:
+        name: Bump versions
+        runs-on: ubuntu-latest
+        steps:
+            - name: Get backend SSH key and set permissions
+              run: |
+                  mkdir -p ~/.ssh
+                  echo "${{ secrets.SSH_USERAPI_PRIVATE_KEY }}" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
+            - name: Run backend bash script
+              run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SSH_USERAPI }}@${{ secrets.SSH_HOST }} "cd /home/${{ secrets.SSH_USERAPI }}${{ secrets.SSH_USERAPI_DOMAINPATH }} && bash increment_version.sh"
+
+            - name: Get frontend SSH key and set permissions
+              run: |
+                  mkdir -p ~/.ssh
+                  echo "${{ secrets.SSH_USERSTATIC_PRIVATE_KEY }}" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
+            - name: Run frontend bash script
+              run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SSH_USERSTATIC }}@${{ secrets.SSH_HOST }} "cd /home/${{ secrets.SSH_USERSTATIC }}${{ secrets.SSH_USERSTATIC_DOMAINPATH }} && bash increment_version.sh"
+              
     deploy-backend:
+        needs: [bump-version] # bump version before being built
         name: Deploy Backend
         runs-on: ubuntu-latest
         container:
@@ -33,6 +49,7 @@ jobs:
               run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SSH_USERAPI }}@${{ secrets.SSH_HOST }} "cd /home/${{ secrets.SSH_USERAPI }}${{ secrets.SSH_USERAPI_DOMAINPATH }} && pm2 kill && pm2 start dist/index.js"
 
     deploy-frontend:
+        needs: [bump-version] # bump version before being built
         name: Deploy Frontend
         runs-on: ubuntu-latest
         container:
@@ -47,22 +64,3 @@ jobs:
               run: scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -r ./frontend/* ${{ secrets.SSH_USERSTATIC }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USERSTATIC }}${{ secrets.SSH_USERSTATIC_DOMAINPATH }}
             - name: Build at root using webpack
               run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SSH_USERSTATIC }}@${{ secrets.SSH_HOST }} "cd /home/${{ secrets.SSH_USERSTATIC }}${{ secrets.SSH_USERSTATIC_DOMAINPATH }} && pnpm install && pnpm run build && pnpm prune"
-
-    bump-version:
-        needs: [deploy-backend, deploy-frontend] # deploy after repos have been cloned and built
-        name: Bump versions
-        runs-on: ubuntu-latest
-        steps:
-            - name: Get backend SSH key and set permissions
-              run: |
-                  mkdir -p ~/.ssh
-                  echo "${{ secrets.SSH_USERAPI_PRIVATE_KEY }}" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
-            - name: Run backend bash script
-              run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SSH_USERAPI }}@${{ secrets.SSH_HOST }} "cd /home/${{ secrets.SSH_USERAPI }}${{ secrets.SSH_USERAPI_DOMAINPATH }} && bash increment_version.sh"
-
-            - name: Get frontend SSH key and set permissions
-              run: |
-                  mkdir -p ~/.ssh
-                  echo "${{ secrets.SSH_USERSTATIC_PRIVATE_KEY }}" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
-            - name: Run frontend bash script
-              run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SSH_USERSTATIC }}@${{ secrets.SSH_HOST }} "cd /home/${{ secrets.SSH_USERSTATIC }}${{ secrets.SSH_USERSTATIC_DOMAINPATH }} && bash increment_version.sh"
