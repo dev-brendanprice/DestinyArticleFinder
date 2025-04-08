@@ -36,7 +36,7 @@ export default async function intializeEvents() {
             const articles = await fetchArticles(searchTerm);
             document.getElementById('searchStatsContainer').style.display = 'flex';
             document.getElementById('searchResultsContainer').style.display = 'flex';
-            parseResults(articles, 'searchBar');
+            parseResults(articles);
             resetPositionIndex();
             document.getElementsByClassName(`spinner`)[0].style.opacity = '0';
         }

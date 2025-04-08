@@ -1,14 +1,15 @@
 import { activeSortByValues } from './config/variables.js';
 import { getSearchStats } from './getSearchStats.js';
+import { getSnippet } from './getSnippet.js';
 import { mapArticleToRoute } from './handleRoutes.js';
 import { renderArticle } from './renderArticle.js';
 import { addTabToGroup, TabGroup } from './tabGroup.js';
 
 // Parse a given article, sanitise content, format into HTML DOM content
-export function parseResults(data, searchBarNamePrefix) {
+export function parseResults(data) {
     const articles = data.data;
     const searchTerm = data.search;
-    const searchResultsDomElement = document.getElementById(`${searchBarNamePrefix}Results`); // nuke this prefix stuff
+    const searchResultsDomElement = document.getElementById(`searchBarResults`);
     searchResultsDomElement.innerHTML = '';
     searchResultsDomElement.style.display = 'block';
 
@@ -26,7 +27,7 @@ export function parseResults(data, searchBarNamePrefix) {
 
     // no articles are found with given searchTerm
     if (data.data.length === 0) {
-        clearSearchBarResults(searchBarNamePrefix);
+        clearSearchBarResults();
         return;
     }
 
@@ -79,10 +80,20 @@ export function parseResults(data, searchBarNamePrefix) {
         const listItemContainer = document.createElement('a');
         const listItemTitle = document.createElement('div');
         const listItemSubtitle = document.createElement('span');
+        const listItemSnippet = document.createElement('div');
+        const snippet = getSnippet(article, searchTerm);
+
+        // snippet can be a DOMElement or a String
+        if (typeof snippet == 'string') {
+            listItemSnippet.innerHTML = snippet;
+        } else {
+            listItemSnippet.appendChild(snippet);
+        }
 
         listItemTitle.innerHTML = article.title;
         listItemSubtitle.innerHTML = article.dateShortForm;
         listItemSubtitle.className = 'listItemSubtitle';
+        listItemSnippet.className = 'listItemSnippet';
         listItemContainer.href = `${window.location.origin}/article?a=${article.hostedUrl}&s=${searchTerm}`;
         listItemContainer.setAttribute('data-index', i);
 
@@ -94,7 +105,7 @@ export function parseResults(data, searchBarNamePrefix) {
             mapArticleToRoute(article.hostedUrl, searchTerm);
         });
 
-        listItemContainer.append(listItemTitle, listItemSubtitle);
+        listItemContainer.append(listItemTitle, listItemSnippet);
         searchResultsDomElement.appendChild(listItemContainer);
     }
 

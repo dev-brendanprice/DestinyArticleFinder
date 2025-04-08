@@ -103,9 +103,7 @@ body {
 
 input:-webkit-autofill,
 input:-webkit-autofill:focus {
-    transition:
-        background-color 600000s 0s,
-        color 600000s 0s;
+    transition: background-color 600000s 0s, color 600000s 0s;
 }
 input[data-autocompleted] {
     background-color: transparent !important;
@@ -133,7 +131,7 @@ input[data-autocompleted] {
 }
 
 #searchBarResults {
-    display: none;
+    /* display: none; */
     margin: 0 auto;
     user-select: none;
     width: 100%;
@@ -221,30 +219,35 @@ input[data-autocompleted] {
 #searchBarResults > a {
     display: flex;
     flex-direction: column;
+    gap: 10px;
     width: 100%;
     box-sizing: border-box;
     text-align: left;
     font-size: 14px;
-    padding: 5px;
-    border: 1px solid #333b41;
+    font-weight: 600;
+    color: #e4e4e4;
+    padding: 8px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border: 1px solid #595385;
     background-color: #211d3d;
     border-top: none;
     cursor: pointer;
-    color: #8c85b6;
     text-decoration: none;
+    transition: background-color 0.1s;
 }
 
 /* on hover for every list result */
 #searchBarResults > a:hover {
-    background-color: #322c57;
-    color: #bfbfbf;
+    background-color: #2a244b;
+    transition: background-color 0.1s;
 }
 
 /* first result in the list */
 #searchBarResults > a:first-child {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
-    border-top: 1px solid #333b41;
+    border-top: 1px solid #595385;
 }
 
 /* last result in the list */
@@ -254,8 +257,15 @@ input[data-autocompleted] {
 }
 
 .listItemSubtitle {
+    display: none; /* temp */
     font-size: 14px;
     font-weight: normal;
+}
+
+.listItemSnippet {
+    color: #9a9a9a;
+    font-weight: normal;
+    font-size: 13px;
 }
 
 #noSearchResultsFoundText {
