@@ -131,7 +131,7 @@ input[data-autocompleted] {
 }
 
 #searchBarResults {
-    /* display: none; */
+    display: none;
     margin: 0 auto;
     user-select: none;
     width: 100%;
