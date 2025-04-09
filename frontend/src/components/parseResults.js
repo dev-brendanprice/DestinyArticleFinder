@@ -46,10 +46,12 @@ export function parseResults(data) {
 
     // get, and set DOM, search statistics for results which are based on search term
     const searchStatistics = getSearchStats(articles, searchTerm);
+    const mostMatches = [...searchStatistics.mostMentions[1].htmlContent.matchAll(new RegExp(searchTerm, 'gi'))];
     console.log(searchStatistics);
     document.getElementById('statFirstDate').innerHTML = searchStatistics.firstMention.dateShortForm;
     document.getElementById('statLastDate').innerHTML = searchStatistics.lastMention.dateShortForm;
     document.getElementById('statMostDate').innerHTML = searchStatistics.mostMentions[1].dateShortForm;
+    document.getElementById('statMostNumber').innerHTML = mostMatches.length;
 
     document.getElementById('statFirstTitle').innerHTML = searchStatistics.firstMention.title;
     document.getElementById('statLastTitle').innerHTML = searchStatistics.lastMention.title;
