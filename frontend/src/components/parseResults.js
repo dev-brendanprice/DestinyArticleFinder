@@ -97,7 +97,8 @@ export function parseResults(data) {
         listItemContainer.href = `${window.location.origin}/article?a=${article.hostedUrl}&s=${searchTerm}`;
         listItemContainer.setAttribute('data-index', i);
 
-        listItemContainer.addEventListener('click', async () => {
+        listItemContainer.addEventListener('click', async (e) => {
+            e.preventDefault(); // stop default (href) behaviour on click
             document.getElementsByTagName('body')[0].style.backgroundImage = 'unset'; // remove background (png)
             document.getElementById('allResultsDropShadow').style.filter = 'drop-shadow(0px 0px 50px black)'; // add drop shadow back to search results
             addTabToGroup(article, searchTerm); // make new tab
