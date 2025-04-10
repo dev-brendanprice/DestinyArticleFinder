@@ -31,6 +31,10 @@ export function parseResults(data) {
         return;
     }
 
+    // get search statistics for results, by searching for occurences of substring, etc.
+    const searchStatistics = getSearchStats(articles, searchTerm);
+    const mostMatches = [...searchStatistics.mostMentions[1].htmlContent.matchAll(new RegExp(searchTerm, 'gi'))];
+
     // sort articles
     let sortBy = Object.keys(activeSortByValues)
         .filter(key => activeSortByValues[key] && key !== 'set')[0]
@@ -44,9 +48,6 @@ export function parseResults(data) {
         articles.sort((a, b) => a.title.localeCompare(b.title));
     }
 
-    // get, and set DOM, search statistics for results which are based on search term
-    const searchStatistics = getSearchStats(articles, searchTerm);
-    const mostMatches = [...searchStatistics.mostMentions[1].htmlContent.matchAll(new RegExp(searchTerm, 'gi'))];
     console.log(searchStatistics);
     document.getElementById('statFirstDate').innerHTML = searchStatistics.firstMention.dateShortForm;
     document.getElementById('statLastDate').innerHTML = searchStatistics.lastMention.dateShortForm;
