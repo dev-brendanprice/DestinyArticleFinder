@@ -17,7 +17,7 @@ export function getSearchStats(articles, searchTerm) {
     return {
         firstMention: firstMention,
         lastMention: lastMention,
-        mostMentions: mostMentions[0],
+        mostMentions: mostMentions[0], // return first article
         totalMentions: totalMentions
     };
 }

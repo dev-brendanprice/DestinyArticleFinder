@@ -20,9 +20,23 @@ export function parseResults(data) {
         mapArticleToRoute(article.hostedUrl, searchTerm);
     }
 
-    function openUrlOnElement(e) {
-        e.preventDefault();
-        window.open(e.target.href, '_blank').focus();
+    // open link from href in new tab
+    function openUrlOnElement(url) {
+        window.open(url, '_blank').focus();
+    }
+
+    // handler to ensure unique click events
+    function uniqueClickHandler(elementName, article, searchTerm) {
+
+        const element = document.getElementById(`${elementName}`);
+        const key = '_uniqueClickHandler_';
+
+        if (element[key]) { // remove pre-existing events
+            element.removeEventListener('click', element[key]);
+        }
+    
+        element[key] = () => loadArticle(article, searchTerm); // new click handler
+        element.addEventListener('click', element[key]);
     }
 
     // no articles are found with given searchTerm
@@ -31,9 +45,11 @@ export function parseResults(data) {
         return;
     }
 
-    // get search statistics for results, by searching for occurences of substring, etc.
+    // get search statistics for results
     const searchStatistics = getSearchStats(articles, searchTerm);
-    const mostMatches = [...searchStatistics.mostMentions[1].htmlContent.matchAll(new RegExp(searchTerm, 'gi'))];
+    const topArticle = searchStatistics.mostMentions[1]; // article with most matches
+    const amountOfMatches = [...topArticle.htmlContent.matchAll(new RegExp(searchTerm, 'gi'))];
+    // ^ amount of matches, in article with most matches
 
     // sort articles
     let sortBy = Object.keys(activeSortByValues)
@@ -51,31 +67,26 @@ export function parseResults(data) {
     console.log(searchStatistics);
     document.getElementById('statFirstDate').innerHTML = searchStatistics.firstMention.dateShortForm;
     document.getElementById('statLastDate').innerHTML = searchStatistics.lastMention.dateShortForm;
-    document.getElementById('statMostDate').innerHTML = searchStatistics.mostMentions[1].dateShortForm;
-    document.getElementById('statMostNumber').innerHTML = mostMatches.length;
-
+    document.getElementById('statMostDate').innerHTML = topArticle.dateShortForm;
+    document.getElementById('statMostNumber').innerHTML = amountOfMatches.length;
     document.getElementById('statFirstTitle').innerHTML = searchStatistics.firstMention.title;
     document.getElementById('statLastTitle').innerHTML = searchStatistics.lastMention.title;
-    document.getElementById('statMostTitle').innerHTML = searchStatistics.mostMentions[1].title;
-    document.getElementById('statFirstBnet').href = searchStatistics.firstMention.url;
-    document.getElementById('statLastBnet').href = searchStatistics.lastMention.url;
-    document.getElementById('statMostBnet').href = searchStatistics.mostMentions[1].url;
-    document.getElementById('statFirstBnet').addEventListener('click', openUrlOnElement);
-    document.getElementById('statLastBnet').addEventListener('click', openUrlOnElement);
-    document.getElementById('statMostBnet').addEventListener('click', openUrlOnElement);
-
-    document
-        .getElementById('statFirstTitle')
-        .addEventListener('click', () => loadArticle(searchStatistics.firstMention, searchTerm));
-    document
-        .getElementById('statLastTitle')
-        .addEventListener('click', () => loadArticle(searchStatistics.lastMention, searchTerm));
-    document
-        .getElementById('statMostTitle')
-        .addEventListener('click', () => loadArticle(searchStatistics.mostMentions[1], searchTerm));
-
+    document.getElementById('statMostTitle').innerHTML = topArticle.title;
     document.getElementById('statResults').innerHTML = articles.length;
     document.getElementById('statTotalMentions').innerHTML = searchStatistics.totalMentions;
+
+    document.getElementById('statFirstBnet')
+        .addEventListener('click', () => { openUrlOnElement(searchStatistics.firstMention.url); });
+    document.getElementById('statLastBnet')
+        .addEventListener('click', () => { openUrlOnElement(searchStatistics.lastMention.url); });
+    document.getElementById('statMostBnet')
+        .addEventListener('click', () => { openUrlOnElement(topArticle.url); });
+    
+    // assign unique click events for each of these elements
+    uniqueClickHandler('statFirstTitle', searchStatistics.firstMention, searchTerm);
+    uniqueClickHandler('statLastTitle', searchStatistics.lastMention, searchTerm);
+    uniqueClickHandler('statMostTitle', topArticle, searchTerm);
+
 
     // Create a new list item for each article
     for (let i = 0; i < articles.length; i++) {
