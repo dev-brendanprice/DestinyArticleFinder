@@ -1,6 +1,6 @@
 {
   "name": "backend",
-  "version": "166",
+  "version": "167",
   "description": "This directory contains the backend code for Destiny Article Finder project.",
   "main": "index.js",
   "scripts": {
