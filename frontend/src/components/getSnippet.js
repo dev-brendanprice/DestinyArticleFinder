@@ -1,9 +1,5 @@
 // return snippet of htmlContent that contains searchTerm
 export function getSnippet(article, searchTerm) {
-    // const htmlContent = article.htmlContent;
-    // const startIdx = htmlContent.toLowerCase().indexOf(searchTerm);
-    // const endIdx = startIdx - 100;
-    // console.log(htmlContent.slice(endIdx, startIdx + searchTerm.length), article);
 
     const doc = new DOMParser().parseFromString(article.htmlContent, 'text/html');
     const walker = document.createTreeWalker(doc, NodeFilter.SHOW_TEXT);
@@ -26,6 +22,12 @@ export function getSnippet(article, searchTerm) {
 
             for (let fragment of split) {
                 if (regex.test(fragment)) {
+
+                    // wrap matching substrings in highlighted span
+                    const span = document.createElement('span');
+                    span.className = 'highlight-lighter';
+                    span.textContent = fragment;
+                    parent.insertBefore(span, node);
 
                     const strToLowercase = parent.textContent.toString().toLowerCase();
                     const parentLength = strToLowercase.length;
@@ -68,8 +70,13 @@ export function getSnippet(article, searchTerm) {
                         const trimmedTextContent = parent.textContent.substring(startIdx - 125, startIdx + 125);
                         snippet = `..${trimmedTextContent}`;
                     }
+                } else {
+                    // create text node for non-matching text
+                    const textNode = document.createTextNode(fragment);
+                    parent.insertBefore(textNode, node);
                 }
             }
+            parent.removeChild(node); // remove (old) child node
         }
     }
 

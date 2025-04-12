@@ -39,7 +39,7 @@ export async function highlightSubstringPositions(el, query) {
     const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
     let nodes = [];
 
-    // Store [..] all nodes
+    // store all dom nodes
     while (walker.nextNode()) {
         nodes.push(walker.currentNode);
     }
@@ -52,11 +52,13 @@ export async function highlightSubstringPositions(el, query) {
 
         // if array is longer than 1 item -> it contains the query
         if (split.length > 1) {
+
             // loop over fragments in split array -> reconstruct text node
             let parent = node.parentNode;
             for (let fragment of split) {
                 if (regex.test(fragment)) {
-                    // wrap matching text in highlight span
+
+                    // wrap matching substrings in highlight span
                     const span = document.createElement('span');
                     span.className = 'highlight';
                     span.textContent = fragment;

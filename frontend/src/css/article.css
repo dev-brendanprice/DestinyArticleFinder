@@ -266,6 +266,11 @@ hr {
     color: black;
 }
 
+.highlight-lighter {
+    background-color: #f2ffc440;
+    color: black;
+}
+
 .activeHighlight {
     background-color: #e7eb00;
     color: black;
