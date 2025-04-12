@@ -1,6 +1,6 @@
 {
   "name": "frontend",
-  "version": "167",
+  "version": "168",
   "description": "This directory contains the front-end code for Destiny Article Finder.",
   "main": "webpack.config.js",
   "scripts": {
