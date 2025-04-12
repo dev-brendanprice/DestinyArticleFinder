@@ -225,65 +225,60 @@ export default async function intializeEvents() {
     });
 
     // search filter list
-    const filterParent = document.getElementById('filterFold');
+    const filterDropdownElement = document.getElementById('filterFold');
+    const filterListItems = document.getElementsByClassName('fli');
     let filtersOpen = false;
-    filterParent.addEventListener('click', () => {
-        const listItems = document.getElementsByClassName('fli');
-        let displayMode = 'none';
 
-        // parent style
+    filterDropdownElement.addEventListener('click', () => {
+
+        // conditionally change dropdown style
         if (filtersOpen) {
-            // console.log('close');
-            filterParent.style.borderBottomRightRadius = '5px';
-            filterParent.style.borderBottomLeftRadius = '5px';
-            filtersOpen = false;
+            filterDropdownElement.style.borderBottomRightRadius = '5px';
+            filterDropdownElement.style.borderBottomLeftRadius = '5px';
         } else if (!filtersOpen) {
-            // console.log('open');
-            filterParent.style.borderBottomRightRadius = '0px';
-            filterParent.style.borderBottomLeftRadius = '0px';
-            filtersOpen = true;
-            displayMode = 'flex';
+            filterDropdownElement.style.borderBottomRightRadius = '0px';
+            filterDropdownElement.style.borderBottomLeftRadius = '0px';
         }
 
+        filtersOpen = !filtersOpen;
+
         // hide list items
-        for (let item of listItems) {
-            item.style.display = displayMode;
+        for (let item of filterListItems) {
+            item.style.display = filtersOpen ? 'flex' : 'none'; // default to none
         }
     });
 
     // search sort-by list
     const sortbyParent = document.getElementById('sortbyFold');
+    const sortByListItems = document.getElementsByClassName('sli');
     let sortbyOpen = false;
-    sortbyParent.addEventListener('click', () => {
-        const listItems = document.getElementsByClassName('sli');
-        let displayMode = 'none';
 
+    sortbyParent.addEventListener('click', () => {
+
+        // conditionally change dropdown style
         if (sortbyOpen) {
-            displayMode = 'none';
             sortbyParent.style.borderBottomRightRadius = '5px';
             sortbyParent.style.borderBottomLeftRadius = '5px';
-            sortbyOpen = false;
         } else if (!sortbyOpen) {
-            displayMode = 'flex';
             sortbyParent.style.borderBottomRightRadius = '0px';
             sortbyParent.style.borderBottomLeftRadius = '0px';
-            sortbyOpen = true;
         }
 
-        for (let item of listItems) {
-            item.style.display = displayMode;
+        sortbyOpen = !sortbyOpen;
+
+        for (let item of sortByListItems) {
+            item.style.display = sortbyOpen ? 'flex' : 'none'; // default to none
         }
     });
 
     // filter list items
-    const filterListItems = document.getElementsByClassName('fli');
     const filterListValues = ['typeTwab', 'typeNews', 'typeUpdate', 'typeHotfix'];
     const typeAllCheckbox = document.querySelector('[value=typeAll]');
     const getCheckbox = value => document.querySelector(`[value=${value}]`);
 
     function hideFilterList() {
-        filterParent.style.borderBottomRightRadius = '5px';
-        filterParent.style.borderBottomLeftRadius = '5px';
+        filterDropdownElement.style.borderBottomRightRadius = '5px';
+        filterDropdownElement.style.borderBottomLeftRadius = '5px';
 
         for (let item of filterListItems) {
             item.style.display = 'none';
@@ -365,7 +360,6 @@ export default async function intializeEvents() {
     }
 
     // sort-by list items
-    const sortByListItems = document.getElementsByClassName('sli');
     const sortByValues = ['typeDateASC', 'typeDateDES', 'typeABC'];
     const getSortCheckbox = value => document.querySelector(`[value=${value}]`);
 
