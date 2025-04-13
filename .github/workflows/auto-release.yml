@@ -1,0 +1,47 @@
+# create a release tag
+name : create release
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+# get latest release, increment release version +1, make new release
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Get latest release
+        id: get_latest
+        run: |
+          latest=$(gh release list --limit 1 --json tagName --jq '.[0].tagName' || echo "0")
+          echo "Latest tag: $latest"
+          echo "tag=$latest" >> $GITHUB_OUTPUT
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Increment release number
+        id: next_version
+        run: |
+          current="${{ steps.get_latest.outputs.tag }}"
+          if [[ "$current" =~ ^[0-9]+$ ]]; then
+            next=$((current + 1))
+          else
+            next=1
+          fi
+          echo "Next version: $next"
+          echo "version=$next" >> $GITHUB_OUTPUT
+
+      - name: Create new release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.next_version.outputs.version }}
+          name: v${{ steps.next_version.outputs.version }}
+          body: Auto-generated release for v${{ steps.next_version.outputs.version }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
