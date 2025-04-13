@@ -6,7 +6,8 @@ import parseTypes from './utils/parseTypes';
 import { variables } from './utils/variables';
 import { getReleases } from './utils/version';
 
-interface ResponseOptions {
+// request/response interfaces
+interface RequestOptions {
     readonly searchTerm: String;
     readonly types: Array<string>;
     readonly limit: String;
@@ -16,7 +17,7 @@ interface APIResponse {
     readonly data: Array<any>;
     readonly items: Number;
     readonly search: String;
-} // TO:DO refactor how we use types in this file
+}
 
 // globals
 const expressPort = process.env.PORT || 3000;
@@ -58,7 +59,7 @@ app.get('/api/v1/articlesByName', async (req, res) => {
 // query articles database
 app.get('/api/v1/articles', async (req, res) => {
     const types: Array<string> = parseTypes(<string>req.query.types); // parse param "types"
-    const options: ResponseOptions = {
+    const options: RequestOptions = {
         searchTerm: <string>req.query.search,
         types: types,
         limit: <string>req.query.limit || '25'
