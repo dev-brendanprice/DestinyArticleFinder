@@ -1,3 +1,4 @@
+import Dotenv from 'dotenv-webpack';
 import ESLintWebpackPlugin from 'eslint-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
@@ -23,7 +24,8 @@ const config = merge(common, {
         new MiniCssExtractPlugin({
             filename: '[name].[contenthash].css'
         }),
-        new ESLintWebpackPlugin()
+        new ESLintWebpackPlugin(),
+        new Dotenv()
     ]
 });
 

@@ -1,4 +1,5 @@
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
+import Dotenv from 'dotenv-webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import path from 'path';
@@ -25,7 +26,8 @@ const config = merge(common, {
     plugins: [
         new MiniCssExtractPlugin({
             filename: '[name].[contenthash].css'
-        })
+        }),
+        new Dotenv()
     ]
 });
 

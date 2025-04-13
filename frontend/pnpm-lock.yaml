@@ -11,6 +11,9 @@ importers:
       dotenv:
         specifier: ^16.4.7
         version: 16.4.7
+      dotenv-webpack:
+        specifier: ^8.1.0
+        version: 8.1.0(webpack@5.98.0)
     devDependencies:
       '@eslint/js':
         specifier: ^9.21.0
@@ -21,9 +24,6 @@ importers:
       css-minimizer-webpack-plugin:
         specifier: ^7.0.0
         version: 7.0.0(webpack@5.98.0)
-      dotenv-webpack:
-        specifier: ^8.1.0
-        version: 8.1.0(webpack@5.98.0)
       eslint:
         specifier: ^9.21.0
         version: 9.21.0
