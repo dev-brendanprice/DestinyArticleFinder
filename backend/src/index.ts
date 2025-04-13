@@ -82,7 +82,7 @@ app.get('/api/v1/articles', async (req, res) => {
 });
 
 // get latest app version from github releases
-app.get('/api/v1/releases', async (req, res) => {
+app.get('/api/v1/releases', async (_req, res) => {
     
     // request releases if none are stored
     if (!(githubReleases?.length > 0)) {
