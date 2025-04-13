@@ -6,36 +6,10 @@ on:
             - main
     workflow_dispatch:
 
-# bump version, [deploy backend, deploy frontend]
+# deploy backend, deploy frontend
 # TODO: clear cf cache once deployment completes
 jobs:
-    bump-version:
-        name: Bump versions
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v3
-            - name: Increment package.json versions
-              run: |
-                # increment package.json version in given path
-                bump_version () {
-                  FILE=$1
-                  jq '.version |= (tonumber + 1 | tostring)' "$FILE" > package.tmp.json && mv package.tmp.json "$FILE"
-                }
-      
-                bump_version frontend/package.json
-                bump_version backend/package.json
-
-            - name: Commit and push changes
-              run: |
-                  git config user.name "github-actions[bot]"
-                  git config user.email "github-actions[bot]@users.noreply.github.com"
-                  git add frontend/package.json
-                  git add backend/package.json
-                  git commit -m "v$(jq -r .version frontend/package.json)"
-                  git push
-
     deploy-backend:
-        needs: bump-version
         name: Deploy Backend
         runs-on: ubuntu-latest
         container:
@@ -56,7 +30,6 @@ jobs:
               run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SSH_USERAPI }}@${{ secrets.SSH_HOST }} "cd /home/${{ secrets.SSH_USERAPI }}${{ secrets.SSH_USERAPI_DOMAINPATH }} && pm2 kill && pm2 start dist/index.js"
 
     deploy-frontend:
-        needs: bump-version
         name: Deploy Frontend
         runs-on: ubuntu-latest
         container:
