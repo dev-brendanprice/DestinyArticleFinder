@@ -38,7 +38,7 @@ export async function renderArticle(article, searchTerm) {
 
             // remove blur & load notice
             document.getElementById('articleControls').style.filter = 'none';
-            document.getElementById('articleSubContainer').style.filter = 'none';
+            document.getElementById('articleContainer').style.filter = 'none';
             document.getElementById('loadNoticeText').style.display = 'none';
 
             // show find function results

@@ -11,9 +11,8 @@
 #articleSubContainer {
     margin-bottom: 2rem;
     width: 100%;
-    border: 1px solid #2a2831;
     background-color: #19191c;
-    filter: blur(2px); /* removes onload */
+    overflow: hidden;
 }
 
 #tabGroupsAndControls {
@@ -36,8 +35,6 @@
     border: 1px solid #2a2831;
     border-top: none;
     border-bottom: 1px solid #3c3c49;
-    /* border-top-right-radius: 5px; */
-    filter: opacity(0.6); /* removes onload */
 }
 
 #loadNoticeText {
@@ -149,6 +146,8 @@
     height: fit-content;
     width: fit-content;
     box-sizing: content-box;
+    border: 1px solid #2a2831;
+    filter: blur(2px);
 }
 
 #articleTitleContainer {
