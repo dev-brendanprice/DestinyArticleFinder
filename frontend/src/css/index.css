@@ -42,6 +42,13 @@ body {
     cursor: pointer;
 }
 
+#navTitle {
+    cursor: pointer;
+    width: fit-content;
+    padding: 10px;
+    padding-left: 0px;
+}
+
 .navButtonControl {
     font-size: 13px;
     text-decoration: none;

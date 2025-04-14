@@ -43,6 +43,11 @@ export default async function intializeEvents() {
         }
     }
 
+    // nav title redirects back to homepage
+    document.getElementById('navTitle').addEventListener('click', () => {
+        window.location = window.location.origin;
+    });
+
     // Bungie logo redirect
     document.getElementById('bungieLogoIcon').addEventListener('click', () => {
         window.open('https://www.bungie.net/7/en/News', '_blank').focus();
