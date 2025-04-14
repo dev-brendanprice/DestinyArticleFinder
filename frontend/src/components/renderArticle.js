@@ -1,5 +1,6 @@
 import { addImageControls } from './addImageControls.js';
 import { highlightSubstringPositions, positions } from './controlSearch.js';
+import { waitForQueriesToLoad } from './mediaHandler.js';
 import { parseDOM } from './parseDOM.js';
 
 export async function renderArticle(article, searchTerm) {
@@ -25,53 +26,30 @@ export async function renderArticle(article, searchTerm) {
     highlightSubstringPositions(document.getElementById('articleContent'), searchTerm);
     document.getElementById('controlSearchBar').value = `${searchTerm}`;
 
-    // wait for iframes to load
-    function iframesLoaded() {
-        return new Promise((resolve, reject) => {
-            // store to-be-loaded iframes
-            const articleContainer = document.getElementById('articleContainer');
-            const iframes = articleContainer.querySelectorAll('iframe');
-            const elements = Array.from(iframes);
-            if (elements.length === 0) {
-                resolve();
-                return;
-            }
 
-            let loadedCount = 0;
-            elements.forEach(el => {
-                // wait for each element
-
-                el.onload = () => {
-                    loadedCount++;
-                    if (loadedCount === elements.length) {
-                        resolve();
-                    }
-                };
-
-                el.onerror = () => {
-                    reject(new Error('An element failed to load'));
-                };
-            });
+    waitForQueriesToLoad('img')
+        .then(() => {
+            console.log('🍒 images loaded!');
         });
-    }
 
-    iframesLoaded().then(() => {
-        console.log('🍒 (selected) resources loaded!');
+    waitForQueriesToLoad('iframe') // may need to nuke this code
+        .then(() => {
+            console.log('🍒 iframes loaded!');
 
-        // remove blur & load notice
-        document.getElementById('articleControls').style.filter = 'none';
-        document.getElementById('articleSubContainer').style.filter = 'none';
-        document.getElementById('loadNoticeText').style.display = 'none';
+            // remove blur & load notice
+            document.getElementById('articleControls').style.filter = 'none';
+            document.getElementById('articleSubContainer').style.filter = 'none';
+            document.getElementById('loadNoticeText').style.display = 'none';
 
-        // show find function results
-        if (positions.length === 0) {
-            document.getElementById('controlSearchCountInner').style.display = 'none';
-            document.getElementById('controlSearchCountDefault').style.display = 'flex';
-        } else {
-            document.getElementById('controlSearchCountPrefix').innerHTML = 1;
-            document.getElementById('controlSearchCountSuffix').innerHTML = positions.length;
-            document.getElementById('controlSearchCountInner').style.display = 'flex';
-            document.getElementById('controlSearchCountDefault').style.display = 'none';
-        }
-    });
+            // show find function results
+            if (positions.length === 0) {
+                document.getElementById('controlSearchCountInner').style.display = 'none';
+                document.getElementById('controlSearchCountDefault').style.display = 'flex';
+            } else {
+                document.getElementById('controlSearchCountPrefix').innerHTML = 1;
+                document.getElementById('controlSearchCountSuffix').innerHTML = positions.length;
+                document.getElementById('controlSearchCountInner').style.display = 'flex';
+                document.getElementById('controlSearchCountDefault').style.display = 'none';
+            }
+        });
 }
