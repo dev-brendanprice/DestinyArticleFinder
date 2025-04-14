@@ -4,7 +4,15 @@ import { variables } from './variables.js';
 export async function getLatestRelease(releases) {
 
     if (!releases && !(releases?.length > 0)) { // request new release if none exists
-        releases = await getReleases();
+        releases = await getReleases()
+            .catch(err => {
+                console.error(err);
+                return [];
+            });
+        
+        if (!(releases.length > 0)) {
+            return;
+        }
     }
 
     const sortedByPublishedDate =
