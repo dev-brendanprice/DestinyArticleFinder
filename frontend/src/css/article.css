@@ -10,6 +10,7 @@
 
 #articleSubContainer {
     margin-bottom: 2rem;
+    width: 100%;
     border: 1px solid #2a2831;
     background-color: #19191c;
     filter: blur(2px); /* removes onload */
