@@ -1,4 +1,5 @@
-import { activeFilterValues, variables } from './config/variables.js';
+import { variables } from './config/variables.js';
+import { activeFilterValues } from './filterResults.js';
 
 // fetch articles by name (hostedUrl) from server
 export async function fetchArticlesByName(articleNames) {

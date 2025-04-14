@@ -89,7 +89,10 @@ app.get('/api/v1/releases', async (_req, res) => {
     if (!(githubReleases?.length > 0)) {
         githubReleases = await getReleases()
             .then(data => { return data })
-            .catch(err => console.error(err));
+            .catch(err => {
+                console.error(err);
+                res.status(500).json({ error: 'A server error has occured. Please try again later' });
+            });
     };
 
     res.json(githubReleases);

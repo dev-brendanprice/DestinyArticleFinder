@@ -1,5 +1,4 @@
 import { isEntryValid } from './checkUserInput.js';
-import { activeFilterValues, activeSortByValues } from './config/variables.js';
 import {
     cleanseHighlightedSpans,
     clearPositions,
@@ -8,7 +7,9 @@ import {
     toggleCaseSensitive
 } from './controlSearch.js';
 import { fetchArticles } from './fetchArticles.js';
+import { activeFilterValues } from './filterResults.js';
 import { clearSearchBarResults, parseResults } from './parseResults.js';
+import { activeSortByValues } from './sortResults.js';
 import { TabGroup } from './tabGroup.js';
 
 let positionIndex = 0; // index for reader controls

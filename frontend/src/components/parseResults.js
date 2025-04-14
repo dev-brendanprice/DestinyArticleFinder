@@ -1,8 +1,8 @@
-import { activeSortByValues } from './config/variables.js';
 import { getSearchStats } from './getSearchStats.js';
 import { getSnippet } from './getSnippet.js';
 import { mapArticleToRoute } from './handleRoutes.js';
 import { renderArticle } from './renderArticle.js';
+import { activeSortByValues } from './sortResults.js';
 import { addTabToGroup, TabGroup } from './tabGroup.js';
 
 // Parse a given article, sanitise content, format into HTML DOM content

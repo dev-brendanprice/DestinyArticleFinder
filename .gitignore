@@ -80,8 +80,6 @@ client/build/
 .env.production.local
 .env.local
 
-frontend/src/components/config/variables.js
-
 # parcel-bundler cache (https://parceljs.org/)
 .cache
 .parcel-cache

@@ -1,4 +1,5 @@
-import { activeFilterValues, activeSortByValues } from './config/variables.js';
+import { activeFilterValues } from './filterResults.js';
+import { activeSortByValues } from './sortResults.js';
 
 // set all DOM elements to saved content in localStorage
 export default function initSettings() {
