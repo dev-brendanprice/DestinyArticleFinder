@@ -9,6 +9,10 @@ export function parseDOM(htmlContent) {
             continue; // ignore specific tags
         }
 
+        if (item.tagName === 'A') { // make sure hrefs on a tags, always open in new tab
+            item.target = '_blank';
+        };
+
         if (item.tagName === 'DIV') {
             // remove (potentially) conflicting classes
 
