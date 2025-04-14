@@ -57,6 +57,12 @@ export function addImageControls() {
         let imageURL = imageContainer.querySelector('img').src;
         imageURL = imageURL.split('?')[0]; // remove URI query params
 
+        // if image src is incorrectly set
+        if (imageURL.includes(window.location.origin)) {
+            const fixedImageURL = `https://www.bungie.net${imageURL.split(window.location.origin)[1]}`;
+            imageContainer.querySelector('img').src = fixedImageURL;
+        };
+
         // config events // keep commented code here just in case i find more info to grab from the image
         // imageCtrlMore.style.display = 'none';
         // imageCtrlMore.addEventListener('click', () => {
