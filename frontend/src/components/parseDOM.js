@@ -1,3 +1,5 @@
+import { rewriteProto } from "./mediaHandler.js";
+
 // parse a HTML document that is in the format of a string
 export function parseDOM(htmlContent) {
     htmlContent = new DOMParser().parseFromString(htmlContent, 'text/html'); // parse string to HTML
@@ -5,17 +7,15 @@ export function parseDOM(htmlContent) {
     const ignoredTags = ['BR'];
 
     for (let item of allQueries) {
-        if (ignoredTags.includes(item.tagName)) {
-            continue; // ignore specific tags
+        if (ignoredTags.includes(item.tagName)) { // ignore specified tags
+            continue;
         }
 
         if (item.tagName === 'A') { // make sure hrefs on a tags, always open in new tab
             item.target = '_blank';
-        };
+        }
 
-        if (item.tagName === 'DIV') {
-            // remove (potentially) conflicting classes
-
+        if (item.tagName === 'DIV') { // remove (potentially) conflicting classes
             item.classList.remove('content');
             item.classList.remove('text-content');
             if (item.classList.length === 0) {
@@ -38,6 +38,7 @@ export function parseDOM(htmlContent) {
 
         if (item.tagName === 'IFRAME') {
             item.id = 'articleIframe';
+            item.src = rewriteProto(item.src);
         }
     }
 

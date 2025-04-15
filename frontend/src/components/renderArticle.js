@@ -30,7 +30,8 @@ export async function renderArticle(article, searchTerm) {
     waitForQueriesToLoad('img')
         .then(() => {
             console.log('🍒 images loaded!');
-        });
+        })
+        .catch(console.error);
 
     waitForQueriesToLoad('iframe') // may need to nuke this code
         .then(() => {
@@ -51,5 +52,6 @@ export async function renderArticle(article, searchTerm) {
                 document.getElementById('controlSearchCountInner').style.display = 'flex';
                 document.getElementById('controlSearchCountDefault').style.display = 'none';
             }
-        });
+        })
+        .catch(console.error);
 }

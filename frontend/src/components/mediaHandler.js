@@ -1,3 +1,9 @@
+// rewrite (force) URL protocol to match origin
+export function rewriteProto(URL) {
+    const newURL = `//${URL.split('://')[1]}`;
+    return newURL;
+};
+
 // wait for media from specified query to load
 export function waitForQueriesToLoad(query) {
     return new Promise((resolve, reject) => {
@@ -6,7 +12,7 @@ export function waitForQueriesToLoad(query) {
         const articleContainer = document.getElementById('articleContainer');
         const domQueries = articleContainer.querySelectorAll(query);
         const elements = Array.from(domQueries);
-        let domQueriesLoaded = 0;
+        let domQueriesHandled = 0;
 
         // if passed query doesn't exist -> return function
         if (elements.length === 0) {
@@ -23,18 +29,19 @@ export function waitForQueriesToLoad(query) {
                     el.style.background = 'unset';
                 }
 
-                domQueriesLoaded++;
-                if (domQueriesLoaded === elements.length) {
+                if (domQueriesHandled === elements.length) {
                     resolve();
                 }
             };
 
             el.onerror = () => {
                 reject({
-                    error: new Error('An element failed to load'),
+                    error: new Error('An element failed to load. Object was removed from DOM.'),
                     onElement: el
                 });
             };
+
+            domQueriesHandled++;
         };
     });
 }
