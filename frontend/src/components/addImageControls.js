@@ -101,7 +101,7 @@ export function addImageControls() {
         imageCtrlOpen.appendChild(icoOpen);
 
         // imageCtrlMore.appendChild(icoMore);
-        imageControls.append(imageCtrlLink, imageCtrlDownload, imageCtrlOpen, imageCtrlMore);
+        imageControls.append(imageCtrlLink, imageCtrlOpen, imageCtrlMore); // leave out imageCtrlDownload until later
         imageContainer.append(imageControls);
 
         // imageContainer.append(imageControls, ctrlMoreContainer);
