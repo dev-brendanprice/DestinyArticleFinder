@@ -7,6 +7,7 @@ import { addTabToGroup, TabGroup } from './tabGroup.js';
 
 // Parse a given article, sanitise content, format into HTML DOM content
 export function parseResults(data) {
+    console.log('fubar');
     const articles = data.data;
     const searchTerm = data.search;
     const searchResultsDomElement = document.getElementById(`searchBarResults`);
