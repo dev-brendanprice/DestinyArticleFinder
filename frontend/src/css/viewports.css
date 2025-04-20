@@ -11,9 +11,21 @@
     .searchBarContainer {
         height: 34px;
     }
+    #navTitleParent {
+        display: none;
+    }
+    #headNavIcons {
+        display: none;
+    }
+    #outerSearchContainer {
+        gap: 45px;
+    }
     #searchBar {
-        height: 34px;
-        width: 220px;
+        font-size: 16px;
+        height: 38px;
+    }
+    #spinnerContainer {
+        height: 38px;
     }
 }
 
