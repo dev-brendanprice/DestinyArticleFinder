@@ -93,6 +93,7 @@
     font-size: 12px;
     font-weight: normal;
     align-content: center;
+    user-select: none;
 }
 
 #controlSearchCountInner {
@@ -103,7 +104,7 @@
 #controlButtonsContainer {
     display: flex;
     justify-content: left;
-    gap: 10px;
+    gap: 14px;
     width: fit-content;
 }
 
@@ -128,7 +129,7 @@
 }
 
 .buttonArrow {
-    width: 10px;
+    width: 13px;
     cursor: pointer;
     transition: all 0.1s;
 }

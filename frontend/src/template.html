@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" type="image/x-icon" href="./assets/favicon.ico">
     <title>Destiny Article Finder</title>
 </head>
@@ -133,36 +134,38 @@
     </div>
 
     <div id="articleMainContainer">
-        <div id="tabGroupsAndControls">
-            <div id="tabGroupContainer"></div>
-            <div id="articleControls">
-
-                <div id="controlSearchBarContainer">
-                    <input type="text" id="controlSearchBar" placeholder="Find (&#8593;&#8595; for history)">
-                    <img id="controlSearchCaseSensitiveToggle" src="./assets/Aa.svg" title="Case Sensitive"></img>
-                </div>
-                <div id="controlSearchFeedbackContainer">
-                    <div id="controlSearchCountDefault" style="font-size:11px;">No results</div>
-                    <div id="controlSearchCountInner">
-                        <div id="controlSearchCountPrefix">0</div>
-                        <div>of</div>
-                        <div id="controlSearchCountSuffix">1</div>
+        <div id="tabGroupsAndControlsWrapper">
+            <div id="tabGroupsAndControls">
+                <div id="tabGroupContainer"></div>
+                <div id="articleControls">
+    
+                    <div id="controlSearchBarContainer">
+                        <input type="text" id="controlSearchBar" placeholder="Find (&#8593;&#8595; for history)">
+                        <img id="controlSearchCaseSensitiveToggle" src="./assets/Aa.svg" title="Case Sensitive"></img>
                     </div>
+                    <div id="controlSearchFeedbackContainer">
+                        <div id="controlSearchCountDefault" style="font-size:11px;">No results</div>
+                        <div id="controlSearchCountInner">
+                            <div id="controlSearchCountPrefix">0</div>
+                            <div>of</div>
+                            <div id="controlSearchCountSuffix">1</div>
+                        </div>
+                    </div>
+                    <div id="controlButtonsContainer">
+                        <img id="controlButtonPrev" class="buttonArrow" src="./assets/match_arrow.svg" title="Previous Match"></img>
+                        <img id="controlButtonNext" class="buttonArrow" src="./assets/match_arrow.svg" title="Next Match" style="rotate: 180deg;"></img>
+                    </div>
+                    <div id="loadNoticeText">
+                        Loading Article..
+                    </div>
+    
                 </div>
-                <div id="controlButtonsContainer">
-                    <img id="controlButtonPrev" class="buttonArrow" src="./assets/match_arrow.svg" title="Previous Match"></img>
-                    <img id="controlButtonNext" class="buttonArrow" src="./assets/match_arrow.svg" title="Next Match" style="rotate: 180deg;"></img>
+                <div id="articleControlsTitle">
+                    <div style="font-weight: bold;margin-right: 5px;">Viewing:</div>
+                    <div id="articleControlsTitleText">This Week in Destiny: 27 Feb</div>
                 </div>
-                <div id="loadNoticeText">
-                    Loading Article..
-                </div>
-
+                <div id="articleControlsFade"></div>
             </div>
-            <div id="articleControlsTitle">
-                <div style="font-weight: bold;margin-right: 5px;">Viewing:</div>
-                <div id="articleControlsTitleText">This Week in Destiny: 27 Feb</div>
-            </div>
-            <div id="articleControlsFade"></div>
         </div>
 
         <div id="articleSubContainer">

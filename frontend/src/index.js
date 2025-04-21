@@ -28,9 +28,11 @@ import { getLatestRelease } from './components/config/version.js';
 import { handleRoutes } from './components/handleRoutes.js';
 import intializeEvents from './components/initEvents.js';
 import intializeSettings from './components/initSettings.js';
+import { initializeMobileReaderControls } from './components/mobileViews.js';
 
 intializeEvents(); // config UI/UX events
 intializeSettings(); // load user settings/defaults
+initializeMobileReaderControls(); // change DOM layout if mobile is being used
 handleRoutes(); // handle url routes
 
 export const version = await getLatestRelease(); // get and save latest version from release tag
