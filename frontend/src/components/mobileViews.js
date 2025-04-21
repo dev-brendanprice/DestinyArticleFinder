@@ -23,7 +23,7 @@ export function initializeMobileReaderControls() {
                 return;
             }
 
-            controls.style.marginTop = `${controlsPosition}px`;
+            controls.style.marginTop = `${controlsPosition + 1}px`;
         }
     }
 
