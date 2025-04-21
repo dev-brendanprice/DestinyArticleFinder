@@ -43,17 +43,50 @@
     #articleSubtitle {
         padding: 0px 15px 0px 15px;
     }
-
-    /* .highlight {
-        padding: unset;
+    #articleContainer {
+        border: none;
     }
-    .activeHighlight {
-        padding: unset;
+    #headNavigation {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    #mobileBurgerMenuIcon {
+        display: block;
+        flex: unset !important;
+        width: 28px;
+    }
+    #mobileBurgerMenu {
+        display: none;
+        position: absolute;
+        padding: 15px;
+        border-left: 1px solid rgba(128, 128, 128, 0.4);
+        width: 70%;
+        height: 100%;
+        right: 0;
+        box-sizing: border-box;
+        z-index: 99;
+        background-color: #252629;
+        color: white;
+        box-shadow: -50px 0px 50px rgba(0, 0, 0, 0.75);
+    }
+    #burgerMenuClose {
+        font-weight: normal;
+        text-decoration: underline;
+        text-underline-offset: 4px;
+        margin-bottom: 30px;
+        font-size: 14px;
+        color: rgb(110, 113, 148);
+    }
+    #burgerMenuList {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    #burgerMenuList > div {
+        padding: 5px 5px 5px 0px;
+        font-size: 20px;
     }
 
-    span {
-        padding: 0px 15px 0px 15px;
-    } */
     p {
         padding: 0px 15px 0px 15px;
     }

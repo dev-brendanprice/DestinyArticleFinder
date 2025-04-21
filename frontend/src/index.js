@@ -10,6 +10,7 @@ import './css/viewports.css';
 import './assets/Aa.svg';
 import './assets/bg.png';
 import './assets/bungie_shield.svg';
+import './assets/burger_menu.svg';
 import './assets/close.svg';
 import './assets/copy.svg';
 import './assets/download.svg';

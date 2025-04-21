@@ -152,16 +152,18 @@
 
 #articleTitleContainer {
     display: flex;
-    padding-top: 15px;
+    padding: 15px 15px 0px 15px;
     align-items: center;
     gap: 10px;
 }
 
 #articleTitle {
-    font-weight: 600;
+    font-size: 2em;
+    font-weight: bold;
 }
 
 #articleTitleLink {
+    margin-left: 5px;
     width: 16px;
     height: 16px;
 }

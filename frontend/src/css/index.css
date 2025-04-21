@@ -18,12 +18,12 @@ body {
     display: flex;
     justify-content: space-between;
     height: 64px;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 10px;
 }
 
 #headNavigation > div {
-    flex: 1;
+    width: 83vw;
+    flex-direction: 1;
     align-content: center;
 }
 
@@ -125,6 +125,7 @@ input[data-autocompleted] {
 }
 
 #allResultsDropShadow {
+    width: 94vw;
     z-index: 3;
     filter: drop-shadow(0px 0px 50px black);
 }
