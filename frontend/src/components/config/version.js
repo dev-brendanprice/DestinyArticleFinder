@@ -25,7 +25,7 @@ export async function getLatestRelease(releases) {
 export async function getReleases() {
     try {
 
-        const url = `${variables.HOST}/api/v1/releases`;
+        const url = `${variables.API_HOST}/api/v1/releases`;
         const releases = await fetch(url)
             .then(res => res.json())
             .then(data => {

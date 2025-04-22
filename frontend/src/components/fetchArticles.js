@@ -3,7 +3,7 @@ import { activeFilterValues } from './filterResults.js';
 
 // fetch articles by name (hostedUrl) from server
 export async function fetchArticlesByName(articleNames) {
-    let url = `${variables.HOST}/api/v1/articlesByName?a=${articleNames}`;
+    let url = `${variables.API_HOST}/api/v1/articlesByName?a=${articleNames}`;
 
     const articles = await fetch(url)
         .then(res => res.json())
@@ -20,7 +20,7 @@ export async function fetchArticlesByName(articleNames) {
 
 // Tell server to return matching articles, using specified search term
 export async function fetchArticles(searchTerm) {
-    let url = `${variables.HOST}/api/v1/articles?search=${encodeURIComponent(searchTerm)}`;
+    let url = `${variables.API_HOST}/api/v1/articles?search=${encodeURIComponent(searchTerm)}`;
 
     if (!activeFilterValues.typeAll) {
         const types = Object.keys(activeFilterValues).filter(
