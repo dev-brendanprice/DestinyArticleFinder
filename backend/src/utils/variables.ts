@@ -15,7 +15,10 @@ interface Variables {
 }
 
 // default to prod
-let allowedOrigins: Array<string> = [process.env.PROD_ORIGIN, 'dev.destinyarticlefinder.com'];
+let allowedOrigins: Array<string> = [
+    process.env.PROD_ORIGIN,
+    'dev.destinyarticlefinder.com'
+];
 let databaseConfig: DatabaseConfig = {
     connectionLimit: 10,
     host: process.env.DB_HOST,
@@ -26,7 +29,10 @@ let databaseConfig: DatabaseConfig = {
 
 // change config for development if mode='development'
 if (process.env.MODE === 'development') {
-    allowedOrigins = [process.env.DEV_ORIGIN];
+    allowedOrigins = [
+        process.env.DEV_ORIGIN,
+        process.env.LOCAL_DEV_ORIGIN_NETWORK_ADDR // full network addr
+    ];
     databaseConfig = {
         connectionLimit: 10,
         host: process.env.DEV_DB_HOST,
