@@ -101,7 +101,7 @@
 #controlButtonsContainer {
     display: flex;
     justify-content: left;
-    gap: 14px;
+    gap: 10px;
     width: fit-content;
 }
 
@@ -126,7 +126,7 @@
 }
 
 .buttonArrow {
-    width: 13px;
+    width: 10px;
     cursor: pointer;
     transition: all 0.1s;
 }

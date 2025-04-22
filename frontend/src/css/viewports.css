@@ -25,8 +25,9 @@
         height: 38px;
     }
     #articleContainer {
-        padding: 0px;
+        padding: 15px;
         width: auto;
+        border: none;
     }
     #articleContent {
         font-size: 16px;
@@ -40,12 +41,9 @@
     #articleImage {
         height: 300px;
     }
-    #articleSubtitle {
+    /* #articleSubtitle {
         padding: 0px 15px 0px 15px;
-    }
-    #articleContainer {
-        border: none;
-    }
+    } */
     #headNavigation {
         padding-left: 10px;
         padding-right: 10px;
@@ -103,11 +101,6 @@
     #controlSearchBarContainer {
         width: 145px;
     }
-    /* #tabGroupsAndControlsWrapper {
-        position: sticky;
-        top: 0;
-        z-index: 2;
-    } */
     #tabGroupsAndControls {
         position: absolute;
     }
@@ -116,8 +109,11 @@
         transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
         transition-duration: 300ms;
     }
-    #articleTitleContainer {
-        padding: 15px 15px 0px 15px;
+    #controlButtonsContainer {
+        gap: 14px;
+    }
+    .buttonArrow {
+        width: 13px;
     }
 
     p {

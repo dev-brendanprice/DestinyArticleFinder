@@ -32,8 +32,8 @@ import { initializeMobileReaderControls } from './components/mobileViews.js';
 
 intializeEvents(); // config UI/UX events
 intializeSettings(); // load user settings/defaults
-initializeMobileReaderControls(); // change DOM layout if mobile is being used
 handleRoutes(); // handle url routes
+initializeMobileReaderControls(); // change DOM layout if mobile is being used
 
 export const version = await getLatestRelease(); // get and save latest version from release tag
 console.log(`%cDestiny Article Finder ${version}`, 'font-weight: bold;font-size: 1.75em;');

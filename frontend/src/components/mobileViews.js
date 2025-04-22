@@ -41,9 +41,13 @@ function initialize() {
 
     window.addEventListener('scroll', showControls); // debounce on scroll
     input.addEventListener('blur', showControls); // debounce on "soft" (virtual) keyboard is closed
+
+    // give controls a bottom margin, equal to its height
+    const controlsHeight = controls.parentElement.offsetHeight;
+    controls.style.marginBottom = `${controlsHeight}px`;
 };
 
-// only initialize mobile controls if viewport is 600px or less
+// only initialize if viewport is 600px or less
 export function initializeMobileReaderControls() {
     if (window.innerWidth <= 600) {
         initialize();
