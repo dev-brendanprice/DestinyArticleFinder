@@ -12,5 +12,4 @@ export function initializeVariables() {
     } else if (origin.includes('192.168') && origin.includes('http://')) {
         variables.HOST = `http://${process.env.LOCAL_DEV_SERVER_NETWORK_IP}:3000`;
     };
-    console.log(variables.HOST);
 }
