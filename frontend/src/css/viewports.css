@@ -25,9 +25,13 @@
         height: 38px;
     }
     #articleContainer {
-        padding: 15px;
+        padding: unset;
+        padding-top: 15px;
         width: auto;
         border: none;
+    }
+    #articleTitleContainer, #articleSubtitle {
+        padding-left: 15px;
     }
     #articleContent {
         font-size: 16px;
@@ -36,14 +40,12 @@
         height: 38px;
     }
     #articleIframe {
-        height: 200px;
-    }
-    #articleImage {
         height: 300px;
     }
-    /* #articleSubtitle {
-        padding: 0px 15px 0px 15px;
-    } */
+    #articleImage {
+        height: 100%;
+        box-sizing: border-box;
+    }
     #headNavigation {
         padding-left: 10px;
         padding-right: 10px;
