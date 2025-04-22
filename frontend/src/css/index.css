@@ -18,12 +18,12 @@ body {
     display: flex;
     justify-content: space-between;
     height: 64px;
-    padding-left: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 #headNavigation > div {
-    width: 83vw;
-    flex-direction: 1;
+    flex: 1;
     align-content: center;
 }
 
@@ -125,7 +125,6 @@ input[data-autocompleted] {
 }
 
 #allResultsDropShadow {
-    width: 94vw;
     z-index: 3;
     filter: drop-shadow(0px 0px 50px black);
 }
@@ -294,4 +293,16 @@ input[data-autocompleted] {
     font-size: 12px;
     font-style: italic;
     user-select: none;
+}
+
+#mobileBurgerMenuIcon {
+    display: none;
+}
+
+#mobileBurgerMenu {
+    display: none;
+}
+
+#tabGroupsAndControlsWrapper {
+    width: 100%;
 }

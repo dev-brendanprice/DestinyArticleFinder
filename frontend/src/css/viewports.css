@@ -50,6 +50,14 @@
         padding-left: 10px;
         padding-right: 10px;
     }
+    #headNavigation > div {
+        flex: unset;
+        width: 83vw;
+        flex-direction: 1;
+    }
+    #allResultsDropShadow {
+        width: 94vw;
+    }
     #mobileBurgerMenuIcon {
         display: block;
         flex: unset !important;
@@ -98,7 +106,6 @@
     #tabGroupsAndControlsWrapper {
         position: sticky;
         top: 0;
-        width: 100%;
         z-index: 2;
     }
     #tabGroupsAndControls {
@@ -108,6 +115,9 @@
         transition-property: all;
         transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
         transition-duration: 300ms;
+    }
+    #articleTitleContainer {
+        padding: 15px 15px 0px 15px;
     }
 
     p {

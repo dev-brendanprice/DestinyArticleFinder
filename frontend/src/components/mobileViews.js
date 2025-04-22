@@ -1,6 +1,6 @@
  
 // ensure that reader controls are always shown on mobile - TO:DO REFACTOR THIS
-export function initializeMobileReaderControls() {
+function initialize() {
     let controlsPosition = 0;
     let wrapper = document.getElementById('tabGroupsAndControlsWrapper');
     let controls = document.getElementById('tabGroupsAndControls');
@@ -41,4 +41,11 @@ export function initializeMobileReaderControls() {
 
     window.addEventListener('scroll', showControls); // debounce on scroll
     input.addEventListener('blur', showControls); // debounce on "soft" (virtual) keyboard is closed
+};
+
+// only initialize mobile controls if viewport is 600px or less
+export function initializeMobileReaderControls() {
+    if (window.innerWidth <= 600) {
+        initialize();
+    };
 };
