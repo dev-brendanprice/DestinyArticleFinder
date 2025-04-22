@@ -32,7 +32,8 @@ setInterval(async () => {
 
 // config express and middleware
 const app = express();
-app.use(cors({ origin: variables.origins })); // allow from dev/prod frontend
+app.use(cors({ origin: variables.origins }));
+
 
 // get articles by name (hostedUrl)
 app.get('/api/v1/articlesByName', async (req, res) => {
@@ -99,5 +100,5 @@ app.get('/api/v1/releases', async (_req, res) => {
 });
 
 app.listen(expressPort, () => {
-    console.log(`serving: http://localhost:${expressPort}`);
+    console.log(`serving: ${process.env.DEV_ORIGIN}`);
 });

@@ -30,8 +30,7 @@ let databaseConfig: DatabaseConfig = {
 // change config for development if mode='development'
 if (process.env.MODE === 'development') {
     allowedOrigins = [
-        process.env.DEV_ORIGIN,
-        process.env.LOCAL_DEV_ORIGIN_NETWORK_ADDR // full network addr
+        process.env.DEV_ORIGIN, // http://<deviceip>:<port>
     ];
     databaseConfig = {
         connectionLimit: 10,
