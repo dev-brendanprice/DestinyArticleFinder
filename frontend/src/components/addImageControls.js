@@ -80,9 +80,14 @@ export function addImageControls() {
         // moreLinkContainer.addEventListener('click', () => {
         //     navigator.clipboard.writeText(`${imageURL}`);
         // });
-        imageCtrlLink.addEventListener('click', () => {
-            navigator.clipboard.writeText(`${imageURL}`);
-        });
+        
+        if (navigator?.clipboard) {
+            imageCtrlLink.addEventListener('click', () => {
+                navigator.clipboard.writeText(`${imageURL}`);
+            });
+        } else {
+            imageCtrlLink.style.display = 'none';
+        }; // create event/hide button based on presence of https (hides in dev context)
 
         imageCtrlDownload.href = '';
         imageCtrlDownload.download = `${imageURL}`;

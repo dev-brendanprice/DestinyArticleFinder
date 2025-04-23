@@ -43,6 +43,16 @@ export default async function intializeEvents() {
         }
     }
 
+    // open mobile burger menu
+    document.getElementById('mobileBurgerMenuIcon').addEventListener('click', () => {
+        document.getElementById('mobileBurgerMenu').style.display = 'block';
+    });
+
+    // close mobile burger menu
+    document.getElementById('burgerMenuClose').addEventListener('click', () => {
+        document.getElementById('mobileBurgerMenu').style.display = 'none';
+    });
+
     // nav title redirects back to homepage
     document.getElementById('navTitle').addEventListener('click', () => {
         window.location = window.location.origin;
@@ -50,6 +60,11 @@ export default async function intializeEvents() {
 
     // Bungie logo redirect
     document.getElementById('bungieLogoIcon').addEventListener('click', () => {
+        window.open('https://www.bungie.net/7/en/News', '_blank').focus();
+    });
+
+    // "Bungie.net News" 
+    document.getElementById('burgerMenuLinkListBungie').addEventListener('click', () => {
         window.open('https://www.bungie.net/7/en/News', '_blank').focus();
     });
 

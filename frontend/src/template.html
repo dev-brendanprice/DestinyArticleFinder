@@ -2,13 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" type="image/x-icon" href="./assets/favicon.ico">
     <title>Destiny Article Finder</title>
 </head>
 <body>
+    <div id="mobileBurgerMenu">
+        <div id="burgerMenuClose">Close <span>X</span></div>
+        <div id="burgerMenuList">
+            <div id="burgerMenuLinkListBungie">Bungie.net News</div>
+        </div>
+    </div>
+
     <div id="headNavigation">
-        <div>
+        <div id="navTitleParent">
             <div id="navTitle">DAF</div>
         </div>
 
@@ -121,46 +128,49 @@
         <div id="headNavIcons">
             <img id="bungieLogoIcon" src="./assets/bungie_shield.svg" href="https://www.bungie.net/7/en/News" target="_blank">
         </div>
+
+        <img id="mobileBurgerMenuIcon" src="./assets/burger_menu.svg"></img>
     </div>
 
     <div id="articleMainContainer">
-        <div id="tabGroupsAndControls">
-            <div id="tabGroupContainer"></div>
-            <div id="articleControls">
-
-                <div id="controlSearchBarContainer">
-                    <input type="text" id="controlSearchBar" placeholder="Find (&#8593;&#8595; for history)">
-                    <img id="controlSearchCaseSensitiveToggle" src="./assets/Aa.svg" title="Case Sensitive"></img>
-                </div>
-                <div id="controlSearchFeedbackContainer">
-                    <div id="controlSearchCountDefault" style="font-size:11px;">No results</div>
-                    <div id="controlSearchCountInner">
-                        <div id="controlSearchCountPrefix">0</div>
-                        <div>of</div>
-                        <div id="controlSearchCountSuffix">1</div>
+        <div id="tabGroupsAndControlsWrapper">
+            <div id="tabGroupsAndControls">
+                <div id="tabGroupContainer"></div>
+                <div id="articleControls">
+    
+                    <div id="controlSearchBarContainer">
+                        <input type="text" id="controlSearchBar" placeholder="Find (&#8593;&#8595; for history)">
+                        <img id="controlSearchCaseSensitiveToggle" src="./assets/Aa.svg" title="Case Sensitive"></img>
                     </div>
+                    <div id="controlSearchFeedbackContainer">
+                        <div id="controlSearchCountDefault" style="font-size:11px;">No results</div>
+                        <div id="controlSearchCountInner">
+                            <div id="controlSearchCountPrefix">0</div>
+                            <div>of</div>
+                            <div id="controlSearchCountSuffix">1</div>
+                        </div>
+                    </div>
+                    <div id="controlButtonsContainer">
+                        <img id="controlButtonPrev" class="buttonArrow" src="./assets/match_arrow.svg" title="Previous Match"></img>
+                        <img id="controlButtonNext" class="buttonArrow" src="./assets/match_arrow.svg" title="Next Match" style="rotate: 180deg;"></img>
+                    </div>
+                    <div id="loadNoticeText">
+                        Loading Article..
+                    </div>
+    
                 </div>
-                <div id="controlButtonsContainer">
-                    <img id="controlButtonPrev" class="buttonArrow" src="./assets/match_arrow.svg" title="Previous Match"></img>
-                    <img id="controlButtonNext" class="buttonArrow" src="./assets/match_arrow.svg" title="Next Match" style="rotate: 180deg;"></img>
+                <div id="articleControlsTitle">
+                    <div style="font-weight: bold;margin-right: 5px;">Viewing:</div>
+                    <div id="articleControlsTitleText">This Week in Destiny: 27 Feb</div>
                 </div>
-                <div id="loadNoticeText">
-                    Loading Article..
-                </div>
-
+                <div id="articleControlsFade"></div>
             </div>
-            <div id="articleControlsTitle">
-                <div style="font-weight: bold;margin-right: 5px;">Viewing:</div>
-                <div id="articleControlsTitleText">This Week in Destiny: 27 Feb</div>
-            </div>
-            <div id="articleControlsFade"></div>
         </div>
 
         <div id="articleSubContainer">
             <div id="articleContainer">
                 <div id="articleTitleContainer">
-                    <h1 id="articleTitle"></h1>
-                    <svg id="articleTitleLink" viewBox="0 0 16 16" height="16" aria-hidden="true"><path fill="#8585C5" d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg>
+                    <span id="articleTitle"></span>
                 </div>
                 <span id="articleSubtitle"></span>
                 <div id="articleContent"></div>

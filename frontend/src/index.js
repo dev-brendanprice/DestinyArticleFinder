@@ -10,6 +10,7 @@ import './css/viewports.css';
 import './assets/Aa.svg';
 import './assets/bg.png';
 import './assets/bungie_shield.svg';
+import './assets/burger_menu.svg';
 import './assets/close.svg';
 import './assets/copy.svg';
 import './assets/download.svg';
@@ -27,10 +28,12 @@ import { getLatestRelease } from './components/config/version.js';
 import { handleRoutes } from './components/handleRoutes.js';
 import intializeEvents from './components/initEvents.js';
 import intializeSettings from './components/initSettings.js';
+import { initializeMobileReaderControls } from './components/mobileViews.js';
 
 intializeEvents(); // config UI/UX events
 intializeSettings(); // load user settings/defaults
 handleRoutes(); // handle url routes
+initializeMobileReaderControls(); // change DOM layout if mobile is being used
 
 export const version = await getLatestRelease(); // get and save latest version from release tag
 console.log(`%cDestiny Article Finder ${version}`, 'font-weight: bold;font-size: 1.75em;');

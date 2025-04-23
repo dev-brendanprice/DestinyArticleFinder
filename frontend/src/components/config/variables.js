@@ -1,4 +1,4 @@
 /* eslint-disable no-undef */
 export const variables = {
-    HOST: process.env.HOST
+    API_HOST: process.env.API_HOST
 };

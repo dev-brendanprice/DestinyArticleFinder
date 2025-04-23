@@ -1,3 +1,9 @@
+@media (max-width: 1700px) {
+    #articleMainContainer {
+        width: 80% !important;
+    }
+}
+
 @media (max-width: 1000px) {
     #articleMainContainer {
         width: 100% !important;
@@ -11,9 +17,130 @@
     .searchBarContainer {
         height: 34px;
     }
+    #navTitleParent {
+        display: none;
+    }
+    #headNavIcons {
+        display: none;
+    }
+    #outerSearchContainer {
+        gap: 45px;
+    }
     #searchBar {
-        height: 34px;
-        width: 220px;
+        font-size: 16px;
+        height: 38px;
+    }
+    #articleContainer {
+        padding: unset;
+        padding-top: 15px;
+        width: auto;
+        border: none;
+    }
+    #articleTitleContainer, #articleSubtitle {
+        padding-left: 15px;
+    }
+    #articleContent {
+        font-size: 16px;
+    }
+    #spinnerContainer {
+        height: 38px;
+    }
+    #articleIframe {
+        height: 300px;
+    }
+    #articleImage {
+        height: 100%;
+        box-sizing: border-box;
+    }
+    #headNavigation {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    #headNavigation > div {
+        flex: unset;
+        width: 83vw;
+        flex-direction: 1;
+    }
+    #allResultsDropShadow {
+        width: 94vw;
+    }
+    #mobileBurgerMenuIcon {
+        display: block;
+        flex: unset !important;
+        width: 28px;
+    }
+    #mobileBurgerMenu {
+        display: none;
+        position: absolute;
+        padding: 15px;
+        border-left: 1px solid rgba(128, 128, 128, 0.4);
+        width: 70%;
+        height: 100%;
+        right: 0;
+        box-sizing: border-box;
+        z-index: 99;
+        background-color: #252629;
+        color: white;
+        box-shadow: -50px 0px 50px rgba(0, 0, 0, 0.75);
+    }
+    #burgerMenuClose {
+        font-weight: normal;
+        text-decoration: underline;
+        text-underline-offset: 4px;
+        margin-bottom: 30px;
+        font-size: 14px;
+        color: rgb(110, 113, 148);
+    }
+    #burgerMenuList {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    #burgerMenuList > div {
+        padding: 5px 5px 5px 0px;
+        font-size: 20px;
+    }
+    #controlSearchFeedbackContainer {
+        width: auto;
+    }
+    #loadNoticeText {
+        font-size: 10px;
+    }
+    #controlSearchBarContainer {
+        width: 145px;
+    }
+    #tabGroupsAndControls {
+        position: absolute;
+    }
+    #tabGroupsAndControls.down {
+        transition-property: all;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        transition-duration: 300ms;
+    }
+    #controlButtonsContainer {
+        gap: 14px;
+    }
+    .buttonArrow {
+        width: 13px;
+    }
+
+    p {
+        padding: 0px 15px 0px 15px;
+    }
+    ul {
+        padding: 0px 15px 0px 15px;
+    }
+    h1, h2, h3, h4 {
+        padding: 0px 15px 0px 15px;
+    }
+    figure {
+        margin-bottom: 20px;
+    }
+    figcaption {
+        color: rgb(86, 82, 118);;
+        font-size: 14px;
+        text-align: left !important;
+        padding: 0px 15px 0px 15px;
     }
 }
 

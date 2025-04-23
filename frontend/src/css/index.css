@@ -122,6 +122,9 @@ input[data-autocompleted] {
     flex-direction: column;
     gap: 39px;
     margin-top: 15px;
+
+    flex: unset !important; /* ignore headNavigation > div flex style */
+    width: 60%;
 }
 
 #allResultsDropShadow {
@@ -293,4 +296,25 @@ input[data-autocompleted] {
     font-size: 12px;
     font-style: italic;
     user-select: none;
+}
+
+#mobileBurgerMenuIcon {
+    display: none;
+    cursor: pointer;
+}
+
+#burgerMenuLinkListBungie, #burgerMenuClose {
+    cursor: pointer;
+}
+
+#mobileBurgerMenu {
+    display: none;
+}
+
+#tabGroupsAndControlsWrapper {
+    width: 100%;
+    height: 90px; /* height of tabGroupsAndControlsWrapper */
+    position: sticky;
+    top: 0;
+    z-index: 2;
 }

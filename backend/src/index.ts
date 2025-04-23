@@ -2,37 +2,32 @@ import cors from 'cors';
 import express from 'express';
 import mysql from 'mysql';
 import { fetchArticle, fetchArticleByName } from './utils/fetchArticle';
+import { APIRequest, APIResponse } from './utils/interfaces';
 import parseTypes from './utils/parseTypes';
 import { variables } from './utils/variables';
 import { getReleases } from './utils/version';
 
-// request/response interfaces
-interface RequestOptions {
-    readonly searchTerm: String;
-    readonly types: Array<string>;
-    readonly limit: String;
-}
-
-interface APIResponse {
-    readonly data: Array<any>;
-    readonly items: Number;
-    readonly search: String;
-}
-
-// globals
-const expressPort = process.env.PORT || 3000;
-const connectionPool = mysql.createPool(variables.dbConfig);
+const expressPort = process.env.PORT || 4000; // default to port 4000
+const connectionPool = mysql.createPool(variables.databaseConfig); // use connection pools
 let githubReleases: Array<any>;
-
-// get releases every 30 seconds for prod, 90 for dev
-setInterval(async () => {
-    githubReleases = await getReleases();
-}, process.env.MODE === 'production' ? 30 * 1000 : 90 * 1000);
-
 
 // config express and middleware
 const app = express();
-app.use(cors({ origin: variables.origins })); // allow from dev/prod frontend
+// const fubar: String = 'production';
+
+// fetch github releases every 60 seconds
+setInterval(async () => {
+    githubReleases = await getReleases();
+}, 60 * 1000);
+
+// prod and dev cors
+if (process.env.MODE === 'production') {
+    console.log(variables.allowedOrigins);
+    app.use(cors({ origin: variables.allowedOrigins }));
+} else {
+    app.use(cors());
+};
+
 
 // get articles by name (hostedUrl)
 app.get('/api/v1/articlesByName', async (req, res) => {
@@ -59,7 +54,7 @@ app.get('/api/v1/articlesByName', async (req, res) => {
 // query articles database
 app.get('/api/v1/articles', async (req, res) => {
     const types: Array<string> = parseTypes(<string>req.query.types); // parse param "types"
-    const options: RequestOptions = {
+    const options: APIRequest = {
         searchTerm: <string>req.query.search,
         types: types,
         limit: <string>req.query.limit || '25'
@@ -99,5 +94,5 @@ app.get('/api/v1/releases', async (_req, res) => {
 });
 
 app.listen(expressPort, () => {
-    console.log(`serving: http://localhost:${expressPort}`);
+    console.log(`API port: ${expressPort}\nAPI addr: http://<local_device_ip>:${expressPort}`);
 });
