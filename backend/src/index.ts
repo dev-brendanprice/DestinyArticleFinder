@@ -7,13 +7,11 @@ import parseTypes from './utils/parseTypes';
 import { variables } from './utils/variables';
 import { getReleases } from './utils/version';
 
+const app = express();
 const expressPort = process.env.PORT || 4000; // default to port 4000
 const connectionPool = mysql.createPool(variables.databaseConfig); // use connection pools
 let githubReleases: Array<any>;
 
-// config express and middleware
-const app = express();
-// const fubar: String = 'production';
 
 // fetch github releases every 60 seconds
 setInterval(async () => {

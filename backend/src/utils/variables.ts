@@ -18,8 +18,8 @@ if (mode === 'development') {
 }
 else if (mode === 'production') {
     allowedOrigins = [
-        'dev.destinyarticlefinder.com',
-        'www.destinyarticlefinder.com',
+        'https://dev.destinyarticlefinder.com',
+        'https://www.destinyarticlefinder.com',
     ];
     databaseConfig = {
         connectionLimit: 10,
