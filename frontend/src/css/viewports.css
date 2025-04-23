@@ -1,3 +1,9 @@
+@media (max-width: 1700px) {
+    #articleMainContainer {
+        width: 80% !important;
+    }
+}
+
 @media (max-width: 1000px) {
     #articleMainContainer {
         width: 100% !important;
