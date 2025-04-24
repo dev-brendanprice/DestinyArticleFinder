@@ -49,7 +49,7 @@ export function fetchArticle(connectionPool: any, options: any): Promise<object>
             LIMIT 0, ${options.limit};
         `;
     }
-    console.log(sqlQuery);
+
     return new Promise((resolve, reject) => {
         connectionPool.query(sqlQuery, (err, results) => {
             if (err) return reject(err);

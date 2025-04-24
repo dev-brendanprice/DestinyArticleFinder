@@ -4,7 +4,7 @@ import { activeSortByValue } from './sortResults.js';
 
 // fetch articles by name (hostedUrl) from server
 export async function fetchArticlesByName(articleNames) {
-    let url = `${API_HOST}/api/v1/articlesByName?a=${articleNames}`;
+    let url = `${API_HOST}/api/v1/articlesByName?articlenames=${articleNames}`;
 
     const articles = await fetch(url)
         .then(res => res.json())

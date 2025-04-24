@@ -31,7 +31,7 @@ if (process.env.MODE === 'production') {
 // get articles by name (hostedUrl)
 app.get('/api/v1/articlesByName', async (req, res) => {
 
-    const articleNames: Array<string> = (<string>req.query.a)?.split(',');
+    const articleNames: Array<string> = (<string>req.query.articlenames)?.split(',');
 
     if (!articleNames || (articleNames.length === 1 && articleNames[0] === '')) {
         res.status(400).json({ error: 'Please provide article names' });
@@ -43,7 +43,7 @@ app.get('/api/v1/articlesByName', async (req, res) => {
             let response: APIResponse = {
                 data: articles,
                 items: articles.length,
-                search: <string>req.query.articles // doesnt return ??
+                search: articleNames.toString()
             };
             res.json(response);
         })
