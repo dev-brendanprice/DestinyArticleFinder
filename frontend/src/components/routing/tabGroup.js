@@ -31,7 +31,7 @@ export function addTabToGroup(article, searchTerm) {
     if (searchTerm !== '') { // if no searchTerm supplied, use fallback tab title
         tabTitle.innerHTML = `${article.type}, "${searchTerm}"`;
     } else {
-        tabTitle.innerHTML = `Latest Article`;
+        tabTitle.innerHTML = `${article.type} article`;
     }
     tabClose.src = './assets/close.svg';
 
