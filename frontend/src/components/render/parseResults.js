@@ -2,7 +2,7 @@ import { mapArticleToRoute } from '../routing/handleRoutes.js';
 import { addTabToGroup, TabGroup } from '../routing/tabGroup.js';
 import { getSearchStats } from '../search/getSearchStats.js';
 import { getSnippet } from '../search/getSnippet.js';
-import { activeSortByValues } from '../search/sortResults.js';
+import { activeSortByValue } from '../search/sortResults.js';
 import { renderArticle } from './renderArticle.js';
 
 // Parse a given article, sanitise content, format into HTML DOM content
@@ -52,8 +52,8 @@ export function parseResults(data) {
     // ^ amount of matches, in article with most matches
 
     // sort articles
-    let sortBy = Object.keys(activeSortByValues)
-        .filter(key => activeSortByValues[key] && key !== 'set')[0]
+    let sortBy = Object.keys(activeSortByValue)
+        .filter(key => activeSortByValue[key] && key !== 'set')[0]
         .replace('type', '');
 
     if (sortBy === 'DateASC') {

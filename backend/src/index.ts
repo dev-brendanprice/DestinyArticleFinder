@@ -5,6 +5,7 @@ import { variables } from './components/config/variables';
 import { getReleases } from './components/config/version';
 import { fetchArticle, fetchArticleByName, fetchLatestArticles } from './components/search/fetchArticle';
 import { APIRequest, APIResponse } from './components/utils/interfaces';
+import parseSort from './components/utils/parseSort';
 import parseTypes from './components/utils/parseTypes';
 
 const app = express();
@@ -52,11 +53,18 @@ app.get('/api/v1/articlesByName', async (req, res) => {
 // query articles database
 app.get('/api/v1/articles', async (req, res) => {
     const types: Array<string> = parseTypes(<string>req.query.types); // parse param "types"
+    const sort: String = parseSort(<string>req.query.sort); // parse sort param
     const options: APIRequest = {
         searchTerm: <string>req.query.search,
         types: types,
-        limit: <string>req.query.limit || '25'
+        sort: sort,
+        limit: <string>req.query.limit || '25' // Default to 25
     };
+
+    if (!sort) {
+        res.status(400).json({ error: 'Please provide a valid sort param' });
+        return;
+    }
 
     if (!options.searchTerm) {
         res.status(400).json({ error: 'Please provide a search query param' });

@@ -1,4 +1,4 @@
-export let activeSortByValues = {
+export let activeSortByValue = {
     typeDateASC: true, // default
     typeDateDES: false,
     typeABC: false,
@@ -7,6 +7,6 @@ export let activeSortByValues = {
     set(target, boolean) {
         this[target] = boolean;
         const { ...values } = this;
-        window.localStorage.setItem('activeSortByValues', JSON.stringify(values));
+        window.localStorage.setItem('activeSortByValue', JSON.stringify(values));
     }
 };

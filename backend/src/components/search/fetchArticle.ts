@@ -29,10 +29,12 @@ export function fetchLatestArticles(connectionPool: any): Promise<object> {
 
 export function fetchArticle(connectionPool: any, options: any): Promise<object> {
     const searchTerm = options.searchTerm.replaceAll("'", "''");
+
     let sqlQuery: String = `
         SELECT * FROM articles
         WHERE lower(htmlContent) LIKE lower('%${searchTerm}%') OR
         lower(title) LIKE lower('%${searchTerm}%')
+        ORDER BY ${options.sort}
         LIMIT 0, ${options.limit};
     `;
 
@@ -43,10 +45,11 @@ export function fetchArticle(connectionPool: any, options: any): Promise<object>
             WHERE lower(htmlContent) LIKE lower('%${searchTerm}%') OR
             lower(title) LIKE lower('%${searchTerm}%')
             AND (${options.types.map((type: String) => `type = '${type}'`).join(' OR ')})
+            ORDER BY ${options.sort}
             LIMIT 0, ${options.limit};
         `;
     }
-
+    console.log(sqlQuery);
     return new Promise((resolve, reject) => {
         connectionPool.query(sqlQuery, (err, results) => {
             if (err) return reject(err);

@@ -1,7 +1,7 @@
 /*
     Credentials for MySQL Database
     connectionLimit: limit of connections allowed in connection pool
-    database: the name of the database
+    database: the name of the database table
 */
 export interface DatabaseCredentials {
     readonly connectionLimit: Number;
@@ -21,6 +21,7 @@ export interface AppVariables {
 export interface APIRequest {
     readonly searchTerm: String;
     readonly types: Array<string>;
+    readonly sort: String;
     readonly limit: String;
 }
 

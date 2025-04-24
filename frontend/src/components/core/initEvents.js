@@ -10,7 +10,7 @@ import {
 } from '../search/controlSearch.js';
 import { fetchArticles } from '../search/fetchArticles.js';
 import { activeFilterValues } from '../search/filterResults.js';
-import { activeSortByValues } from '../search/sortResults.js';
+import { activeSortByValue } from '../search/sortResults.js';
 
 let positionIndex = 0; // index for reader controls
 export function resetPositionIndex() {
@@ -409,16 +409,16 @@ export default async function intializeEvents() {
                 for (const value of sortByValues) {
                     const checkbox = getSortCheckbox(value);
                     checkbox.checked = false;
-                    activeSortByValues.set(value, false);
+                    activeSortByValue.set(value, false);
                 }
 
                 checkbox.checked = true;
-                activeSortByValues.set(checkboxValue, true);
+                activeSortByValue.set(checkboxValue, true);
                 hideSortList();
             }
 
             // transform active sortby into a string
-            let sortbyString = Object.entries(activeSortByValues)
+            let sortbyString = Object.entries(activeSortByValue)
                 .filter(([key, value]) => value && key !== 'set')
                 .map(([key]) => (key = key.replace(/^type/, '')));
 

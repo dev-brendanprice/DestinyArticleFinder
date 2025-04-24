@@ -1,21 +1,21 @@
 import { activeFilterValues } from '../search/filterResults.js';
-import { activeSortByValues } from '../search/sortResults.js';
+import { activeSortByValue } from '../search/sortResults.js';
 
 // set all DOM elements to saved content in localStorage
 export default function initSettings() {
     // set default filter/sort-by values
     const storedFilters = window.localStorage.getItem('activeFilterValues');
-    const storedSortBys = window.localStorage.getItem('activeSortByValues');
+    const storedSortBys = window.localStorage.getItem('activeSortByValue');
 
     if (!storedFilters) {
         window.localStorage.setItem('activeFilterValues', JSON.stringify(activeFilterValues));
     }
     if (!storedSortBys) {
-        window.localStorage.setItem('activeSortByValues', JSON.stringify(activeSortByValues));
+        window.localStorage.setItem('activeSortByValue', JSON.stringify(activeSortByValue));
     }
 
     const filterValues = JSON.parse(window.localStorage.getItem('activeFilterValues'));
-    const sortbyValues = JSON.parse(window.localStorage.getItem('activeSortByValues'));
+    const sortbyValues = JSON.parse(window.localStorage.getItem('activeSortByValue'));
     const parent = document.getElementById('searchFiltersContainer');
 
     // set filter and sort-by objects (again)
@@ -23,7 +23,7 @@ export default function initSettings() {
         activeFilterValues.set(...type);
     }
     for (let type of Object.entries(sortbyValues)) {
-        activeSortByValues.set(...type);
+        activeSortByValue.set(...type);
     }
 
     // filter DOM
@@ -60,7 +60,7 @@ export default function initSettings() {
     document.getElementById('filterParentLabel').innerHTML = filtersString;
 
     // transform active sortby into a string
-    let sortbyString = Object.entries(activeSortByValues)
+    let sortbyString = Object.entries(activeSortByValue)
         .filter(([key, value]) => value && key !== 'set')
         .map(([key]) => (key = key.replace(/^type/, '')));
 
