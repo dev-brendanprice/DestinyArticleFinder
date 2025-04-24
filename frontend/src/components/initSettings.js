@@ -18,7 +18,7 @@ export default function initSettings() {
     const sortbyValues = JSON.parse(window.localStorage.getItem('activeSortByValues'));
     const parent = document.getElementById('searchFiltersContainer');
 
-    // set variables.js objects (again)
+    // set filter and sort-by objects (again)
     for (let type of Object.entries(filterValues)) {
         activeFilterValues.set(...type);
     }

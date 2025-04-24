@@ -64,7 +64,6 @@ export function parseResults(data) {
         articles.sort((a, b) => a.title.localeCompare(b.title));
     }
 
-    console.log(searchStatistics);
     document.getElementById('statFirstDate').innerHTML = searchStatistics.firstMention.dateShortForm;
     document.getElementById('statLastDate').innerHTML = searchStatistics.lastMention.dateShortForm;
     document.getElementById('statMostDate').innerHTML = topArticle.dateShortForm;

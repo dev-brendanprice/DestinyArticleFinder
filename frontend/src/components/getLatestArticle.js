@@ -1,7 +1,7 @@
-import { variables } from './config/variables.js';
+import { API_HOST } from "../index.js";
 
 export async function getLatestArticle() {
-    const url = `${variables.API_HOST}/api/v1/latestArticle`;
+    const url = `${API_HOST}/api/v1/latestArticle`;
     const latestArticle = await fetch(url)
         .then(res => res.json())
         .then(data => {

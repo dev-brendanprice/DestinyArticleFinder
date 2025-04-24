@@ -28,7 +28,7 @@ export function addTabToGroup(article, searchTerm) {
     tabTitle.id = 'tabTitle';
     tabClose.id = 'btnCloseTab';
 
-    if (searchTerm !== '') {
+    if (searchTerm !== '') { // if no searchTerm supplied, use fallback tab title
         tabTitle.innerHTML = `${article.type}, "${searchTerm}"`;
     } else {
         tabTitle.innerHTML = `Latest Article`;
@@ -51,8 +51,6 @@ export function addTabToGroup(article, searchTerm) {
         if (TabGroup.tabArticles.length === 1) {
             return;
         }
-
-        console.log(e.target);
 
         const targetTab = e.target;
         const targetTabParent = targetTab.parentElement;

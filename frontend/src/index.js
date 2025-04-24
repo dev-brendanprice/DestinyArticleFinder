@@ -31,11 +31,15 @@ import intializeEvents from './components/initEvents.js';
 import intializeSettings from './components/initSettings.js';
 import { initializeMobileReaderControls } from './components/mobileViews.js';
 
+// eslint-disable-next-line no-undef
+export const API_HOST = process.env.API_HOST;
+
 intializeEvents(); // config UI/UX events
 intializeSettings(); // load user settings/defaults
 handleRoutes(); // handle url routes
-checkLatestArticle(); // ..
+checkLatestArticle(); // show animation for (new) latest article
 initializeMobileReaderControls(); // change DOM layout if mobile is being used
 
 export const version = await getLatestRelease(); // get and save latest version from release tag
+
 console.log(`%cDestiny Article Finder ${version}`, 'font-weight: bold;font-size: 1.75em;');

@@ -1,4 +1,4 @@
-import { variables } from './variables.js';
+import { API_HOST } from '../../index.js';
 
 // get latest release from api response
 export async function getLatestRelease(releases) {
@@ -25,7 +25,7 @@ export async function getLatestRelease(releases) {
 export async function getReleases() {
     try {
 
-        const url = `${variables.API_HOST}/api/v1/releases`;
+        const url = `${API_HOST}/api/v1/releases`;
         const releases = await fetch(url)
             .then(res => res.json())
             .then(data => {
