@@ -26,17 +26,21 @@ export async function checkLatestArticle() {
         wrapper.classList.add('newItemSwishWrapper');
         wrapper.addEventListener('click', () => {
 
+            latestArticle.hasBeenViewed = true;
+            window.localStorage.setItem('latestSavedArticle', JSON.stringify(latestArticle)); // save
+
             // change client location to this url
             const url = `${window.location.origin}/article?a=${latestArticle.hostedUrl}&m=true`;
             window.location = url;
         });
     };
 
-    // if no pre-existing article OR
-    // if (pre-existing) stored article is older than latest article
-    if ((!storedArticle) || (storedArticle && new Date(storedArticle.date) < new Date(latestArticle.date))) {
+    // if no stored article OR
+    // if (pre-existing) stored article is older than latest article OR
+    // if (pre-existing) stored article has not been viewed
+    if ((!storedArticle) || (!storedArticle.hasBeenViewed) || (storedArticle && new Date(storedArticle.date) < new Date(latestArticle.date))) {
+        latestArticle.hasBeenViewed = false;
         window.localStorage.setItem('latestSavedArticle', JSON.stringify(latestArticle));
         notify();
-        return;
     };
 };
