@@ -95,8 +95,9 @@
 }
 
 #bungieLogoIcon {
-    cursor: pointer;
+    margin-left: -1px;
     width: 23px;
+    cursor: pointer;
 }
 #settingsIcon {
     cursor: pointer;
@@ -263,4 +264,11 @@
     display: flex;
     justify-content: right;
     user-select: none;
+}
+
+#headNavIcons > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
 }

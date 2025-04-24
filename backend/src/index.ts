@@ -1,7 +1,7 @@
 import cors from 'cors';
 import express from 'express';
 import mysql from 'mysql';
-import { fetchArticle, fetchArticleByName } from './utils/fetchArticle';
+import { fetchArticle, fetchArticleByName, fetchLatestArticles } from './utils/fetchArticle';
 import { APIRequest, APIResponse } from './utils/interfaces';
 import parseTypes from './utils/parseTypes';
 import { variables } from './utils/variables';
@@ -71,6 +71,16 @@ app.get('/api/v1/articles', async (req, res) => {
                 search: options.searchTerm
             };
             res.json(response);
+        })
+        .catch(console.error);
+});
+
+// get the latest article
+app.get('/api/v1/latestArticle', async (_req, res) => {
+    
+    await fetchLatestArticles(connectionPool)
+        .then((articles: Array<any>) => {
+            res.json(articles[0]);
         })
         .catch(console.error);
 });

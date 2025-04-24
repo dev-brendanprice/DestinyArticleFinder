@@ -28,7 +28,11 @@ export function addTabToGroup(article, searchTerm) {
     tabTitle.id = 'tabTitle';
     tabClose.id = 'btnCloseTab';
 
-    tabTitle.innerHTML = `${article.type}, "${searchTerm}"`;
+    if (searchTerm !== '') {
+        tabTitle.innerHTML = `${article.type}, "${searchTerm}"`;
+    } else {
+        tabTitle.innerHTML = `Latest Article`;
+    }
     tabClose.src = './assets/close.svg';
 
     tabElement.append(tabClose, tabTitle);
@@ -61,18 +65,27 @@ export function addTabToGroup(article, searchTerm) {
         }
         targetTab.classList.add('activeTab');
 
-        // set searchTerm to TabGroup.[article].search
-        searchTerm = TabGroup.tabArticles[targetTabIndex].search;
+        if (searchTerm !== '') {
+            // set searchTerm to TabGroup.[article].search
+            searchTerm = TabGroup.tabArticles[targetTabIndex].search;
 
-        // when different tab is clicked, render target tab
-        if (targetTabIndex !== TabGroup.currentTabIndex) {
-            TabGroup.currentTabIndex = targetTabIndex;
-            renderArticle(article, searchTerm);
+            // when different tab is clicked, render target tab
+            if (targetTabIndex !== TabGroup.currentTabIndex) {
+                TabGroup.currentTabIndex = targetTabIndex;
+                renderArticle(article, searchTerm);
+            }
+        } else {
+
+            // when different tab is clicked, render target tab
+            if (targetTabIndex !== TabGroup.currentTabIndex) {
+                TabGroup.currentTabIndex = targetTabIndex;
+                renderArticle(article, '');
+            }
         }
     });
 
     // tab close
-    tabClose.addEventListener('click', e => {
+    tabClose.addEventListener('click', (e) => {
         e.stopPropagation();
         removeTabFromGroup(e);
     });

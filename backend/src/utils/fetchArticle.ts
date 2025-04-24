@@ -12,9 +12,22 @@ export function fetchArticleByName(connectionPool: any, articles: Array<string>)
     });
 }
 
-export function fetchArticle(connectionPool: any, options: any): Promise<object> {
-    // const variations = getCaseVariants(<string>options.searchTerm);
+export function fetchLatestArticles(connectionPool: any): Promise<object> {
+    const sqlQuery = `
+        SELECT * FROM articles
+        ORDER BY date DESC
+        LIMIT 0, 10;
+    `;
 
+    return new Promise((resolve, reject) => {
+        connectionPool.query(sqlQuery, (err, results) => {
+            if (err) return reject(err);
+            resolve(results);
+        });
+    });
+}
+
+export function fetchArticle(connectionPool: any, options: any): Promise<object> {
     const searchTerm = options.searchTerm.replaceAll("'", "''");
     let sqlQuery: String = `
         SELECT * FROM articles

@@ -1,15 +1,32 @@
 import { fetchArticlesByName } from './fetchArticles.js';
 import { renderArticle } from './renderArticle.js';
-import { addTabToGroup } from './tabGroup.js';
+import { addTabToGroup, TabGroup } from './tabGroup.js';
 
 export async function handleRoutes() {
     const locationPathname = window.location.pathname;
     const urlSearchParams = new URLSearchParams(window.location.search);
     let nameQueries = urlSearchParams.get('a');
     let searchQueries = urlSearchParams.get('s');
+    let modeQuery = urlSearchParams.get('m') === 'true'; // boolean
+
+    // redirect back to origin, if not equal to above pathname(s)
+    if (locationPathname !== '/article') {
+        window.history.pushState(null, '', window.location.origin);
+    }
+
+    // render the article with no search term when "m" is set to True
+    if (nameQueries && modeQuery) {
+        const article = await fetchArticlesByName(nameQueries);
+        console.log(article);
+
+        document.getElementsByTagName('body')[0].style.backgroundImage = 'unset';
+
+        addTabToGroup(article.data[0], '');
+        renderArticle(article.data[0], ''); // render article
+    }
 
     // fetch articles and match articles based on the index of queries in .split() array results
-    if (locationPathname === '/article' && nameQueries && searchQueries) {
+    if (nameQueries && searchQueries) {
         const articles = await fetchArticlesByName(nameQueries);
         searchQueries = searchQueries.split(',');
         nameQueries = nameQueries.split(',');
@@ -24,14 +41,14 @@ export async function handleRoutes() {
             addTabToGroup(matchedArticle[0], matchedSearchQuery);
             renderArticle(matchedArticle[0], matchedSearchQuery);
         }
-    } else {
-        // redirect back to origin, if not equal to above pathname(s)
-        window.history.pushState(null, '', window.location.origin);
     }
 }
 
 // remove article and search from route
 export function removeArticleFromRoute(articleName, search) {
+
+    if (TabGroup.tabArticles.length === 1) {return;} // avoid error when closing last tab, therefore no params are present
+
     const params = new URLSearchParams(window.location.search);
     const searchParams = params.get('s').split(',');
     const nameParams = params.get('a').split(',');

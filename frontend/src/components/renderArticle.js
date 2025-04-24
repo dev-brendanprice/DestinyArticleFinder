@@ -24,9 +24,11 @@ export async function renderArticle(article, searchTerm) {
 
     addImageControls(); // buttons for like "Copy Image", "Download", etc.
 
-    // highlight substrings, then show find function results
-    highlightSubstringPositions(document.getElementById('articleContent'), searchTerm);
-    document.getElementById('controlSearchBar').value = `${searchTerm}`;
+    // if searchTerm present, highlight substrings then show find function results
+    if (searchTerm !== '') {
+        highlightSubstringPositions(document.getElementById('articleContent'), searchTerm);
+        document.getElementById('controlSearchBar').value = `${searchTerm}`;
+    };
 
 
     waitForQueriesToLoad('img')
