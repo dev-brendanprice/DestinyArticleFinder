@@ -31,17 +31,19 @@ export function fetchArticle(connectionPool: any, options: any): Promise<object>
     const searchTerm = options.searchTerm.replaceAll("'", "''");
     let sqlQuery: String = `
         SELECT * FROM articles
-        WHERE lower(htmlContent) LIKE lower('%${searchTerm}%')
-        LIMIT 0, ${options.limit}
+        WHERE lower(htmlContent) LIKE lower('%${searchTerm}%') OR
+        lower(title) LIKE lower('%${searchTerm}%')
+        LIMIT 0, ${options.limit};
     `;
 
     // if types are specified
     if (!options.types.includes('all')) {
         sqlQuery = `
             SELECT * FROM articles
-            WHERE lower(htmlContent) LIKE lower('%${searchTerm}%')
+            WHERE lower(htmlContent) LIKE lower('%${searchTerm}%') OR
+            lower(title) LIKE lower('%${searchTerm}%')
             AND (${options.types.map((type: String) => `type = '${type}'`).join(' OR ')})
-            LIMIT 0, ${options.limit}
+            LIMIT 0, ${options.limit};
         `;
     }
 
