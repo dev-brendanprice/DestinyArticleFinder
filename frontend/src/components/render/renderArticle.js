@@ -11,12 +11,15 @@ export async function renderArticle(article, searchTerm) {
 
 
     articleContent = parseDOM(articleContent);
+    // articleContent = uwufyHTML(articleContent);
     document.getElementById('searchStatsContainer').style.display = 'none';
     document.getElementById('searchResultsContainer').style.display = 'none';
     document.getElementById('articleMainContainer').style.display = 'flex';
     document.getElementById('articleControlsTitleText').innerHTML = `${article.title} (${article.dateShortForm})`;
     document.getElementById('articleTitle').innerHTML = article.title + articleLinkSVG;
     document.getElementById('articleSubtitle').innerHTML = articleSubTitle;
+    // document.getElementById('articleTitle').innerHTML = uwufyString(article.title) + articleLinkSVG;
+    // document.getElementById('articleSubtitle').innerHTML = uwufyString(articleSubTitle);
     document.getElementById('articleContent').innerHTML = articleContent;
     document
         .getElementById('articleTitleLink')
