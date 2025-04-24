@@ -1,4 +1,4 @@
-import { API_HOST } from "../index.js";
+import { API_HOST } from "../../index.js";
 
 export async function getLatestArticle() {
     const url = `${API_HOST}/api/v1/latestArticle`;

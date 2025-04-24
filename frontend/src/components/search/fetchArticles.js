@@ -1,4 +1,4 @@
-import { API_HOST } from '../index.js';
+import { API_HOST } from '../../index.js';
 import { activeFilterValues } from './filterResults.js';
 
 // fetch articles by name (hostedUrl) from server

@@ -1,6 +1,6 @@
+import { resetPositionIndex } from '../core/initEvents.js';
+import { renderArticle } from '../render/renderArticle.js';
 import { removeArticleFromRoute } from './handleRoutes.js';
-import { resetPositionIndex } from './initEvents.js';
-import { renderArticle } from './renderArticle.js';
 
 // 'searchTerm' in addTab() is so reader controls retains its search term between tab loads/removal
 export const TabGroup = {

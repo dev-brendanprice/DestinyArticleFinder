@@ -1,4 +1,4 @@
-import { rewriteProto } from "./mediaHandler.js";
+import { rewriteProto } from "../ui/mediaHandler.js";
 
 // parse a HTML document that is in the format of a string
 export function parseDOM(htmlContent) {

@@ -1,16 +1,16 @@
-import { isEntryValid } from './checkUserInput.js';
+import { clearSearchBarResults, parseResults } from '../render/parseResults.js';
+import { TabGroup } from '../routing/tabGroup.js';
+import { isEntryValid } from '../search/checkUserInput.js';
 import {
     cleanseHighlightedSpans,
     clearPositions,
     highlightSubstringPositions,
     positions,
     toggleCaseSensitive
-} from './controlSearch.js';
-import { fetchArticles } from './fetchArticles.js';
-import { activeFilterValues } from './filterResults.js';
-import { clearSearchBarResults, parseResults } from './parseResults.js';
-import { activeSortByValues } from './sortResults.js';
-import { TabGroup } from './tabGroup.js';
+} from '../search/controlSearch.js';
+import { fetchArticles } from '../search/fetchArticles.js';
+import { activeFilterValues } from '../search/filterResults.js';
+import { activeSortByValues } from '../search/sortResults.js';
 
 let positionIndex = 0; // index for reader controls
 export function resetPositionIndex() {

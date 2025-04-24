@@ -24,12 +24,12 @@ import './assets/more.svg';
 import './assets/open.svg';
 import './assets/settings.svg';
 
-import { getLatestRelease } from './components/config/version.js';
-import { checkLatestArticle } from './components/getLatestArticle.js';
-import { handleRoutes } from './components/handleRoutes.js';
-import intializeEvents from './components/initEvents.js';
-import intializeSettings from './components/initSettings.js';
-import { initializeMobileReaderControls } from './components/mobileViews.js';
+import intializeEvents from './components/core/initEvents.js';
+import intializeSettings from './components/core/initSettings.js';
+import { getLatestRelease } from './components/core/version.js';
+import { handleRoutes } from './components/routing/handleRoutes.js';
+import { checkLatestArticle } from './components/search/getLatestArticle.js';
+import { initializeMobileReaderControls } from './components/ui/mobileViews.js';
 
 // eslint-disable-next-line no-undef
 export const API_HOST = process.env.API_HOST;

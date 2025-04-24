@@ -1,6 +1,6 @@
-import { addImageControls } from './addImageControls.js';
-import { highlightSubstringPositions, positions } from './controlSearch.js';
-import { waitForQueriesToLoad } from './mediaHandler.js';
+import { highlightSubstringPositions, positions } from '../search/controlSearch.js';
+import { addImageControls } from '../ui/addImageControls.js';
+import { waitForQueriesToLoad } from '../ui/mediaHandler.js';
 import { parseDOM } from './parseDOM.js';
 
 export async function renderArticle(article, searchTerm) {

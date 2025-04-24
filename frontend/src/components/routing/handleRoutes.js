@@ -1,5 +1,5 @@
-import { fetchArticlesByName } from './fetchArticles.js';
-import { renderArticle } from './renderArticle.js';
+import { renderArticle } from '../render/renderArticle.js';
+import { fetchArticlesByName } from '../search/fetchArticles.js';
 import { addTabToGroup, TabGroup } from './tabGroup.js';
 
 export async function handleRoutes() {

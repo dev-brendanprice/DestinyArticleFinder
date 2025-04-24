@@ -1,9 +1,9 @@
-import { getSearchStats } from './getSearchStats.js';
-import { getSnippet } from './getSnippet.js';
-import { mapArticleToRoute } from './handleRoutes.js';
+import { mapArticleToRoute } from '../routing/handleRoutes.js';
+import { addTabToGroup, TabGroup } from '../routing/tabGroup.js';
+import { getSearchStats } from '../search/getSearchStats.js';
+import { getSnippet } from '../search/getSnippet.js';
+import { activeSortByValues } from '../search/sortResults.js';
 import { renderArticle } from './renderArticle.js';
-import { activeSortByValues } from './sortResults.js';
-import { addTabToGroup, TabGroup } from './tabGroup.js';
 
 // Parse a given article, sanitise content, format into HTML DOM content
 export function parseResults(data) {
