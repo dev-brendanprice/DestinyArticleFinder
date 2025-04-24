@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-import { AppVariables, DatabaseCredentials } from './interfaces';
+import { AppVariables, DatabaseCredentials } from '../utils/interfaces';
 dotenv.config();
 
 const mode: String = process.env.MODE;

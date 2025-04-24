@@ -1,11 +1,11 @@
 import cors from 'cors';
 import express from 'express';
 import mysql from 'mysql';
-import { fetchArticle, fetchArticleByName, fetchLatestArticles } from './utils/fetchArticle';
-import { APIRequest, APIResponse } from './utils/interfaces';
-import parseTypes from './utils/parseTypes';
-import { variables } from './utils/variables';
-import { getReleases } from './utils/version';
+import { variables } from './components/config/variables';
+import { getReleases } from './components/config/version';
+import { fetchArticle, fetchArticleByName, fetchLatestArticles } from './components/search/fetchArticle';
+import { APIRequest, APIResponse } from './components/utils/interfaces';
+import parseTypes from './components/utils/parseTypes';
 
 const app = express();
 const expressPort = process.env.PORT || 4000; // default to port 4000
