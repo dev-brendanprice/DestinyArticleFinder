@@ -165,26 +165,17 @@ input[data-autocompleted] {
 
 #searchStatsContainer > div {
     display: flex;
+    flex-direction: row;
     gap: 5px;
     align-items: baseline;
 }
 
-#searchStatsContainer > div > a {
+
+.statBnet {
     display: flex;
-    justify-content: space-between;
-    background-color: #262323;
+    gap: 5px;
+    width: fit-content;
     border: 1px solid #626262;
-    box-sizing: border-box;
-    padding: 2px;
-    padding-left: 5px;
-    padding-right: 5px;
-    border-radius: 3px;
-    text-decoration: underline;
-    text-underline-offset: 2px;
-    cursor: pointer;
-    user-select: none;
-    color: #49b5dd;
-    transition: all 0.1s;
 }
 
 #searchStatsContainer > div > a:hover {
@@ -193,28 +184,43 @@ input[data-autocompleted] {
 }
 
 #searchStatsContainer > div > a > img {
-    margin-left: 5px;
-    width: 9px;
+    /* margin-left: 5px; */
+    width: 12px;
 }
 
 .statDate {
+    text-wrap: nowrap;
     font-size: 12px;
     color: #989898;
 }
 
 .statArticleLink {
-    width: 140px;
+    width: fit-content;
+    min-width: 120px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    border: 1px solid red;
 }
 
 .statArticleLink > div {
-    width: 115px;
+    width: 100%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.statLinkContainer {
+    display: flex;
+    gap: 5px;
+    border: 1px solid #626262;
+    border-radius: 5px;
+    padding: 2px 4px 2px 4px;
+    box-sizing: content-box;
+    color: #49B5DD;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    background-color: #262323;
+    cursor: pointer;
 }
 
 #subStatistics {
