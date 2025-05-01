@@ -42,13 +42,14 @@ export function fetchArticle(connectionPool: any, options: any): Promise<object>
     if (!options.types.includes('all')) {
         sqlQuery = `
             SELECT * FROM articles
-            WHERE lower(htmlContent) LIKE lower('%${searchTerm}%') OR
+            WHERE (${options.types.map((type: String) => `type = '${type}'`).join(' OR ')}) AND
+            (lower(htmlContent) LIKE lower('%${searchTerm}%')) OR
             lower(title) LIKE lower('%${searchTerm}%')
-            AND (${options.types.map((type: String) => `type = '${type}'`).join(' OR ')})
             ORDER BY ${options.sort}
             LIMIT 0, ${options.limit};
         `;
     }
+    
 
     return new Promise((resolve, reject) => {
         connectionPool.query(sqlQuery, (err, results) => {
