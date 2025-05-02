@@ -27,6 +27,7 @@ import './assets/settings.svg';
 import intializeEvents from './components/core/initEvents.js';
 import intializeSettings from './components/core/initSettings.js';
 import { getLatestRelease } from './components/core/version.js';
+import { renderCards } from './components/render/renderCards.js';
 import { handleRoutes } from './components/routing/handleRoutes.js';
 import { checkLatestArticle } from './components/search/getLatestArticle.js';
 import { initializeMobileReaderControls } from './components/ui/mobileViews.js';
@@ -39,6 +40,7 @@ intializeSettings(); // load user settings/defaults
 handleRoutes(); // handle url routes
 checkLatestArticle(); // show animation for (new) latest article
 initializeMobileReaderControls(); // change DOM layout if mobile is being used
+renderCards(); // ..
 
 export const version = await getLatestRelease(); // get and save latest version from release tag
 

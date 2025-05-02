@@ -37,6 +37,7 @@ export default async function intializeEvents() {
             const articles = await fetchArticles(searchTerm);
             document.getElementById('searchStatsContainer').style.display = 'flex';
             document.getElementById('searchResultsContainer').style.display = 'flex';
+            document.getElementById('bodyBlur').style.display = 'block';
             parseResults(articles);
             resetPositionIndex();
             document.getElementsByClassName(`spinner`)[0].style.opacity = '0';
@@ -75,22 +76,31 @@ export default async function intializeEvents() {
 
     // only show results if at-least 1 tab is loaded and the search bar already has a value typed in
     searchBarElement.addEventListener('click', () => {
-        if (TabGroup.tabArticles.length >= 1 && searchBarElement.value !== '') {
+        if (searchBarElement.value !== '') {
             document.getElementById('searchStatsContainer').style.display = 'flex';
             document.getElementById('searchResultsContainer').style.display = 'flex';
+            document.getElementById('bodyBlur').style.display = 'block';
         }
     });
 
     // hide certain elements when user clicks away
-    // TODO: "esc" key press for certain UI's (??)
+    // TODO: "esc" key press for certain UI's
     document.addEventListener('mouseup', async event => {
         const targetClass = event.target.className;
         const targetClassList = targetClass.split(' ');
+
+        // hide search results when anywhere else on the screen is clicked
+        if (event.target.id === 'bodyBlur') {
+            document.getElementById('searchStatsContainer').style.display = 'none';
+            document.getElementById('searchResultsContainer').style.display = 'none';
+            document.getElementById('bodyBlur').style.display = 'none';
+        }
 
         // hide search results, only when at-least one tab is loaded
         if (TabGroup.tabArticles.length >= 1) {
             document.getElementById('searchStatsContainer').style.display = 'none';
             document.getElementById('searchResultsContainer').style.display = 'none';
+            document.getElementById('bodyBlur').style.display = 'none';
         }
 
         // for image "More" context menu

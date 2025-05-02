@@ -21,5 +21,8 @@
         "source.organizeImports": "always"
     },
     "eslint.validate": ["javascript"],
-    "eslint.run": "onSave"
+    "eslint.run": "onSave",
+    "[html]": {
+        "editor.defaultFormatter": "vscode.html-language-features"
+    }
 }

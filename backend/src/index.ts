@@ -1,5 +1,7 @@
+import bodyParser from 'body-parser';
 import cors from 'cors';
 import express from 'express';
+import fs from 'fs';
 import mysql from 'mysql';
 import { variables } from './components/config/variables';
 import { getReleases } from './components/config/version';
@@ -8,9 +10,11 @@ import { APIRequest, APIResponse } from './components/utils/interfaces';
 import parseSort from './components/utils/parseSort';
 import parseTypes from './components/utils/parseTypes';
 
+
 const app = express();
 const expressPort = process.env.PORT || 4000; // default to port 4000
 const connectionPool = mysql.createPool(variables.databaseConfig); // use connection pools
+const jsonParser = bodyParser.json(); // application/json parser
 let githubReleases: Array<any>;
 
 
@@ -26,6 +30,41 @@ if (process.env.MODE === 'production') {
 } else {
     app.use(cors());
 };
+
+
+// get graphs by item name
+app.post('/api/v1/graphs', jsonParser, async (req, res) => {
+
+    const itemArray: Array<any> = req.body;
+    let SVGObject: Object = {}
+
+    // ..
+    for (let item of itemArray) {
+
+        let svg: String;
+
+        // avoid non-existing file errors from breaking execution
+        try {
+            svg = fs.readFileSync(`./graphs/${item.itemName}.svg`, 'utf-8');
+        }
+        catch (err) {
+            svg = null;
+        };
+
+        SVGObject[item.itemName] = {
+            inventoryItem: item,
+            svg: svg,
+        };
+    };
+
+    const response: APIResponse = {
+        data: [SVGObject],
+        items: itemArray.length,
+        search: ''
+    };
+
+    res.json(response);
+});
 
 
 // get articles by name (hostedUrl)

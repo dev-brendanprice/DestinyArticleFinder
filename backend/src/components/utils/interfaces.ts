@@ -31,3 +31,10 @@ export interface APIResponse {
     readonly items: Number;
     readonly search: String;
 }
+
+// Error interface, sent back by the API
+export interface APIError {
+    readonly errorCode: Number;
+    readonly message: String;
+    readonly info?: String;
+}

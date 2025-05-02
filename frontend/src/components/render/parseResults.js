@@ -136,4 +136,5 @@ export function clearSearchBarResults() {
     searchResultsElement.style.display = 'none';
     searchResultsElement.innerHTML = '';
     document.getElementById('searchStatsContainer').style.display = 'none';
+    document.getElementById('bodyBlur').style.display = 'none';
 }
