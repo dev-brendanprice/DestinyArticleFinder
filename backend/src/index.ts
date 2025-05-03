@@ -3,6 +3,7 @@ import cors from 'cors';
 import express from 'express';
 import fs from 'fs';
 import mysql from 'mysql';
+import getLatestManifest from './components/config/manifest';
 import { variables } from './components/config/variables';
 import { getReleases } from './components/config/version';
 import { fetchArticle, fetchArticleByName, fetchLatestArticles } from './components/search/fetchArticle';
@@ -15,13 +16,29 @@ const app = express();
 const expressPort = process.env.PORT || 4000; // default to port 4000
 const connectionPool = mysql.createPool(variables.databaseConfig); // use connection pools
 const jsonParser = bodyParser.json(); // application/json parser
+
+// globals for github releases and manifest
 let githubReleases: Array<any>;
+let manifest: Object;
+
+// fetch manifest on server start-up
+manifest = getLatestManifest();
+(async () => {
+    manifest = await getLatestManifest();
+})();
+
 
 
 // fetch github releases every 60 seconds
 setInterval(async () => {
     githubReleases = await getReleases();
-}, 60 * 1000);
+}, 60_000);
+
+// fetch latest manifest every 3 hours
+setInterval(async () => {
+    manifest = await getLatestManifest();
+}, 10_800_000);
+
 
 // prod and dev cors
 if (process.env.MODE === 'production') {
@@ -38,29 +55,26 @@ app.post('/api/v1/graphs', jsonParser, async (req, res) => {
     const itemArray: Array<any> = req.body;
     let SVGObject: Object = {}
 
-    // ..
     for (let item of itemArray) {
 
-        let svg: String;
-
         // avoid non-existing file errors from breaking execution
+        let SVGString: String;
         try {
-            svg = fs.readFileSync(`./graphs/${item.itemName}.svg`, 'utf-8');
-        }
-        catch (err) {
-            svg = null;
+            SVGString = fs.readFileSync(`./graphs/${item.itemName}.svg`, 'utf-8');
+        } catch (err) {
+            SVGString = null;
         };
 
-        SVGObject[item.itemName] = {
+        SVGObject[`${item.itemName}`] = {
             inventoryItem: item,
-            svg: svg,
+            svg: SVGString,
         };
     };
 
     const response: APIResponse = {
-        data: [SVGObject],
-        items: itemArray.length,
-        search: ''
+        data: [SVGObject], // object with svg graphs for each item
+        items: Object.keys(SVGObject).length, // items returned
+        search: null
     };
 
     res.json(response);
@@ -88,6 +102,7 @@ app.get('/api/v1/articlesByName', async (req, res) => {
         })
         .catch(console.error);
 });
+
 
 // query articles database
 app.get('/api/v1/articles', async (req, res) => {
@@ -122,6 +137,7 @@ app.get('/api/v1/articles', async (req, res) => {
         .catch(console.error);
 });
 
+
 // get the latest article
 app.get('/api/v1/latestArticle', async (_req, res) => {
     
@@ -131,6 +147,7 @@ app.get('/api/v1/latestArticle', async (_req, res) => {
         })
         .catch(console.error);
 });
+
 
 // get latest app version from github releases
 app.get('/api/v1/releases', async (_req, res) => {
@@ -147,6 +164,13 @@ app.get('/api/v1/releases', async (_req, res) => {
 
     res.json(githubReleases);
 });
+
+
+// return the latest bnet API manifest
+app.get('/api/v1/manifest', async (_req, res) => {
+    res.json(manifest);
+});
+
 
 app.listen(expressPort, () => {
     console.log(`API port: ${expressPort}\nAPI addr: http://<local_device_ip>:${expressPort}`);

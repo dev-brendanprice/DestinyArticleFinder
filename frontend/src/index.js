@@ -26,6 +26,7 @@ import './assets/settings.svg';
 
 import intializeEvents from './components/core/initEvents.js';
 import intializeSettings from './components/core/initSettings.js';
+import { validateManifest } from './components/core/manifest.js';
 import { getLatestRelease } from './components/core/version.js';
 import { renderCards } from './components/render/renderCards.js';
 import { handleRoutes } from './components/routing/handleRoutes.js';
@@ -35,12 +36,13 @@ import { initializeMobileReaderControls } from './components/ui/mobileViews.js';
 // eslint-disable-next-line no-undef
 export const API_HOST = process.env.API_HOST;
 
+validateManifest(); // rebuilds non-existing or old manifest
 intializeEvents(); // config UI/UX events
 intializeSettings(); // load user settings/defaults
 handleRoutes(); // handle url routes
 checkLatestArticle(); // show animation for (new) latest article
 initializeMobileReaderControls(); // change DOM layout if mobile is being used
-renderCards(); // ..
+renderCards(); // render "mentions in articles", animated slider cards on homepage
 
 export const version = await getLatestRelease(); // get and save latest version from release tag
 

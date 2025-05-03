@@ -1,30 +1,7 @@
  
  
 import { API_HOST } from "../../index.js";
-import fetchGearFromManifest from "../core/manifest.js";
-
-// get manifest 
-const manifest = await fetchGearFromManifest();
-
-// get 12 random items from the manifest
-async function getRandomItemsFromManifest() {
-
-    // generate 12 random numbers to use as indexes
-    let randomIndexes = new Set();
-    for (let i = 0; i < 12; i++) {
-
-        // prevent duplicate indexes
-        let index = Math.floor(Math.random() * manifest.size);
-        while (randomIndexes.has(index)) {
-            index = Math.floor(Math.random() * manifest.size);
-        };
-        randomIndexes.add(index);
-    };
-
-    // get manifest items from random indexes
-    const items = Array.from(randomIndexes).map(v => Array.from(manifest)[v]);
-    return items;
-};
+import { itemSubTypeStrings, returnDefinition } from "../core/manifest.js";
 
 // get the SVG data for each item in array of items
 async function getItemSVGData(randomItemsArray) {
@@ -51,13 +28,59 @@ async function getItemSVGData(randomItemsArray) {
 };
 
 
+// get 12 random items from GIVEN definitions object
+async function getRandomItemsFromManifest(definitionsObject) {
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            let j = Math.floor(Math.random() * (i + 1));
+            let temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+        };
+        return array;
+    };
+
+    const shuffledArray = shuffleArray(Object.values(definitionsObject));
+    return shuffledArray.slice(0, 12); // return first 12 values
+};
+
+
+// long-winded process to get statistic graphs for a randomised selection of DestinyInventoryItems
+async function getGraphs() {
+
+    // get inventoryItemDefinitions and keep the required itemSubTypes (e.g. only keep "Weapon")
+    let inventoryItemDefinitions = await returnDefinition('DestinyInventoryItemDefinition');
+    
+    const allowedItemTypes = [3];
+    const definitionValues = Object.values(inventoryItemDefinitions);
+    inventoryItemDefinitions = {};
+
+    for (let inventoryItem of definitionValues) {
+        if (allowedItemTypes.includes(inventoryItem.itemType)) {
+
+            const itemName = inventoryItem.displayProperties.name.replace('/', '').replace(',', ''); // sanitise names
+            inventoryItemDefinitions[inventoryItem.hash] = {
+                itemName: itemName,
+                itemSubType: itemSubTypeStrings[inventoryItem.itemSubType],
+                itemHash: inventoryItem.hash,
+                itemRarity: inventoryItem.inventory.tierTypeName,
+                iconURL: `https://www.bungie.net${inventoryItem.displayProperties.icon}`,
+            };
+        };
+    };
+
+    const randomItemsArray = await getRandomItemsFromManifest(inventoryItemDefinitions); // get first 12 unique randomised items
+    const itemGraphs = await getItemSVGData(randomItemsArray); // get graphs for each item
+    
+    return itemGraphs.data[0];
+};
+
+
 // render the sliding cards
 export async function renderCards() {
 
-    // get random inventoryItem & SVG graph data 
-    const randomItemsArray = await getRandomItemsFromManifest();
-    let itemsArray = await getItemSVGData(randomItemsArray);
-    itemsArray = itemsArray.data[0];
+    const itemGraphs = await getGraphs();
 
 
     // build slider cards --nuke this shit 
@@ -68,7 +91,7 @@ export async function renderCards() {
     let count = 0;
 
     // build each card
-    for (let [key, value] of Object.entries(itemsArray)) {
+    for (let [key, value] of Object.entries(itemGraphs)) {
         
         const sliderCard = document.createElement('div'); // the card itself
         const sliderAttrs = document.createElement('div'); // title, subtitle

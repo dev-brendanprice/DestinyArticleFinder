@@ -1,4 +1,10 @@
-const itemSubTypeStrings = {
+import { get, set } from 'idb-keyval';
+
+const requiredDefinitions = [
+    'DestinyInventoryItemDefinition'
+];
+
+export const itemSubTypeStrings = {
     6: "Auto Rifle",
     7: "Shotgun",
     8: "Machine Gun",
@@ -23,6 +29,66 @@ const itemSubTypeStrings = {
     33: "Glaive"
 };
 
+
+// validate the stored manifest (if any)
+export async function validateManifest(forceValidate = false) {
+
+    // eslint-disable-next-line no-undef
+    const host = process.env.API_HOST;
+    const language = navigator.language.split('-')[0];
+
+    const localManifest = JSON.parse(window.localStorage.getItem('destinyManifest'));
+    const latestManifest = await fetch(`${host}/api/v1/manifest`)
+        .then(res => res.json())
+        .then(data => {
+            return data.Response;
+        })
+        .catch(err => {
+            console.error(err);
+            return [];
+        });
+
+    // if stored version is mismatching (older version or non-existing)
+    if (forceValidate || localManifest?.version !== latestManifest.version) {
+
+        console.log('old manifest version found or has been force-updated');
+        window.localStorage.setItem('destinyManifest', JSON.stringify(latestManifest)); // update local manifest
+
+        let promiseArray = []; // array of promises to request the required definitions
+        for (let definitionName of requiredDefinitions) { // request each required definition
+
+            const definitionURL = `https://www.bungie.net${latestManifest.jsonWorldComponentContentPaths[language][definitionName]}`;
+            promiseArray.push(
+                new Promise((resolve, reject) => {
+                    fetch(definitionURL)
+                        .then(res => res.json())
+                        .then(resolve)
+                        .catch(reject);
+                })
+            );
+        };
+
+        // promise await array and then store each definition
+        const definitions = await Promise.all(promiseArray);
+
+        for (let i = 0; i < requiredDefinitions.length; i++) {
+            set(requiredDefinitions[i], definitions[i]);
+        };
+    };
+};
+
+// return stored definition
+export async function returnDefinition(definitionName) {
+    
+    const storedDefinition = await get(definitionName);
+    if (!storedDefinition) { // force-validate manifest if non-existing
+        await validateManifest(true); // true = force validate
+        return await get(definitionName);
+    };
+
+    return storedDefinition;
+};
+
 // Return manifest components
 async function getManifestSuffixes() {
 
@@ -41,8 +107,9 @@ async function getManifestSuffixes() {
                 console.error(err);
                 return [];
             });
-    
-        const suffixes = manifest.Response.jsonWorldComponentContentPaths.en;
+
+        const navigatorLanguage = navigator.language;
+        const suffixes = manifest.Response.jsonWorldComponentContentPaths[navigatorLanguage];
         return suffixes;
 
     } catch (err) {
@@ -50,7 +117,7 @@ async function getManifestSuffixes() {
     };
 };
 
-export default async function fetchGearFromManifest() {
+export async function fetchGearFromManifest() {
 
     async function getManifest() {
         try {
