@@ -15,6 +15,7 @@ export async function renderArticle(article, searchTerm) {
     document.getElementById('searchStatsContainer').style.display = 'none';
     document.getElementById('searchResultsContainer').style.display = 'none';
     document.getElementById('bodyBlur').style.display = 'none';
+    document.getElementById('sliderConOuter').style.display = 'none';
     document.getElementById('articleMainContainer').style.display = 'flex';
     document.getElementById('articleControlsTitleText').innerHTML = `${article.title} (${article.dateShortForm})`;
     document.getElementById('articleTitle').innerHTML = article.title + articleLinkSVG;
