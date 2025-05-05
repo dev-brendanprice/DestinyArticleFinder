@@ -142,5 +142,10 @@ export async function renderCards() {
 
     // hide skeleton-load and show rendered sliders
     document.getElementById('slidersLoadingContainer').style.display = 'none';
-    document.getElementById('sliderConOuter').style.display = 'flex';
+    
+    // only swap container display if it's NOT "none"
+    const sliderContainer = document.getElementById('sliderConOuter');
+    if (sliderContainer.style.display !== 'none') {
+        sliderContainer.style.display = 'flex';
+    };
 };

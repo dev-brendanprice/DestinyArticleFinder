@@ -373,7 +373,7 @@ input[data-autocompleted] {
 }
 
 #sliderConOuter {
-    display: none; /* temp */
+    display: none;
     flex-direction: column;
     gap: 50px;
     height: calc(100vh - 80px);

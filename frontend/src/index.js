@@ -40,9 +40,9 @@ validateManifest(); // rebuilds non-existing or old manifest
 intializeEvents(); // config UI/UX events
 intializeSettings(); // load user settings/defaults
 handleRoutes(); // handle url routes
+renderCards(); // render "mentions in articles", animated slider cards on homepage
 checkLatestArticle(); // show animation for (new) latest article
 initializeMobileReaderControls(); // change DOM layout if mobile is being used
-renderCards(); // render "mentions in articles", animated slider cards on homepage
 
 export const version = await getLatestRelease(); // get and save latest version from release tag
 
