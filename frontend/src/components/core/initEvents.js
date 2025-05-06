@@ -147,7 +147,10 @@ export default async function intializeEvents() {
         try {
             // Scroll to index of matching substring
             toggleActiveHighlight();
-            window.scroll(0, pos.y);
+            window.scrollTo({
+                top: pos.y,
+                left: 0,
+            });
         } catch (error) {
             console.error(error);
         }

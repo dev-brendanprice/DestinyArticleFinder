@@ -27,7 +27,8 @@ export function parseDOM(htmlContent) {
             item.id = 'articleImage';
             item.removeAttribute('style');
 
-            // item.removeAttribute('loading'); // (toggleable lazy-loading!)
+            item.setAttribute('loading', 'lazy'); // keep this on else control search doesn't work
+            // item.removeAttribute('loading'); // (toggleable) lazy-loading!
 
             // wrap image in a container
             const container = document.createElement('div');
