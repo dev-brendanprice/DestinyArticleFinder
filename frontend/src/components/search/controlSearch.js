@@ -64,13 +64,13 @@ export async function highlightSubstringPositions(el, query) {
                     span.textContent = fragment;
                     parent.insertBefore(span, node);
 
-                    let anbar = {
+                    const spanPosition = {
                         el: span,
                         x: 0,
-                        y: span.offsetTop - 200 // offset
+                        y: span.getBoundingClientRect().top - 200
                     };
 
-                    positions.push(anbar);
+                    positions.push(spanPosition);
                 } else {
                     // create text node for non-matching text
                     const textNode = document.createTextNode(fragment);

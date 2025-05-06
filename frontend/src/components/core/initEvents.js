@@ -132,7 +132,6 @@ export default async function intializeEvents() {
 
     // Nested function and index variable for reader controls
     function toggleActiveHighlight() {
-        // Toggle active highlighted-text
 
         // remove class from everything but matching index
         const target = positions[positionIndex].el;
@@ -145,12 +144,14 @@ export default async function intializeEvents() {
     // scroll to y pos on window
     function scrollToY(pos) {
         try {
-            // Scroll to index of matching substring
+
+            // scroll to matching substring
             toggleActiveHighlight();
             window.scrollTo({
                 top: pos.y,
                 left: 0,
             });
+
         } catch (error) {
             console.error(error);
         }
@@ -162,18 +163,19 @@ export default async function intializeEvents() {
         const searchBar = document.getElementById('controlSearchBar');
         let searchQuery = searchBar.value;
 
+        positionIndex = 0; // reset position
+        
         // remove conflicting regex characters
         const confict = ['?', '/', '\\', '.', '(', ')', '[', ']', '{', '}', '$'];
         for (const char of confict) {
             searchQuery = searchQuery.replaceAll(char, '');
         }
 
-        // check entry validity
+        // check input validity
         if (!isEntryValid(searchBar)) {
-            // string has changed
 
+            // input is empty
             if (searchQuery.length === 0) {
-                // string is not empty
                 clearPositions();
                 cleanseHighlightedSpans(articleElement);
                 document.getElementById('controlSearchCountInner').style.display = 'none';
