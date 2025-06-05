@@ -1,7 +1,6 @@
 import { mapArticleToRoute } from '../routing/handleRoutes.js';
 import { addTabToGroup, TabGroup } from '../routing/tabGroup.js';
 import { getSearchStats } from '../search/getSearchStats.js';
-import { getSnippet } from '../search/getSnippet.js';
 import { activeSortByValue } from '../search/sortResults.js';
 import { renderArticle } from './renderArticle.js';
 
@@ -34,7 +33,7 @@ export function parseResults(data) {
         if (element[key]) { // remove pre-existing events
             element.removeEventListener('click', element[key]);
         }
-    
+
         element[key] = () => loadArticle(article, searchTerm); // new click handler
         element.addEventListener('click', element[key]);
     }
@@ -80,7 +79,7 @@ export function parseResults(data) {
         .addEventListener('click', () => { openUrlOnElement(searchStatistics.lastMention.url); });
     document.getElementById('statMostBnet')
         .addEventListener('click', () => { openUrlOnElement(topArticle.url); });
-    
+
     // assign unique click events for each of these elements
     uniqueClickHandler('statFirstTitle', searchStatistics.firstMention, searchTerm);
     uniqueClickHandler('statLastTitle', searchStatistics.lastMention, searchTerm);
@@ -94,14 +93,19 @@ export function parseResults(data) {
         const listItemTitle = document.createElement('div');
         const listItemSubtitle = document.createElement('span');
         const listItemSnippet = document.createElement('div');
-        const snippet = getSnippet(article, searchTerm);
+        // const snippet = getSnippet(article.htmlContent, searchTerm);
 
         // snippet can be a DOMElement or a String
-        if (typeof snippet == 'string') {
-            listItemSnippet.innerHTML = snippet;
-        } else {
-            listItemSnippet.appendChild(snippet);
-        }
+        // if (snippet) {
+        //     if (typeof snippet == 'string') {
+        //         listItemSnippet.innerHTML = snippet;
+        //     } else {
+        //         listItemSnippet.appendChild(snippet);
+        //     }
+        // };
+
+        // change this later, but keep for now
+        listItemSnippet.innerHTML = article.subtitle;
 
         listItemTitle.innerHTML = article.title;
         listItemSubtitle.innerHTML = article.dateShortForm;

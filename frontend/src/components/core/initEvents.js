@@ -145,6 +145,7 @@ export default async function intializeEvents() {
     function scrollToY(pos) {
         try {
 
+            console.log(pos, pos.el.getBoundingClientRect().top);
             // scroll to matching substring
             toggleActiveHighlight();
             window.scrollTo({
