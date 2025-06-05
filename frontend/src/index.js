@@ -13,6 +13,7 @@ import './assets/bungie_shield.svg';
 import './assets/burger_menu.svg';
 import './assets/close.svg';
 import './assets/copy.svg';
+import './assets/daf_vault_icon.svg';
 import './assets/download.svg';
 import './assets/fold.svg';
 import './assets/fwd_blue.svg';

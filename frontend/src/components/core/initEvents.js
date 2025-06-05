@@ -55,7 +55,7 @@ export default async function intializeEvents() {
     });
 
     // nav title redirects back to homepage
-    document.getElementById('navTitle').addEventListener('click', () => {
+    document.getElementById('navIcon').addEventListener('click', () => {
         window.location = window.location.origin;
     });
 
