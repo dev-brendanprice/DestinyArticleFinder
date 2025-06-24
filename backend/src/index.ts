@@ -170,7 +170,7 @@ app.get('/api/v1/releases', async (_req, res) => {
 // csv
 app.get('/api/v1/csv', async (_req, res) => {
     
-    const csv = fs.readFileSync(path.join(__dirname, '../ContentStackScraper/csv/articles.csv')); // url won't work in local dev environment
+    const csv = fs.readFileSync(path.join(__dirname, '../ContentStackScraper/src/csv/articles.csv')); // url won't work in local dev environment
     res.attachment('articles.csv').send(csv);
 });
 
