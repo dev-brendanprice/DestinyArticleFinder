@@ -27,7 +27,7 @@ jobs:
             - name: Compile TypeScript files
               run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SSH_USERAPI }}@${{ secrets.SSH_HOST }} "cd /home/${{ secrets.SSH_USERAPI }}${{ secrets.SSH_USERAPI_DOMAINPATH }} && pnpm run compile"
             - name: Restart pm2 process
-              run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SSH_USERAPI }}@${{ secrets.SSH_HOST }} "cd /home/${{ secrets.SSH_USERAPI }}${{ secrets.SSH_USERAPI_DOMAINPATH }} && pm2 kill && pm2 start dist/index.js"
+              run: ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SSH_USERAPI }}@${{ secrets.SSH_HOST }} "cd /home/${{ secrets.SSH_USERAPI }}${{ secrets.SSH_USERAPI_DOMAINPATH }} && pm2 kill && pm2 start dist/index.js --name "API" && pm2 start ContentStackScraper/src/scheduler.js --name "StackScraper" && pm2 save"
 
     deploy-frontend:
         name: Deploy Frontend
