@@ -387,6 +387,8 @@ input[data-autocompleted] {
     gap: 50px;
     height: calc(100vh - 80px);
     justify-content: center;
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent, black 5rem, black calc(100% - 5rem), transparent);
 }
 
 #slidersLoadingContainer > div {
