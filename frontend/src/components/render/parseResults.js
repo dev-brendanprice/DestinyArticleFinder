@@ -1,6 +1,7 @@
 import { mapArticleToRoute } from '../routing/handleRoutes.js';
 import { addTabToGroup, TabGroup } from '../routing/tabGroup.js';
 import { getSearchStats } from '../search/getSearchStats.js';
+import { getSnippet } from '../search/getSnippet.js';
 import { activeSortByValue } from '../search/sortResults.js';
 import { renderArticle } from './renderArticle.js';
 
@@ -93,7 +94,7 @@ export function parseResults(data) {
         const listItemTitle = document.createElement('div');
         const listItemSubtitle = document.createElement('span');
         const listItemSnippet = document.createElement('div');
-        // const snippet = getSnippet(article.htmlContent, searchTerm);
+        const snippet = getSnippet(article.htmlContent, searchTerm);
 
         // snippet can be a DOMElement or a String
         // if (snippet) {
@@ -105,7 +106,8 @@ export function parseResults(data) {
         // };
 
         // change this later, but keep for now
-        listItemSnippet.innerHTML = article.subtitle;
+        // listItemSnippet.innerHTML = article.subtitle;
+        listItemSnippet.innerHTML = snippet;
 
         listItemTitle.innerHTML = article.title;
         listItemSubtitle.innerHTML = article.dateShortForm;
