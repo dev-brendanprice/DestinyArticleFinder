@@ -3,6 +3,7 @@ import cors from 'cors';
 import express from 'express';
 import fs from 'fs';
 import mysql from 'mysql';
+import path from 'path';
 import getLatestManifest from './components/config/manifest';
 import { variables } from './components/config/variables';
 import { getReleases } from './components/config/version';
@@ -163,6 +164,14 @@ app.get('/api/v1/releases', async (_req, res) => {
     };
 
     res.json(githubReleases);
+});
+
+
+// csv
+app.get('/api/v1/csv', async (_req, res) => {
+    
+    const csv = fs.readFileSync(path.join(__dirname, '../ContentStackScraper/csv/articles.csv')); // url won't work in local dev environment
+    res.attachment('articles.csv').send(csv);
 });
 
 
