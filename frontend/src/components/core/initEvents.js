@@ -44,6 +44,11 @@ export default async function intializeEvents() {
         }
     }
 
+    // scroll to top button
+    document.getElementById('scrollToTopButton').addEventListener('click', () => {
+        window.scrollTo(0, 0);
+    });
+
     // open mobile burger menu
     document.getElementById('mobileBurgerMenuIcon').addEventListener('click', () => {
         document.getElementById('mobileBurgerMenu').style.display = 'block';

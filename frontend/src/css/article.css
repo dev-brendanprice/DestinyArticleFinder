@@ -234,6 +234,40 @@
     color: rgba(255, 206, 31, 0.8);
 }
 
+#scrollToTopButton {
+    display: flex;
+    position: fixed;
+    padding: 2px;
+    color: red;
+    z-index: 99;
+    bottom: 25px;
+    right: 25px;
+    width: 25px;
+    height: 25px;
+    border: 1px solid #5E5E62;
+    background-color: #252529;
+    align-items: center;
+    border-radius: 5px;
+}
+
+#scrollToTopButton > img {
+    width: 25px;
+    rotate: 180deg;
+    filter: contrast(0);
+    transition: all 0.2s ease-out;
+}
+
+#scrollToTopButton:hover {
+    cursor: pointer;
+    border: 1px solid #828285;
+    background-color: #323237;
+    transition: all 0.2s;
+}
+
+#scrollToTopButton:hover > img {
+    filter: contrast(2);
+}
+
 h1,
 h2,
 h3,
