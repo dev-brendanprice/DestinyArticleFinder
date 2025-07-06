@@ -181,13 +181,14 @@
     cursor: pointer;
 }
 
-#articlePublished {
+#articlePublished, #articleAuthor {
     font-size: 14px;
 }
 
-#articleAuthor {
+#articleReadTime {
     margin-bottom: 15px;
     font-size: 14px;
+    font-weight: normal;
 }
 
 #articleOriginLink {

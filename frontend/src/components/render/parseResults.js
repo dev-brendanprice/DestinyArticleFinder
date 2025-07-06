@@ -104,6 +104,7 @@ export function parseResults(data) {
         const estimated = readingTime(article.htmlContent);
         listItemReadTimeBadge.innerHTML = estimated.text;
         listItemReadTimeBadge.className = 'listItemReadTimeBadge';
+        article.readTime = estimated; // add estimated read time to article obj
 
         listItemHeader.className = 'listItemHeader';
         listItemTitle.innerHTML = article.title;

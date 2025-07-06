@@ -1,3 +1,4 @@
+import { readingTime } from 'reading-time-estimator';
 import { highlightSubstringPositions, positions } from '../search/controlSearch.js';
 import { addImageControls } from '../ui/addImageControls.js';
 import { waitForQueriesToLoad } from '../ui/mediaHandler.js';
@@ -6,6 +7,12 @@ import { parseDOM } from './parseDOM.js';
 export async function renderArticle(article, searchTerm) {
 
     let articleContent = article.htmlContent;
+
+    // check if readTime exists on article
+    if (!article.readTime) {
+        const estimated = readingTime(article.htmlContent);
+        article.readTime = estimated; // add estimated read time to article obj
+    };
 
     articleContent = parseDOM(articleContent);
     // articleContent = uwufyHTML(articleContent);
@@ -20,6 +27,7 @@ export async function renderArticle(article, searchTerm) {
     document.getElementById('articleTitle').innerHTML = article.title;
     document.getElementById('articlePublished').innerHTML = article.dateShortForm;
     document.getElementById('articleAuthor').innerHTML = article.author;
+    document.getElementById('articleReadTime').innerHTML = `Read time: ${article.readTime.text}`;
     document.getElementById('articleContent').innerHTML = articleContent;
     document.getElementById('articleOriginLink').href = article.url;
 
