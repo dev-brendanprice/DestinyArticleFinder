@@ -21,9 +21,7 @@ export async function renderArticle(article, searchTerm) {
     document.getElementById('articlePublished').innerHTML = article.dateShortForm;
     document.getElementById('articleAuthor').innerHTML = article.author;
     document.getElementById('articleContent').innerHTML = articleContent;
-    document.getElementById('articleOriginLink')
-        .addEventListener('click', () => window.open(article.url, '_blank').focus());
-    
+    document.getElementById('articleOriginLink').href = article.url;
 
     // if imgUrl is null, hide image
     if (!article.imgUrl) {
