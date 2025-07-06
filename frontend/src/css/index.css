@@ -326,6 +326,11 @@ input[data-autocompleted] {
     z-index: 2;
 }
 
+#highlightedSnippetText {
+    font-weight: bold;
+    color: #49B5DD;
+}
+
 .newItemSwishWrapper {
     position: relative;
     height: 100%;

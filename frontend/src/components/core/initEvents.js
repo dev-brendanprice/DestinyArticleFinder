@@ -181,7 +181,6 @@ export default async function intializeEvents() {
         // bungie logo dropdown list
         if (targetId !== 'logoDropdown' && targetId !== 'bungieLogoIcon' && targetId !== 'bungieLogoWrapper') {
             document.getElementById('logoDropdown').style.display = 'none';
-            console.log(targetId);
             isDropdownOpen = false; // hide dropdown
         }
     });
