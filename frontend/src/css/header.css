@@ -94,6 +94,17 @@
     transition: all 0.15s;
 }
 
+#bungieLogoWrapper {
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+#bungieLogoWrapper:hover {
+    border: 1px solid #c5c5c54a;
+}
+
 #bungieLogoIcon {
     margin-left: -1px;
     width: 23px;
@@ -102,6 +113,45 @@
 #settingsIcon {
     cursor: pointer;
     width: 20px;
+}
+
+#logoDropdown {
+    display: none; /* toggles to flex */
+    flex-direction: column;
+    position: absolute;
+    margin-top: 110px;
+    right: 0;
+    border: 1px solid #595385;
+    background-color: #211D3D;
+    font-size: 12px;
+    width: 120px;
+    border-radius: 5px;
+    z-index: 3;
+}
+
+#logoDropdown > div {
+    display: flex;
+    justify-content: space-between;
+    height: 30px;
+    padding-left: 8px;
+    padding-right: 8px;
+    align-items: center;
+    transition: all 0.1s;
+}
+
+#logoDropdown > div > img {
+    width: 12px;
+}
+
+#logoDropdown > div:hover {
+    color: #bbb5dc;
+}
+
+#logoDropdown > hr {
+    margin: 0;
+    border: none;
+    background-color: #595385;
+    height: 1px;
 }
 
 .searchBarContainer {

@@ -326,17 +326,6 @@ input[data-autocompleted] {
     z-index: 2;
 }
 
-#bungieLogoWrapper {
-    width: 32px;
-    height: 32px;
-    cursor: pointer;
-    box-sizing: border-box;
-}
-
-#bungieLogoWrapper:hover {
-    border: 1px solid #c5c5c54a;
-}
-
 .newItemSwishWrapper {
     position: relative;
     height: 100%;

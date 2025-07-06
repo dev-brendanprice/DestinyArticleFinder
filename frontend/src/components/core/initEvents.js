@@ -65,8 +65,33 @@ export default async function intializeEvents() {
     });
 
     // Bungie logo redirect
+    const latestArticle = JSON.parse(window.localStorage.getItem('latestSavedArticle'));
+    let isDropdownOpen = false;
+
     document.getElementById('bungieLogoIcon').addEventListener('click', () => {
-        window.open('https://www.bungie.net/7/en/News', '_blank').focus();
+        if (!isDropdownOpen) {
+            document.getElementById('logoDropdown').style.display = 'flex';
+            isDropdownOpen = !isDropdownOpen;
+        } else {
+            document.getElementById('logoDropdown').style.display = 'none';
+            isDropdownOpen = !isDropdownOpen;
+        };
+    });
+
+    // open article in-app
+    document.getElementById('logoOpenInApp').addEventListener('click', () => {
+        // change client location to this url
+        const url = `${window.location.origin}/article?a=${latestArticle.hostedUrl}&m=true`;
+        latestArticle.hasBeenViewed = true;
+        window.localStorage.setItem('latestSavedArticle', JSON.stringify(latestArticle)); // update boolean
+        window.location = url;
+    });
+
+    // open article at Bungie.net
+    document.getElementById('logoOpenInBungie').addEventListener('click', () => {
+        window.open(latestArticle.url, '_blank').focus();
+        document.getElementById('logoDropdown').style.display = 'none';
+        isDropdownOpen = false; // hide dropdown
     });
 
     // "Bungie.net News" 
