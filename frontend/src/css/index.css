@@ -326,9 +326,28 @@ input[data-autocompleted] {
     z-index: 2;
 }
 
+.listItemHeader {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
 #highlightedSnippetText {
     font-weight: bold;
     color: #49B5DD;
+}
+
+.listItemReadTimeBadge {
+    font-weight: normal;
+    background-color: #352e5f;
+    border: 1px solid #595385;
+    width: 80px;
+    height: 20px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 13px;
 }
 
 .newItemSwishWrapper {
