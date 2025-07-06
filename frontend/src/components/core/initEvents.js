@@ -71,10 +71,10 @@ export default async function intializeEvents() {
     document.getElementById('bungieLogoIcon').addEventListener('click', () => {
         if (!isDropdownOpen) {
             document.getElementById('logoDropdown').style.display = 'flex';
-            isDropdownOpen = !isDropdownOpen;
+            isDropdownOpen = true;
         } else {
             document.getElementById('logoDropdown').style.display = 'none';
-            isDropdownOpen = !isDropdownOpen;
+            isDropdownOpen = false;
         };
     });
 
@@ -118,6 +118,7 @@ export default async function intializeEvents() {
     document.addEventListener('mouseup', async event => {
         const targetClass = event.target.className;
         const targetClassList = targetClass.split(' ');
+        const targetId = event.target.id;
 
         // hide search results when anywhere else on the screen is clicked
         if (event.target.id === 'bodyBlur') {
@@ -157,6 +158,13 @@ export default async function intializeEvents() {
         }
         if (!targetClassList.includes('sortbyItem')) {
             hideSortList();
+        }
+
+        // bungie logo dropdown list
+        if (targetId !== 'logoDropdown' && targetId !== 'bungieLogoIcon' && targetId !== 'bungieLogoWrapper') {
+            document.getElementById('logoDropdown').style.display = 'none';
+            console.log(targetId);
+            isDropdownOpen = false; // hide dropdown
         }
     });
 
