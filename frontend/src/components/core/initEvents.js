@@ -113,8 +113,26 @@ export default async function intializeEvents() {
         }
     });
 
+    // hide certain elements when user presses escape key
+    document.addEventListener('keydown', event => {
+        if (event.key === 'Escape') {
+
+            // hide search results
+            document.getElementById('searchStatsContainer').style.display = 'none';
+            document.getElementById('searchResultsContainer').style.display = 'none';
+            document.getElementById('bodyBlur').style.display = 'none';
+
+            // hide bungie logo dropdown
+            document.getElementById('logoDropdown').style.display = 'none';
+            isDropdownOpen = false;
+
+            // hide filter/sortby
+            hideFilterList();
+            hideSortList();
+        };
+    });
+
     // hide certain elements when user clicks away
-    // TODO: "esc" key press for certain UI's
     document.addEventListener('mouseup', async event => {
         const targetClass = event.target.className;
         const targetClassList = targetClass.split(' ');
