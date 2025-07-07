@@ -1,4 +1,3 @@
-import { clearSearchBarResults, parseResults } from '../render/parseResults.js';
 import { TabGroup } from '../routing/tabGroup.js';
 import { isEntryValid } from '../search/checkUserInput.js';
 import {
@@ -8,7 +7,7 @@ import {
     positions,
     toggleCaseSensitive
 } from '../search/controlSearch.js';
-import { fetchArticles } from '../search/fetchArticles.js';
+import { fetchAndParseArticles } from '../search/fetchParseArticles.js';
 import { activeFilterValues } from '../search/filterResults.js';
 import { activeSortByValue } from '../search/sortResults.js';
 
@@ -19,31 +18,6 @@ export function resetPositionIndex() {
 
 export default async function intializeEvents() {
     const searchBarElement = document.getElementById('searchBar');
-
-    // check search bar value then fetch and parse articles
-    async function fetchAndParseArticles(isResend) {
-        const searchBar = document.getElementById('searchBar');
-        const isValid = isEntryValid(searchBar, isResend);
-        const searchTerm = `${searchBar.value}`;
-
-        if (searchTerm.length === 0) {
-            clearSearchBarResults('searchBar');
-            return;
-        }
-
-        // Check if input is valid
-        if (isValid) {
-            document.getElementsByClassName(`spinner`)[0].style.opacity = '0.5';
-            const articles = await fetchArticles(searchTerm);
-            if (!articles) { return; } // if guard -> fetchArticles retusn undefined with AbortController
-            document.getElementById('searchStatsContainer').style.display = 'flex';
-            document.getElementById('searchResultsContainer').style.display = 'flex';
-            document.getElementById('bodyBlur').style.display = 'block';
-            parseResults(articles);
-            resetPositionIndex();
-            document.getElementsByClassName(`spinner`)[0].style.opacity = '0';
-        }
-    }
 
     // scroll to top button
     document.getElementById('scrollToTopButton').addEventListener('click', () => {
@@ -131,6 +105,21 @@ export default async function intializeEvents() {
             hideFilterList();
             hideSortList();
         };
+    });
+
+    // focus on main search bar with CTRL + SHIFT + K
+    document.addEventListener('keydown', event => {
+        if (event.ctrlKey && event.shiftKey && event.key === 'K') {
+            document.getElementById('searchBar').select(); // focus on input field
+            window.scrollTo(0, 0); // scroll to top of page
+
+            // only show results list if there is something in the searchbar
+            if (document.getElementById('searchBar').value) {
+                document.getElementById('searchStatsContainer').style.display = 'flex';
+                document.getElementById('searchResultsContainer').style.display = 'flex';
+                document.getElementById('bodyBlur').style.display = 'block';
+            }
+        }
     });
 
     // hide certain elements when user clicks away

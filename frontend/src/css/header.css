@@ -161,6 +161,19 @@
     z-index: 5;
 }
 
+#searchBarTip {
+    border: 1px solid #555259;
+    position: absolute;
+    right: 35px;
+    top: 3px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 5px;
+    padding: 5px;
+    opacity: .75;
+    user-select: none;
+}
+
 #spinnerContainer {
     position: absolute;
     display: flex;

@@ -1,5 +1,6 @@
 import { readingTime } from 'reading-time-estimator';
 import { highlightSubstringPositions, positions } from '../search/controlSearch.js';
+import { fetchAndParseArticles } from '../search/fetchParseArticles.js';
 import { addImageControls } from '../ui/addImageControls.js';
 import { waitForQueriesToLoad } from '../ui/mediaHandler.js';
 import { parseDOM } from './parseDOM.js';
@@ -7,6 +8,8 @@ import { parseDOM } from './parseDOM.js';
 export async function renderArticle(article, searchTerm) {
 
     let articleContent = article.htmlContent;
+    document.getElementById('searchBar').value = searchTerm;
+    await fetchAndParseArticles(false, true);
 
     // check if readTime exists on article
     if (!article.readTime) {
