@@ -162,6 +162,7 @@ input[data-autocompleted] {
     box-sizing: border-box;
     padding: 10px;
     padding-top: 15px;
+    border-radius: 5px;
 }
 
 #searchStatsContainer > div {
