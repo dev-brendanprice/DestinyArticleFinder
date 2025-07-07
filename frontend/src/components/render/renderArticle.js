@@ -14,6 +14,11 @@ export async function renderArticle(article, searchTerm) {
         article.readTime = estimated; // add estimated read time to article obj
     };
 
+    // if article read time is less than a minute
+    if (article.readTime.minutes <= 1) {
+        article.readTime.text = '<1 min read';
+    };
+
     articleContent = parseDOM(articleContent);
     // articleContent = uwufyHTML(articleContent);
     // document.getElementById('articleTitle').innerHTML = uwufyString(article.title) + articleLinkSVG;

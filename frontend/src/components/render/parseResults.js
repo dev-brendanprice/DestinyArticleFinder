@@ -102,10 +102,15 @@ export function parseResults(data) {
 
         // get estimated article read time using reading-time-estimator
         const estimated = readingTime(article.htmlContent);
-        listItemReadTimeBadge.innerHTML = estimated.text;
-        listItemReadTimeBadge.className = 'listItemReadTimeBadge';
         article.readTime = estimated; // add estimated read time to article obj
 
+        // if article read time is less than a minute
+        if (article.readTime.minutes <= 1) {
+            article.readTime.text = '<1 min read';
+        };
+
+        listItemReadTimeBadge.innerHTML = article.readTime.text;
+        listItemReadTimeBadge.className = 'listItemReadTimeBadge';
         listItemHeader.className = 'listItemHeader';
         listItemTitle.innerHTML = article.title;
         listItemSubtitle.innerHTML = article.dateShortForm;
