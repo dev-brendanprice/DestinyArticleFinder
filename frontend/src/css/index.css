@@ -341,7 +341,8 @@ input[data-autocompleted] {
     font-weight: normal;
     background-color: #352e5f;
     border: 1px solid #595385;
-    width: 80px;
+    padding: 0px 8px;
+    width: fit-content;
     height: 20px;
     border-radius: 10px;
     display: flex;
