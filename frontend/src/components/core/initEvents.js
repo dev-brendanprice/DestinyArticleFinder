@@ -35,6 +35,7 @@ export default async function intializeEvents() {
         if (isValid) {
             document.getElementsByClassName(`spinner`)[0].style.opacity = '0.5';
             const articles = await fetchArticles(searchTerm);
+            if (!articles) { return; } // if guard -> fetchArticles retusn undefined with AbortController
             document.getElementById('searchStatsContainer').style.display = 'flex';
             document.getElementById('searchResultsContainer').style.display = 'flex';
             document.getElementById('bodyBlur').style.display = 'block';
