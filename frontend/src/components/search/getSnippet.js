@@ -32,8 +32,9 @@ export function getSnippet(html, query) {
 };
 
 // encase substring with <b>
-export function highlightSubstring(string, substring) {
-    if (!substring) {return string;}
+export function encaseSubstring(string, substring) {
+    if (!substring) { return string; }
+    if (!string) { return null; }
     const escapedSubstring = substring.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // Escape special regex characters
     const regex = new RegExp(escapedSubstring, 'gi'); // Case-insensitive match
     return string.replace(regex, match => `<b id="highlightedSnippetText">${match}</b>`);

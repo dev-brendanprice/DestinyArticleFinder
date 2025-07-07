@@ -2,7 +2,7 @@ import { readingTime } from 'reading-time-estimator';
 import { mapArticleToRoute } from '../routing/handleRoutes.js';
 import { addTabToGroup, TabGroup } from '../routing/tabGroup.js';
 import { getSearchStats } from '../search/getSearchStats.js';
-import { getSnippet, highlightSubstring } from '../search/getSnippet.js';
+import { encaseSubstring, getSnippet } from '../search/getSnippet.js';
 import { activeSortByValue } from '../search/sortResults.js';
 import { renderArticle } from './renderArticle.js';
 
@@ -98,7 +98,7 @@ export function parseResults(data) {
         const listItemSubtitle = document.createElement('span');
         const listItemSnippet = document.createElement('div');
         let snippet = getSnippet(article.htmlContent, searchTerm);
-        snippet = highlightSubstring(snippet, searchTerm);
+        snippet = encaseSubstring(snippet, searchTerm);
 
         // get estimated article read time using reading-time-estimator
         const estimated = readingTime(article.htmlContent);
@@ -109,13 +109,18 @@ export function parseResults(data) {
             article.readTime.text = '<1 min read';
         };
 
+        // if snippet couldnt be returned, omit snippet from result
+        listItemSnippet.innerHTML = 'No information.';
+        if (snippet !== null) {
+            listItemSnippet.innerHTML = snippet;
+        };
+
         listItemReadTimeBadge.innerHTML = article.readTime.text;
         listItemReadTimeBadge.className = 'listItemReadTimeBadge';
         listItemHeader.className = 'listItemHeader';
         listItemTitle.innerHTML = article.title;
         listItemSubtitle.innerHTML = article.dateShortForm;
         listItemSubtitle.className = 'listItemSubtitle';
-        listItemSnippet.innerHTML = snippet;
         listItemSnippet.className = 'listItemSnippet';
         listItemContainer.href = `${window.location.origin}/article?a=${article.hostedUrl}&s=${searchTerm}`;
         listItemContainer.setAttribute('data-index', i);
