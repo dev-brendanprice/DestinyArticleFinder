@@ -533,6 +533,31 @@ input[data-autocompleted] {
     /* animation-play-state: paused; */
 }
 
+#footer {
+    justify-content: center;
+    display: flex;
+    font-size: 12px;
+    text-decoration: none;
+    text-emphasis: none;
+    color: unset;
+    margin-top: -10px;
+}
+
+#footer > div {
+    margin-left: 3px;
+    margin-right: 3px;
+}
+
+#footer > a {
+    text-decoration: none;
+    text-emphasis: none;
+    color: unset;
+}
+
+#footer > a:hover {
+    color: #247363;
+}
+
 
 @keyframes animateRow {
     to {
