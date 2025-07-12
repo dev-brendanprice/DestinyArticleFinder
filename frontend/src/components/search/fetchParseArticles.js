@@ -18,10 +18,10 @@ export async function fetchAndParseArticles(isResend, silent = false) {
     if (isValid) {
         document.getElementsByClassName(`spinner`)[0].style.opacity = '0.5';
         const articles = await fetchArticles(searchTerm);
-        if (!articles) { return; } // if guard -> fetchArticles retusn undefined with AbortController
+        if (!articles) { return; } // if guard -> fetchArticles return undefined with AbortController
 
         // hides result list by default, unless they are meant to be loaded in the background
-        if (!silent) {
+        if (silent === false) {
             document.getElementById('searchStatsContainer').style.display = 'flex';
             document.getElementById('searchResultsContainer').style.display = 'flex';
             document.getElementById('bodyBlur').style.display = 'block';
