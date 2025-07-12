@@ -39,13 +39,6 @@ export async function renderArticle(article, searchTerm) {
     document.getElementById('articleContent').innerHTML = articleContent;
     document.getElementById('articleOriginLink').href = article.url;
 
-    // if imgUrl is null, hide image
-    if (!article.imgUrl) {
-        document.getElementById('articleImgHeader').style.display = 'none';
-    } else {
-        document.getElementById('articleImgHeader').src = article.imgUrl.trim();
-    };
-
     addImageControls(); // buttons for like "Copy Image", "Download", etc.
 
     // if searchTerm present, highlight substrings then show find function results
@@ -57,6 +50,13 @@ export async function renderArticle(article, searchTerm) {
 
     waitForQueriesToLoad('img')
         .then(() => {
+
+            // if imgUrl is null, hide image
+            if (article.imgUrl == '') {
+                document.getElementById('articleImgHeader').style.display = 'none';
+            } else {
+                document.getElementById('articleImgHeader').src = article.imgUrl.trim();
+            };
             console.log('🍒 images loaded!');
         })
         .catch(console.error);
