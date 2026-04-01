@@ -48,3 +48,5 @@ initializeMobileReaderControls(); // change DOM layout if mobile is being used
 export const version = await getLatestRelease(); // get and save latest version from release tag
 
 console.log(`%cDestiny Article Finder ${version}`, 'font-weight: bold;font-size: 1.75em;');
+console.log('%cIf you have issues loading the Manifest/Definitions please hard reload the page with Ctrl + Shift + R.', 'font-size: 1.2em;');
+console.log('%cMade with ❤️ by Brendan', 'font-size: 1em;font-style: italic;');
