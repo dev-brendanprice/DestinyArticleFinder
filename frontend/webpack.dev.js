@@ -19,7 +19,8 @@ const config = merge(common, {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: path.resolve(__dirname, 'src/template.html')
+            template: path.resolve(__dirname, 'src/template.html'),
+            favicon: path.resolve(__dirname, 'src/assets/favicon.ico'),
         }),
         new MiniCssExtractPlugin({
             filename: '[name].[contenthash].css'

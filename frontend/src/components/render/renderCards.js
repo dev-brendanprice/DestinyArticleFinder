@@ -70,10 +70,21 @@ async function getGraphs() {
         };
     };
 
-    const randomItemsArray = await getRandomItemsFromManifest(inventoryItemDefinitions); // get first 12 unique randomised items
-    const itemGraphs = await getItemSVGData(randomItemsArray); // get graphs for each item
+    // TL;DR cache the response (needs more work)
+    let storedGraphs = JSON.parse(window.localStorage.getItem('itemGraphs'));
+    const msHour = 1000 * 60 * 60;
+
+    // fetch+store graphs, if nonexisting or older than one hour
+    if (!storedGraphs || (new Date - storedGraphs?.dateAdded) <= msHour) { // ms for one hour
+        console.log('d');
+        const randomItemsArray = await getRandomItemsFromManifest(inventoryItemDefinitions); // get first 12 unique randomised items
+        const itemGraphs = await getItemSVGData(randomItemsArray); // get graphs for each item
+        
+        window.localStorage.setItem('itemGraphs', JSON.stringify(itemGraphs));
+        storedGraphs = itemGraphs;
+    }
     
-    return itemGraphs.data[0];
+    return storedGraphs.data[0];
 };
 
 
@@ -142,5 +153,10 @@ export async function renderCards() {
 
     // hide skeleton-load and show rendered sliders
     document.getElementById('slidersLoadingContainer').style.display = 'none';
-    document.getElementById('sliderConOuter').style.display = 'flex';
+    
+    // only swap container display if it's NOT "none"
+    const sliderContainer = document.getElementById('sliderConOuter');
+    if (sliderContainer.style.display !== 'none') {
+        sliderContainer.style.display = 'flex';
+    };
 };

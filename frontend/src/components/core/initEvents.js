@@ -1,4 +1,3 @@
-import { clearSearchBarResults, parseResults } from '../render/parseResults.js';
 import { TabGroup } from '../routing/tabGroup.js';
 import { isEntryValid } from '../search/checkUserInput.js';
 import {
@@ -8,7 +7,7 @@ import {
     positions,
     toggleCaseSensitive
 } from '../search/controlSearch.js';
-import { fetchArticles } from '../search/fetchArticles.js';
+import { fetchAndParseArticles } from '../search/fetchParseArticles.js';
 import { activeFilterValues } from '../search/filterResults.js';
 import { activeSortByValue } from '../search/sortResults.js';
 
@@ -20,29 +19,10 @@ export function resetPositionIndex() {
 export default async function intializeEvents() {
     const searchBarElement = document.getElementById('searchBar');
 
-    // check search bar value then fetch and parse articles
-    async function fetchAndParseArticles(isResend) {
-        const searchBar = document.getElementById('searchBar');
-        const isValid = isEntryValid(searchBar, isResend);
-        const searchTerm = `${searchBar.value}`;
-
-        if (searchTerm.length === 0) {
-            clearSearchBarResults('searchBar');
-            return;
-        }
-
-        // Check if input is valid
-        if (isValid) {
-            document.getElementsByClassName(`spinner`)[0].style.opacity = '0.5';
-            const articles = await fetchArticles(searchTerm);
-            document.getElementById('searchStatsContainer').style.display = 'flex';
-            document.getElementById('searchResultsContainer').style.display = 'flex';
-            document.getElementById('bodyBlur').style.display = 'block';
-            parseResults(articles);
-            resetPositionIndex();
-            document.getElementsByClassName(`spinner`)[0].style.opacity = '0';
-        }
-    }
+    // scroll to top button
+    document.getElementById('scrollToTopButton').addEventListener('click', () => {
+        window.scrollTo(0, 0);
+    });
 
     // open mobile burger menu
     document.getElementById('mobileBurgerMenuIcon').addEventListener('click', () => {
@@ -55,13 +35,38 @@ export default async function intializeEvents() {
     });
 
     // nav title redirects back to homepage
-    document.getElementById('navTitle').addEventListener('click', () => {
+    document.getElementById('navIcon').addEventListener('click', () => {
         window.location = window.location.origin;
     });
 
     // Bungie logo redirect
+    const latestArticle = JSON.parse(window.localStorage.getItem('latestSavedArticle'));
+    let isDropdownOpen = false;
+
     document.getElementById('bungieLogoIcon').addEventListener('click', () => {
-        window.open('https://www.bungie.net/7/en/News', '_blank').focus();
+        if (!isDropdownOpen) {
+            document.getElementById('logoDropdown').style.display = 'flex';
+            isDropdownOpen = true;
+        } else {
+            document.getElementById('logoDropdown').style.display = 'none';
+            isDropdownOpen = false;
+        };
+    });
+
+    // open article in-app
+    document.getElementById('logoOpenInApp').addEventListener('click', () => {
+        // change client location to this url
+        const url = `${window.location.origin}/article?a=${latestArticle.hostedUrl}&m=true`;
+        latestArticle.hasBeenViewed = true;
+        window.localStorage.setItem('latestSavedArticle', JSON.stringify(latestArticle)); // update boolean
+        window.location = url;
+    });
+
+    // open article at Bungie.net
+    document.getElementById('logoOpenInBungie').addEventListener('click', () => {
+        window.open(latestArticle.url, '_blank').focus();
+        document.getElementById('logoDropdown').style.display = 'none';
+        isDropdownOpen = false; // hide dropdown
     });
 
     // "Bungie.net News" 
@@ -83,11 +88,45 @@ export default async function intializeEvents() {
         }
     });
 
+    // hide certain elements when user presses escape key
+    document.addEventListener('keydown', event => {
+        if (event.key === 'Escape') {
+
+            // hide search results
+            document.getElementById('searchStatsContainer').style.display = 'none';
+            document.getElementById('searchResultsContainer').style.display = 'none';
+            document.getElementById('bodyBlur').style.display = 'none';
+
+            // hide bungie logo dropdown
+            document.getElementById('logoDropdown').style.display = 'none';
+            isDropdownOpen = false;
+
+            // hide filter/sortby
+            hideFilterList();
+            hideSortList();
+        };
+    });
+
+    // focus on main search bar with CTRL + SHIFT + K
+    document.addEventListener('keydown', event => {
+        if (event.ctrlKey && event.shiftKey && event.key === 'K') {
+            document.getElementById('searchBar').select(); // focus on input field
+            window.scrollTo(0, 0); // scroll to top of page
+
+            // only show results list if there is something in the searchbar
+            if (document.getElementById('searchBar').value) {
+                document.getElementById('searchStatsContainer').style.display = 'flex';
+                document.getElementById('searchResultsContainer').style.display = 'flex';
+                document.getElementById('bodyBlur').style.display = 'block';
+            }
+        }
+    });
+
     // hide certain elements when user clicks away
-    // TODO: "esc" key press for certain UI's
     document.addEventListener('mouseup', async event => {
         const targetClass = event.target.className;
         const targetClassList = targetClass.split(' ');
+        const targetId = event.target.id;
 
         // hide search results when anywhere else on the screen is clicked
         if (event.target.id === 'bodyBlur') {
@@ -128,11 +167,16 @@ export default async function intializeEvents() {
         if (!targetClassList.includes('sortbyItem')) {
             hideSortList();
         }
+
+        // bungie logo dropdown list
+        if (targetId !== 'logoDropdown' && targetId !== 'bungieLogoIcon' && targetId !== 'bungieLogoWrapper') {
+            document.getElementById('logoDropdown').style.display = 'none';
+            isDropdownOpen = false; // hide dropdown
+        }
     });
 
     // Nested function and index variable for reader controls
     function toggleActiveHighlight() {
-        // Toggle active highlighted-text
 
         // remove class from everything but matching index
         const target = positions[positionIndex].el;
@@ -145,9 +189,15 @@ export default async function intializeEvents() {
     // scroll to y pos on window
     function scrollToY(pos) {
         try {
-            // Scroll to index of matching substring
+
+            console.log(pos, pos.el.getBoundingClientRect().top);
+            // scroll to matching substring
             toggleActiveHighlight();
-            window.scroll(0, pos.y);
+            window.scrollTo({
+                top: pos.y,
+                left: 0,
+            });
+
         } catch (error) {
             console.error(error);
         }
@@ -159,18 +209,19 @@ export default async function intializeEvents() {
         const searchBar = document.getElementById('controlSearchBar');
         let searchQuery = searchBar.value;
 
+        positionIndex = 0; // reset position
+        
         // remove conflicting regex characters
         const confict = ['?', '/', '\\', '.', '(', ')', '[', ']', '{', '}', '$'];
         for (const char of confict) {
             searchQuery = searchQuery.replaceAll(char, '');
         }
 
-        // check entry validity
+        // check input validity
         if (!isEntryValid(searchBar)) {
-            // string has changed
 
+            // input is empty
             if (searchQuery.length === 0) {
-                // string is not empty
                 clearPositions();
                 cleanseHighlightedSpans(articleElement);
                 document.getElementById('controlSearchCountInner').style.display = 'none';

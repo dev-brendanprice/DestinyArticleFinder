@@ -13,6 +13,7 @@ import './assets/bungie_shield.svg';
 import './assets/burger_menu.svg';
 import './assets/close.svg';
 import './assets/copy.svg';
+import './assets/daf_vault_icon.svg';
 import './assets/download.svg';
 import './assets/fold.svg';
 import './assets/fwd_blue.svg';
@@ -40,10 +41,12 @@ validateManifest(); // rebuilds non-existing or old manifest
 intializeEvents(); // config UI/UX events
 intializeSettings(); // load user settings/defaults
 handleRoutes(); // handle url routes
+renderCards(); // render "mentions in articles", animated slider cards on homepage
 checkLatestArticle(); // show animation for (new) latest article
 initializeMobileReaderControls(); // change DOM layout if mobile is being used
-renderCards(); // render "mentions in articles", animated slider cards on homepage
 
 export const version = await getLatestRelease(); // get and save latest version from release tag
 
 console.log(`%cDestiny Article Finder ${version}`, 'font-weight: bold;font-size: 1.75em;');
+console.log('%cIf you have issues loading the Manifest/Definitions please hard reload the page with Ctrl + Shift + R.', 'font-size: 1.2em;');
+console.log('%cMade with ❤️ by Brendan', 'font-size: 1em;font-style: italic;');

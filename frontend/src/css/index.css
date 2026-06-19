@@ -42,11 +42,12 @@ body {
     cursor: pointer;
 }
 
-#navTitle {
+#navIcon {
+    padding: 0;
+    margin: 0;
+    margin-top: 15px;
+    width: 42px;
     cursor: pointer;
-    width: fit-content;
-    padding: 10px;
-    padding-left: 0px;
 }
 
 .navButtonControl {
@@ -161,6 +162,7 @@ input[data-autocompleted] {
     box-sizing: border-box;
     padding: 10px;
     padding-top: 15px;
+    border-radius: 5px;
 }
 
 #searchStatsContainer > div {
@@ -325,15 +327,29 @@ input[data-autocompleted] {
     z-index: 2;
 }
 
-#bungieLogoWrapper {
-    width: 32px;
-    height: 32px;
-    cursor: pointer;
-    box-sizing: border-box;
+.listItemHeader {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 
-#bungieLogoWrapper:hover {
-    border: 1px solid #c5c5c54a;
+#highlightedSnippetText {
+    font-weight: bold;
+    color: #49B5DD;
+}
+
+.listItemReadTimeBadge {
+    font-weight: normal;
+    background-color: #352e5f;
+    border: 1px solid #595385;
+    padding: 0px 8px;
+    width: fit-content;
+    height: 20px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 13px;
 }
 
 .newItemSwishWrapper {
@@ -373,7 +389,7 @@ input[data-autocompleted] {
 }
 
 #sliderConOuter {
-    display: none; /* temp */
+    display: none;
     flex-direction: column;
     gap: 50px;
     height: calc(100vh - 80px);
@@ -386,6 +402,8 @@ input[data-autocompleted] {
     gap: 50px;
     height: calc(100vh - 80px);
     justify-content: center;
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent, black 5rem, black calc(100% - 5rem), transparent);
 }
 
 #slidersLoadingContainer > div {
@@ -514,6 +532,31 @@ input[data-autocompleted] {
 .animreverse {
     animation: 50s linear infinite animateRow reverse;
     /* animation-play-state: paused; */
+}
+
+#footer {
+    justify-content: center;
+    display: flex;
+    font-size: 12px;
+    text-decoration: none;
+    text-emphasis: none;
+    color: unset;
+    margin-top: -10px;
+}
+
+#footer > div {
+    margin-left: 3px;
+    margin-right: 3px;
+}
+
+#footer > a {
+    text-decoration: none;
+    text-emphasis: none;
+    color: unset;
+}
+
+#footer > a:hover {
+    color: #247363;
 }
 
 

@@ -1,6 +1,6 @@
 export let activeSortByValue = {
-    typeDateASC: true, // default
-    typeDateDES: false,
+    typeDateASC: false,
+    typeDateDES: true, // default
     typeABC: false,
 
     // change target to boolean in localStorage

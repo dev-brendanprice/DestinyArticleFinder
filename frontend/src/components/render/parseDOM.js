@@ -1,3 +1,4 @@
+ 
 import { rewriteProto } from "../ui/mediaHandler.js";
 
 // parse a HTML document that is in the format of a string
@@ -24,10 +25,12 @@ export function parseDOM(htmlContent) {
         }
 
         if (item.tagName === 'IMG') {
-            item.id = 'articleImage';
-            item.removeAttribute('style');
 
-            // item.removeAttribute('loading'); // (toggleable lazy-loading!)
+            item.id = 'articleImage';
+
+            // item.removeAttribute('style');
+            item.setAttribute('loading', 'lazy'); // keep this on else control search doesn't work
+            // item.removeAttribute('loading'); // (toggleable) lazy-loading!
 
             // wrap image in a container
             const container = document.createElement('div');

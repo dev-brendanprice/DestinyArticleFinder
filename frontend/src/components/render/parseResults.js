@@ -1,7 +1,8 @@
+import { readingTime } from 'reading-time-estimator';
 import { mapArticleToRoute } from '../routing/handleRoutes.js';
 import { addTabToGroup, TabGroup } from '../routing/tabGroup.js';
 import { getSearchStats } from '../search/getSearchStats.js';
-import { getSnippet } from '../search/getSnippet.js';
+import { encaseSubstring, getSnippet } from '../search/getSnippet.js';
 import { activeSortByValue } from '../search/sortResults.js';
 import { renderArticle } from './renderArticle.js';
 
@@ -34,7 +35,7 @@ export function parseResults(data) {
         if (element[key]) { // remove pre-existing events
             element.removeEventListener('click', element[key]);
         }
-    
+
         element[key] = () => loadArticle(article, searchTerm); // new click handler
         element.addEventListener('click', element[key]);
     }
@@ -80,7 +81,7 @@ export function parseResults(data) {
         .addEventListener('click', () => { openUrlOnElement(searchStatistics.lastMention.url); });
     document.getElementById('statMostBnet')
         .addEventListener('click', () => { openUrlOnElement(topArticle.url); });
-    
+
     // assign unique click events for each of these elements
     uniqueClickHandler('statFirstTitle', searchStatistics.firstMention, searchTerm);
     uniqueClickHandler('statLastTitle', searchStatistics.lastMention, searchTerm);
@@ -91,18 +92,32 @@ export function parseResults(data) {
     for (let i = 0; i < articles.length; i++) {
         const article = articles[i];
         const listItemContainer = document.createElement('a');
+        const listItemHeader = document.createElement('div');
         const listItemTitle = document.createElement('div');
+        const listItemReadTimeBadge = document.createElement('div');
         const listItemSubtitle = document.createElement('span');
         const listItemSnippet = document.createElement('div');
-        const snippet = getSnippet(article, searchTerm);
+        let snippet = getSnippet(article.htmlContent, searchTerm);
+        snippet = encaseSubstring(snippet, searchTerm);
 
-        // snippet can be a DOMElement or a String
-        if (typeof snippet == 'string') {
+        // get estimated article read time using reading-time-estimator
+        const estimated = readingTime(article.htmlContent);
+        article.readTime = estimated; // add estimated read time to article obj
+
+        // if article read time is less than a minute
+        if (article.readTime.minutes <= 1) {
+            article.readTime.text = '<1 min read';
+        };
+
+        // if snippet couldnt be returned, omit snippet from result
+        listItemSnippet.innerHTML = 'No information.';
+        if (snippet !== null) {
             listItemSnippet.innerHTML = snippet;
-        } else {
-            listItemSnippet.appendChild(snippet);
-        }
+        };
 
+        listItemReadTimeBadge.innerHTML = article.readTime.text;
+        listItemReadTimeBadge.className = 'listItemReadTimeBadge';
+        listItemHeader.className = 'listItemHeader';
         listItemTitle.innerHTML = article.title;
         listItemSubtitle.innerHTML = article.dateShortForm;
         listItemSubtitle.className = 'listItemSubtitle';
@@ -119,7 +134,8 @@ export function parseResults(data) {
             mapArticleToRoute(article.hostedUrl, searchTerm);
         });
 
-        listItemContainer.append(listItemTitle, listItemSnippet);
+        listItemHeader.append(listItemTitle, listItemReadTimeBadge);
+        listItemContainer.append(listItemHeader, listItemSnippet);
         searchResultsDomElement.appendChild(listItemContainer);
     }
 

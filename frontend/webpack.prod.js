@@ -19,7 +19,8 @@ const config = merge(common, {
             new CssMinimizerPlugin(), // minify css
             new TerserPlugin(), // minify js > has to be here bc CssMinimizer replaces it
             new HtmlWebpackPlugin({
-                template: path.resolve(__dirname, 'src/template.html') // minify html
+                template: path.resolve(__dirname, 'src/template.html'),
+                favicon: path.resolve(__dirname, 'src/assets/favicon.ico'),
             })
         ]
     },

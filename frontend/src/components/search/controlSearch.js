@@ -64,13 +64,13 @@ export async function highlightSubstringPositions(el, query) {
                     span.textContent = fragment;
                     parent.insertBefore(span, node);
 
-                    let anbar = {
+                    const spanPosition = {
                         el: span,
                         x: 0,
-                        y: span.offsetTop - 200 // offset
+                        y: span.getBoundingClientRect().top - 200
                     };
 
-                    positions.push(anbar);
+                    positions.push(spanPosition);
                 } else {
                     // create text node for non-matching text
                     const textNode = document.createTextNode(fragment);
@@ -81,6 +81,7 @@ export async function highlightSubstringPositions(el, query) {
         }
     }
 
+    // scroll to first position in array, if it exists
     if (positions[0]) {
         window.scroll(0, positions[0].y);
         positions[0].el.className = 'activeHighlight'; // change first matching textNode

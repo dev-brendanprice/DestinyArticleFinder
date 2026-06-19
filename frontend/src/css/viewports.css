@@ -17,7 +17,10 @@
     .searchBarContainer {
         height: 34px;
     }
-    #navTitleParent {
+    #searchBarTip {
+        display: none;
+    }
+    #navIconWrapper {
         display: none;
     }
     #headNavIcons {
