@@ -76,7 +76,6 @@ async function getGraphs() {
 
     // fetch+store graphs, if nonexisting or older than one hour
     if (!storedGraphs || (new Date - storedGraphs?.dateAdded) <= msHour) { // ms for one hour
-        console.log('d');
         const randomItemsArray = await getRandomItemsFromManifest(inventoryItemDefinitions); // get first 12 unique randomised items
         const itemGraphs = await getItemSVGData(randomItemsArray); // get graphs for each item
         

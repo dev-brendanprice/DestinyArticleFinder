@@ -19,6 +19,12 @@ export function resetPositionIndex() {
 export default async function intializeEvents() {
     const searchBarElement = document.getElementById('searchBar');
 
+    // change searchbar shortcut tip if user agent is MacOS
+    const isMac = /mac/i.test(navigator.userAgent);
+    if (isMac) {
+        document.getElementById('searchBarTip').innerHTML = '⌘ + Shift + K';
+    };
+
     // scroll to top button
     document.getElementById('scrollToTopButton').addEventListener('click', () => {
         window.scrollTo(0, 0);
@@ -107,9 +113,9 @@ export default async function intializeEvents() {
         };
     });
 
-    // focus on main search bar with CTRL + SHIFT + K
+    // focus on main search bar with CTRL/COMMAND + SHIFT + K
     document.addEventListener('keydown', event => {
-        if (event.ctrlKey && event.shiftKey && event.key === 'K') {
+        if ((event.ctrlKey || event.metaKey) && event.shiftKey && event.key.toUpperCase() === 'K') { // metaKey is for macOS compatibility
             document.getElementById('searchBar').select(); // focus on input field
             window.scrollTo(0, 0); // scroll to top of page
 
